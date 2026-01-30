@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNE Zone - Professional Security & Networking Solutions</title>
+    <meta name="description" content="CNE Zone provides professional CCTV installation, Access Control systems, Networking solutions in Islamabad Pakistan. Expert security engineering services.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <style>
+        /* ====== CNE ZONE PROFESSIONAL THEME ====== */
+        :root {
+            --primary: #0a2540;
+            --secondary: #0066cc;
+            --accent: #00a8ff;
+            --dark: #121212;
+            --light: #f8fafc;
+            --gray: #6b7280;
+            --success: #10b981;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --border: 1px solid #e5e7eb;
+            --gradient: linear-gradient(135deg, #0a2540 0%, #0066cc 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.2);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* ====== HEADER ====== */
+        header {
+            background: var(--primary);
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            height: 42px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 6px 0;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            padding: 8px 20px;
+            border-radius: 4px;
+            margin-left: 15px;
+            font-size: 13px;
+        }
+
+        .cta-button:hover {
+            background: #0097e6;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        /* ====== HERO SECTION ====== */
+        .hero {
+            background: var(--primary);
+            color: white;
+            padding: 160px 0 100px;
+            text-align: center;
+            margin-top: 66px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        /* ====== SERVICES ====== */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: inline-block;
+            height: 70px;
+            width: 70px;
+            line-height: 70px;
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 50%;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        /* ====== COMPANY PROFILE & CONTACT ====== */
+        .company-profile-contact {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .profile-contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+            align-items: start;
+        }
+
+        .profile-card, .contact-details-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-header, .contact-header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 25px;
+            flex-shrink: 0;
+        }
+
+        .profile-header h3, .contact-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-header i, .contact-header i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .profile-content, .contact-content {
+            padding: 25px;
+            overflow-y: auto;
+            flex-grow: 1;
+            max-height: 500px;
+        }
+
+        .profile-items-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 15px;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            min-width: 140px;
+            max-width: 140px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.4;
+            padding-top: 2px;
+        }
+
+        .profile-label i {
+            color: var(--secondary);
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .profile-value {
+            flex: 1;
+            color: var(--gray);
+            line-height: 1.5;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .service-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        .service-badge {
+            background: rgba(0, 102, 204, 0.08);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+
+        .rating i {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .rating-text {
+            margin-left: 8px;
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .contact-details-card .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            background: rgba(0, 102, 204, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .contact-text h4 {
+            margin: 0 0 6px 0;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-text p {
+            margin: 0;
+            color: var(--gray);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .emergency-tag {
+            margin-top: 8px !important;
+            color: var(--success) !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .business-hours {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .business-hours h4 {
+            margin: 0 0 12px 0;
+            color: var(--primary);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hours-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .day-time {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .day-time:last-child {
+            border-bottom: none;
+        }
+
+        .day {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 120px;
+        }
+
+        .time {
+            color: var(--gray);
+            text-align: right;
+        }
+
+        .time.emergency {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .quick-contact {
+            background: var(--gradient);
+            color: white;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .quick-contact h4 {
+            margin: 0 0 12px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-contact h4 i {
+            color: #ffcc00;
+        }
+
+        .contact-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .call-btn, .whatsapp-btn, .email-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 44px;
+        }
+
+        .call-btn:hover, .whatsapp-btn:hover, .email-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .map-container-large {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            margin-top: 20px;
+        }
+
+        .map-header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 25px;
+        }
+
+        .map-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-header i {
+            color: var(--accent);
+        }
+
+        .map-wrapper {
+            position: relative;
+            height: 350px;
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-info {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 15px;
+        }
+
+        .map-info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        .map-info-item i {
+            color: var(--secondary);
+        }
+
+        /* ====== CONTACT FORMS ====== */
+        .contact-forms {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .form-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .form-tab {
+            padding: 10px 20px;
+            background: #f8fafc;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .form-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .form-tab:hover:not(.active) {
+            background: #e8f4ff;
+            color: var(--primary);
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+        }
+
+        .form-container h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        textarea.form-control {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-message {
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: block;
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: var(--primary);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 60px 0 25px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-about p {
+            margin-bottom: 18px;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .newsletter p {
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-bottom: 18px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0 18px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form button:hover {
+            background: #0097e6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--accent);
+        }
+
+        /* ====== WHATSAPP ====== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 12px 24px;
+            }
+            
+            .profile-contact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .profile-content, .contact-content {
+                max-height: none;
+                overflow: visible;
+            }
+            
+            .profile-item {
+                flex-direction: row;
+                gap: 15px;
+            }
+            
+            .profile-label {
+                min-width: 130px;
+                max-width: 130px;
+            }
+            
+            .contact-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .map-wrapper {
+                height: 300px;
+            }
+            
+            .map-info {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 66px;
+                left: -100%;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 25px;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .hero {
+                padding: 140px 0 70px;
+            }
+            
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .company-profile-contact {
+                padding: 60px 0;
+            }
+            
+            .profile-content, .contact-content {
+                padding: 20px;
+            }
+            
+            .profile-item {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px 0;
+            }
+            
+            .profile-label, .profile-value {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .profile-label {
+                min-width: 100%;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .contact-icon {
+                align-self: flex-start;
+            }
+            
+            .contact-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-time {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            
+            .day, .time {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .map-wrapper {
+                height: 250px;
+            }
+            
+            .map-info {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin: 15px;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+            
+            .form-tabs {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .service-badges {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .service-badge {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .day-time {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .form-tab {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .rating {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .rating-text {
+                margin-left: 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo-text">🔒 CNE <span>Zone</span></div>
+            </div>
+            
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#profile">Company Profile</a>
+                <a href="#contact">Request Services</a>
+                <a href="#forms">Contact Forms</a>
+                <a class="btn cta-button" href="#forms">
+                    <i class="fas fa-quote-right"></i> Get Quote
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Professional Security & Networking Solutions</h1>
+            <p>CNE Zone provides expert CCTV installation, Access Control systems, and Networking solutions in Islamabad. Your security is our priority with professional engineering services.</p>
+            <div class="hero-buttons">
+                <a class="btn" href="#services">
+                    <i class="fas fa-shield-alt"></i> Our Services
+                </a>
+                <a class="btn btn-accent" href="#forms">
+                    <i class="fas fa-file-invoice"></i> Request Quote
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Professional Services</h2>
+                <p>Comprehensive security solutions tailored to your specific needs with cutting-edge technology and expert installation.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>CCTV Installation</h3>
+                    <p>High-definition surveillance systems with remote monitoring, night vision, and AI-powered analytics for maximum security.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>Access Control</h3>
+                    <p>Biometric, card, and mobile-based access systems for secure entry management across your facilities.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Networking Solutions</h3>
+                    <p>Structured cabling, WiFi deployment, and network infrastructure for seamless connectivity and performance.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Maintenance & Support</h3>
+                    <p>24/7 monitoring, regular maintenance, and system upgrades to ensure your security infrastructure remains optimal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPANY PROFILE & CONTACT -->
+    <section class="company-profile-contact" id="profile">
+        <div class="container">
+            <div class="section-title">
+                <h2>CNE Zone Company Profile</h2>
+                <p>Professional security solutions provider with expertise in advanced security systems and networking infrastructure.</p>
+            </div>
+            
+            <div class="profile-contact-grid">
+                <!-- Company Information Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h3><i class="fas fa-building"></i> Company Information</h3>
+                    </div>
+                    <div class="profile-content">
+                        <div class="profile-items-container">
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-signature"></i> Company Name
+                                </div>
+                                <div class="profile-value">
+                                    CNE Zone
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-briefcase"></i> Business Type
+                                </div>
+                                <div class="profile-value">
+                                    Professional Security & Networking Engineering Services
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-calendar-alt"></i> Year Established
+                                </div>
+                                <div class="profile-value">
+                                    2020
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-map-marker-alt"></i> Headquarters
+                                </div>
+                                <div class="profile-value">
+                                    Jaffar Chowk G11/2, Ibn-E-Sina Road, Islamabad, Pakistan
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-map-marked-alt"></i> Service Areas
+                                </div>
+                                <div class="profile-value">
+                                    Islamabad • Rawalpindi • Lahore • Karachi • Major Cities across Pakistan
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-tools"></i> Core Services
+                                </div>
+                                <div class="profile-value">
+                                    <div class="service-badges">
+                                        <span class="service-badge">CCTV Installation</span>
+                                        <span class="service-badge">Access Control Systems</span>
+                                        <span class="service-badge">Networking Solutions</span>
+                                        <span class="service-badge">Security Consultation</span>
+                                        <span class="service-badge">Maintenance & Support</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-certificate"></i> Certifications
+                                </div>
+                                <div class="profile-value">
+                                    Certified Security Technicians • Network Engineering Certified • Vendor Certified Professionals
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-project-diagram"></i> Projects Completed
+                                </div>
+                                <div class="profile-value">
+                                    100+ Successful Installations
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-star"></i> Client Satisfaction
+                                </div>
+                                <div class="profile-value">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span class="rating-text">98% Positive Feedback</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <div class="profile-label">
+                                    <i class="fas fa-headset"></i> Support Availability
+                                </div>
+                                <div class="profile-value">
+                                    24/7 Emergency Support & Maintenance Services
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Details Card -->
+                <div class="contact-details-card">
+                    <div class="contact-header">
+                        <h3><i class="fas fa-address-card"></i> Contact Details</h3>
+                    </div>
+                    <div class="contact-content">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Office Address</h4>
+                                <p>Jaffar Chowk G11/2, Ibn-E-Sina Road<br>Islamabad, Pakistan 44000</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Phone Numbers</h4>
+                                <p>+92 300 8005682 (Primary)<br>+92 333 6154622 (Technical Support)</p>
+                                <p class="emergency-tag">
+                                    <i class="fas fa-bolt"></i> 24/7 Emergency Support Available
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email Address</h4>
+                                <p>cne.zonee@gmail.com<br>support@cnezone.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>WhatsApp Business</h4>
+                                <p>+92 300 8005682<br><em>For quick quotes and support</em></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Business Hours -->
+                        <div class="business-hours">
+                            <h4><i class="fas fa-clock"></i> Business Hours</h4>
+                            <div class="hours-grid">
+                                <div class="day-time">
+                                    <span class="day">Monday - Friday:</span>
+                                    <span class="time">9:00 AM - 6:00 PM</span>
+                                </div>
+                                <div class="day-time">
+                                    <span class="day">Saturday:</span>
+                                    <span class="time">10:00 AM - 4:00 PM</span>
+                                </div>
+                                <div class="day-time">
+                                    <span class="day">Sunday:</span>
+                                    <span class="time emergency">Emergency Support Only</span>
+                                </div>
+                                <div class="day-time">
+                                    <span class="day">After Hours:</span>
+                                    <span class="time emergency">24/7 Technical Assistance</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Contact CTA -->
+                        <div class="quick-contact">
+                            <h4><i class="fas fa-bolt"></i> Quick Contact</h4>
+                            <div class="contact-buttons">
+                                <a href="tel:+923008005682" class="call-btn">
+                                    <i class="fas fa-phone"></i> Call Now
+                                </a>
+                                <a href="https://wa.me/923008005682" target="_blank" class="whatsapp-btn">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="mailto:cne.zonee@gmail.com" class="email-btn">
+                                    <i class="fas fa-envelope"></i> Email Us
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Google Maps -->
+            <div class="map-container-large">
+                <div class="map-header">
+                    <h3><i class="fas fa-map"></i> Our Location on Map</h3>
+                </div>
+                <div class="map-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3321.3456789012345!2d73.047575!3d33.684567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfd8e5c5c5c5%3A0xc5c5c5c5c5c5c5c5!2sJaffar%20Chowk%20G11%2F2%2C%20Ibn-E-Sina%20Road%2C%20Islamabad%2C%20Pakistan!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="map-info">
+                        <div class="map-info-item">
+                            <i class="fas fa-car"></i>
+                            <span>Easy parking available</span>
+                        </div>
+                        <div class="map-info-item">
+                            <i class="fas fa-store"></i>
+                            <span>Commercial area with easy access</span>
+                        </div>
+                        <div class="map-info-item">
+                            <i class="fas fa-directions"></i>
+                            <span>Central location in Islamabad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORMS -->
+    <section class="contact-forms" id="forms">
+        <div class="container">
+            <div class="section-title">
+                <h2>Request Our Services</h2>
+                <p>Choose the service you need and fill out the appropriate form for professional assistance.</p>
+            </div>
+            
+            <div class="form-tabs">
+                <button class="form-tab active" data-form="quote">Request Quote</button>
+                <button class="form-tab" data-form="assessment">Free Security Assessment</button>
+                <button class="form-tab" data-form="survey">Site Survey Request</button>
+            </div>
+            
+            <!-- Quote Request Form -->
+            <div class="form-container" id="quote-form">
+                <h3>Request for Quote</h3>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input class="form-control" id="name" name="name" required type="text" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input class="form-control" id="email" name="email" required type="email" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input class="form-control" id="phone" name="phone" placeholder="+92 XXX XXXXXXX" required type="tel">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-type">Property Type *</label>
+                        <select class="form-control" id="property-type" name="property-type" required>
+                            <option value="">Select Property Type</option>
+                            <option value="residential">Residential House</option>
+                            <option value="apartment">Apartment Building</option>
+                            <option value="commercial">Commercial Office</option>
+                            <option value="retail">Retail Store/Shop</option>
+                            <option value="warehouse">Warehouse/Storage</option>
+                            <option value="industrial">Industrial Facility</option>
+                            <option value="educational">Educational Institute</option>
+                            <option value="healthcare">Healthcare Facility</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Services Needed *</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input name="services-needed" type="checkbox" value="cctv"> CCTV Installation
+                            </label>
+                            <label class="checkbox-option">
+                                <input name="services-needed" type="checkbox" value="access-control"> Access Control
+                            </label>
+                            <label class="checkbox-option">
+                                <input name="services-needed" type="checkbox" value="networking"> Networking
+                            </label>
+                            <label class="checkbox-option">
+                                <input name="services-needed" type="checkbox" value="maintenance"> Maintenance
+                            </label>
+                            <label class="checkbox-option">
+                                <input name="services-needed" type="checkbox" value="consultation"> Consultation
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-size">Property Size (Square Feet)</label>
+                        <input class="form-control" id="property-size" name="property-size" placeholder="e.g., 2000" type="text">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget-range">Budget Range</label>
+                        <select class="form-control" id="budget-range" name="budget-range">
+                            <option value="">Select Budget Range</option>
+                            <option value="50k-100k">PKR 50,000 - 100,000</option>
+                            <option value="100k-250k">PKR 100,000 - 250,000</option>
+                            <option value="250k-500k">PKR 250,000 - 500,000</option>
+                            <option value="500k-1m">PKR 500,000 - 1,000,000</option>
+                            <option value="1m-plus">PKR 1,000,000+</option>
+                            <option value="not-sure">Not Sure/Need Advice</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeline">Project Timeline</label>
+                        <select class="form-control" id="timeline" name="timeline">
+                            <option value="">Select Timeline</option>
+                            <option value="urgent">Urgent (Within 1 week)</option>
+                            <option value="2-4-weeks">2-4 Weeks</option>
+                            <option value="1-2-months">1-2 Months</option>
+                            <option value="planning-stage">Planning Stage</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project-details">Project Details *</label>
+                        <textarea class="form-control" id="project-details" name="project-details" placeholder="Please describe your security requirements, specific areas to cover, existing systems (if any), and any special requirements..." required rows="5"></textarea>
+                    </div>
+                    
+                    <button class="btn" type="submit" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Submit Quote Request
+                    </button>
+                    
+                    <div id="form-message" class="form-message" style="margin-top: 20px;"></div>
+                </form>
+            </div>
+            
+            <!-- Free Assessment Form (Hidden by default) -->
+            <div class="form-container" id="assessment-form" style="display: none;">
+                <h3>Free Security Assessment Request</h3>
+                <p>Contact us directly for free security assessment at +92 300 8005682 or email cne.zonee@gmail.com</p>
+            </div>
+            
+            <!-- Site Survey Form (Hidden by default) -->
+            <div class="form-container" id="survey-form" style="display: none;">
+                <h3>Site Survey Request</h3>
+                <p>Call +92 333 6154622 to schedule a professional site survey at your location.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <a class="footer-logo" href="#">🔒 CNE <span>Zone</span></a>
+                    <p>Professional Security & Networking Engineering Solutions provider specializing in CCTV, Access Control, and Network Infrastructure services across Pakistan.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/cnezone" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/cnezone" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/cnezone" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/cnezone" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/cnezone" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-services">
+                    <h4 class="footer-heading">Our Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> CCTV Installation</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Access Control Systems</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Networking Solutions</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Security Consultation</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Maintenance & Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-section">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#profile"><i class="fas fa-chevron-right"></i> Company Profile</a></li>
+                        <li><a href="#forms"><i class="fas fa-chevron-right"></i> Request Quote</a></li>
+                    </ul>
+                </div>
+                
+                <div class="newsletter">
+                    <h4 class="footer-heading">Security Updates</h4>
+                    <p>Subscribe for security tips, technology updates, and special offers.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input id="newsletter-email" placeholder="Your Email Address" required type="email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <p><small>We respect your privacy. Unsubscribe at any time.</small></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 <strong>CNE Zone</strong>. All Rights Reserved. | Professional Security & Networking Engineering Solutions</p>
+                <p>Jaffar Chowk G11/2, Ibn-E-Sina Road, Islamabad, Pakistan | Phone: +92 300 8005682 | WhatsApp: +92 300 8005682</p>
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP -->
+    <a class="whatsapp-float" href="https://wa.me/923008005682" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.form-tab');
+            const forms = {
+                'quote': document.getElementById('quote-form'),
+                'assessment': document.getElementById('assessment-form'),
+                'survey': document.getElementById('survey-form')
+            };
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const formId = this.getAttribute('data-form');
+                    
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Hide all forms
+                    Object.values(forms).forEach(form => {
+                        if(form) form.style.display = 'none';
+                    });
+                    
+                    // Activate clicked tab and show corresponding form
+                    this.classList.add('active');
+                    if(forms[formId]) {
+                        forms[formId].style.display = 'block';
+                    }
+                });
+            });
+        });
+
+        // Form validation and submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const newsletterForm = document.getElementById('newsletterForm');
+            const formMessage = document.getElementById('form-message');
+            
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const phone = this.querySelector('input[name="phone"]');
+                    const checkboxes = this.querySelectorAll('input[name="services-needed"]:checked');
+                    
+                    // Basic validation
+                    if(phone && !/^[\d\s\-\+\(\)]{10,}$/.test(phone.value)) {
+                        showFormMessage('Please enter a valid phone number', 'error');
+                        phone.focus();
+                        return false;
+                    }
+                    
+                    if(checkboxes.length === 0) {
+                        showFormMessage('Please select at least one service needed', 'error');
+                        return false;
+                    }
+                    
+                    // Show success message (in real app, you would send data to server here)
+                    showFormMessage('Thank you for your quote request! We will contact you within 24 hours.', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Scroll to message
+                    formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    return true;
+                });
+            }
+            
+            if(newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('#newsletter-email');
+                    
+                    if(emailInput && emailInput.value) {
+                        alert('Thank you for subscribing to our newsletter!');
+                        this.reset();
+                    }
+                });
+            }
+            
+            function showFormMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.className = 'form-message ' + type;
+                formMessage.style.display = 'block';
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
+        });
+
+        // Add active class to current section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
