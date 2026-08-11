@@ -1,0 +1,21 @@
+{
+  "name": "CNE Zone - Security & Networking",
+  "short_name": "CNE Zone",
+  "description": "Professional CCTV, Access Control, Networking and Fire Safety solutions",
+  "start_url": "https://cnezone.github.io/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "cne-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "cne-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
