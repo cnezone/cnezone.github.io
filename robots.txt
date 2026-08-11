@@ -1,13 +1,6 @@
-# ===== ROBOTS.TXT FOR CNE ZONE =====
-# Allow all search engines to crawl
+# CNE Zone - Robots.txt
 
 User-agent: *
 Allow: /
-Disallow: /assets/
-Disallow: /images/
 
-# Sitemap location
 Sitemap: https://cnezone.github.io/sitemap.xml
-
-# Crawl delay (respectful crawling)
-Crawl-delay: 10
