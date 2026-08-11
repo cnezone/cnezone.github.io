@@ -98,7 +98,7 @@ document.getElementById('quoteForm')?.addEventListener('submit', e => {
     details ? `Details: ${details}` : ''
   ].filter(Boolean).join('\n');
 
-  window.open(`https://wa.me/9230008005682?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+  window.open(`https://wa.me/923008005682?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
