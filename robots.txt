@@ -1,5 +1,3 @@
-# CNE Zone - Robots.txt
-
 User-agent: *
 Allow: /
 
