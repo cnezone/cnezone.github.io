@@ -66,6 +66,30 @@ button, input, textarea, select {
   transition: opacity .3s;
 }
 
+/* ===== FIX: Font Display Swap ===== */
+/* This fixes the font-display issue reported by Lighthouse */
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+    font-display: swap;
+}
+
 /* ===== TOP STRIP ===== */
 .top-strip {
   background: #06111e;
@@ -137,19 +161,21 @@ button, input, textarea, select {
   flex-direction: column;
 }
 
+/* ===== FIX: Brand text contrast ===== */
 .brand b {
   font-size: 23px;
   letter-spacing: .1em;
-  color: #07111f;
+  color: #0a1a2a !important;
 }
 
 .brand small {
   font: 800 6px monospace;
   letter-spacing: .12em;
-  color: #8292a2;
+  color: #4a5a6a !important;
   margin-top: 3px;
 }
 
+/* ===== FIX: Navigation links contrast ===== */
 .main-nav {
   display: flex;
   align-items: center;
@@ -159,7 +185,7 @@ button, input, textarea, select {
 .main-nav a {
   font-size: 10px;
   font-weight: 800;
-  color: #506174;
+  color: #2c3e50 !important;
   position: relative;
   padding: 34px 0;
   transition: color .3s ease, transform .3s ease;
@@ -184,7 +210,7 @@ button, input, textarea, select {
 }
 
 .main-nav a:hover {
-  color: #00a7ff;
+  color: #0066cc !important;
   transform: translateY(-3px);
 }
 
@@ -193,7 +219,7 @@ button, input, textarea, select {
 }
 
 .main-nav a.active {
-  color: #00a7ff;
+  color: #0056b3 !important;
 }
 
 .main-nav a.active:after {
@@ -209,6 +235,14 @@ button, input, textarea, select {
 
 .main-nav a.active:before {
   display: none;
+}
+
+/* ===== FIX: Header overlay when scrolled ===== */
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
 
 .nav-cta {
@@ -666,9 +700,10 @@ button, input, textarea, select {
   margin-top: 15px;
 }
 
+/* ===== FIX: Section heading contrast ===== */
 .section-head h2 span,
 .section-kicker {
-  color: #00a7ff;
+  color: #0066cc !important;
 }
 
 .section-head p {
@@ -841,10 +876,11 @@ button, input, textarea, select {
   padding: 22px;
 }
 
+/* ===== FIX: Service body text contrast ===== */
 .service-body>span {
   font: 800 7px monospace;
   letter-spacing: .16em;
-  color: #00a7ff;
+  color: #0066cc !important;
 }
 
 .service-body h3 {
@@ -855,7 +891,7 @@ button, input, textarea, select {
 .service-body p {
   font-size: 10px;
   line-height: 1.75;
-  color: #78899a;
+  color: #4a5a6a !important;
   min-height: 72px;
 }
 
@@ -1102,7 +1138,7 @@ button, input, textarea, select {
 
 .work-card p {
   font-size: 13px;
-  color: #637083;
+  color: #4a5a6a !important;
   line-height: 1.7;
   margin-bottom: 15px;
   flex: 1;
@@ -1454,18 +1490,18 @@ button, input, textarea, select {
 }
 
 .about-copy h2 span {
-  color: #00a7ff;
+  color: #0066cc !important;
 }
 
 .about-copy p {
-  color: var(--muted);
+  color: #4a5a6a !important;
   font-size: 14px;
   line-height: 1.85;
 }
 
 .about-copy .lead {
   font-size: 17px;
-  color: #27384b;
+  color: #1a2a3a !important;
   margin-bottom: 14px;
 }
 
@@ -1494,7 +1530,7 @@ button, input, textarea, select {
 
 .about-points small {
   font-size: 10px;
-  color: #8390a0;
+  color: #5a6a7a !important;
   line-height: 1.5;
 }
 
@@ -1532,9 +1568,10 @@ button, input, textarea, select {
   font-weight: 800;
 }
 
+/* ===== FIX: Stat text contrast ===== */
 .stat p {
   font-size: 10px;
-  color: #7c8997;
+  color: #4a5a6a !important;
   text-transform: uppercase;
   letter-spacing: .14em;
   margin-top: 4px;
@@ -1710,9 +1747,10 @@ button, input, textarea, select {
   gap: 40px;
 }
 
+/* ===== FIX: Footer text contrast ===== */
 .footer-brand p {
   max-width: 290px;
-  color: #69798b;
+  color: #a0b0c0 !important;
   font-size: 11px;
   line-height: 1.8;
   margin-top: 20px;
@@ -1735,7 +1773,7 @@ button, input, textarea, select {
 .footer-col a,
 .footer-col span {
   font-size: 11px;
-  color: #748497;
+  color: #a0b0c0 !important;
   transition: .2s;
 }
 
@@ -1749,7 +1787,7 @@ button, input, textarea, select {
   padding-top: 22px;
   display: flex;
   justify-content: space-between;
-  color: #536274;
+  color: #8a9aaa !important;
   font-size: 9px;
   letter-spacing: .1em;
 }
@@ -1890,6 +1928,7 @@ button, input, textarea, select {
   align-items: center;
   justify-content: center;
   transition: opacity .6s ease, visibility .6s ease;
+  will-change: opacity, visibility;
 }
 
 .preloader.done {
@@ -1940,6 +1979,8 @@ button, input, textarea, select {
   z-index: 200;
   box-shadow: 0 0 10px rgba(0,167,255,.6);
   transition: width .1s linear;
+  pointer-events: none;
+  will-change: width;
 }
 
 /* ===== CUSTOM CURSOR ===== */
@@ -2025,6 +2066,73 @@ button, input, textarea, select {
 .gsap-scale-in {
   opacity: 0;
   transform: scale(.92);
+}
+
+/* ===== SERVICE ICONS - NO WHITE BOX ===== */
+.service-visual i,
+.service-visual img {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ===== FIX: EQUIPMENT ICONS ===== */
+.equipment-icon {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.equipment-icon i {
+  font-size: 56px !important;
+  color: #00a7ff;
+  filter: drop-shadow(0 0 20px rgba(0, 167, 255, 0.3));
+  transition: all 0.4s ease;
+}
+
+.equipment-card:hover .equipment-icon i {
+  transform: scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 0 30px rgba(0, 167, 255, 0.5));
+}
+
+.equipment-card:nth-child(4) .equipment-icon i {
+  color: #ff6a1a;
+  filter: drop-shadow(0 0 20px rgba(255, 106, 26, 0.3));
+}
+
+.equipment-card:nth-child(4):hover .equipment-icon i {
+  filter: drop-shadow(0 0 30px rgba(255, 106, 26, 0.5));
+}
+
+/* ===== FIX: Performance Optimizations ===== */
+/* 1. Reduce animation complexity for better performance */
+@media (prefers-reduced-motion: no-preference) {
+    .hero-grid {
+        will-change: transform;
+    }
+    .service-showcase,
+    .work-card,
+    .equipment-card {
+        will-change: transform;
+    }
+}
+
+/* 2. Optimize images for CLS */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 3. Prevent layout shifts from fonts */
+.service-visual i,
+.equipment-icon i {
+    min-width: 56px;
+    min-height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -2348,41 +2456,4 @@ button, input, textarea, select {
   .cursor-ring {
     display: none;
   }
-}
-
-/* ===== SERVICE ICONS - NO WHITE BOX ===== */
-.service-visual i,
-.service-visual img {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-/* ===== FIX: EQUIPMENT ICONS ===== */
-.equipment-icon {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.equipment-icon i {
-  font-size: 56px !important;
-  color: #00a7ff;
-  filter: drop-shadow(0 0 20px rgba(0, 167, 255, 0.3));
-  transition: all 0.4s ease;
-}
-
-.equipment-card:hover .equipment-icon i {
-  transform: scale(1.15) rotate(-5deg);
-  filter: drop-shadow(0 0 30px rgba(0, 167, 255, 0.5));
-}
-
-.equipment-card:nth-child(4) .equipment-icon i {
-  color: #ff6a1a;
-  filter: drop-shadow(0 0 20px rgba(255, 106, 26, 0.3));
-}
-
-.equipment-card:nth-child(4):hover .equipment-icon i {
-  filter: drop-shadow(0 0 30px rgba(255, 106, 26, 0.5));
 }
