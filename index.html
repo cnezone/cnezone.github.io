@@ -53,35 +53,30 @@
   <meta property="og:image:alt" content="CNE Zone - Security & Networking Engineering">
 
   <!-- ===== FAVICON - COMPLETE SET ===== -->
-  <!-- Standard favicon for all browsers -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  
-  <!-- PNG favicons for modern browsers -->
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
-  
-  <!-- Apple Touch Icon (iOS, iPad, iPhone) -->
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   
-  <!-- Android Chrome -->
+  <!-- ===== FIXED: site.webmanifest PATH ===== -->
+  <!-- If your file is site.webmanifest.txt, change href to "site.webmanifest.txt" -->
   <link rel="manifest" href="site.webmanifest">
   <meta name="mobile-web-app-capable" content="yes">
   
-  <!-- Windows Metro -->
   <meta name="msapplication-TileColor" content="#07111f">
   <meta name="msapplication-TileImage" content="cne-logo.png">
-
-  <!-- ===== THEME COLOR ===== -->
   <meta name="theme-color" content="#07111f">
 
-  <!-- ===== FONT AWESOME ===== -->
+  <!-- ===== FONT AWESOME (Optimized with preconnect) ===== -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-  <!-- ===== GSAP (premium scroll & entrance animation engine) ===== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- ===== GSAP (Deferred - Improves FCP) ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- ===== SCHEMA MARKUP - LocalBusiness (JSON-LD) ===== -->
   <script type="application/ld+json">
@@ -226,7 +221,7 @@
   <header class="site-header">
     <div class="container nav-inner">
       <a class="brand" href="#home" aria-label="CNE Zone Home">
-        <img src="cne-logo.png" alt="CNE Zone - Security and Networking Engineering" style="width:55px;height:64px;object-fit:contain;">
+        <img src="cne-logo.png" alt="CNE Zone - Security and Networking Engineering" style="width:55px;height:64px;object-fit:contain;" width="55" height="64">
         <span><b>CNE ZONE</b><small>SECURITY NETWORKING ENGINEERING</small></span>
       </a>
       <nav class="main-nav">
@@ -276,28 +271,24 @@
               <b><i></i> CNE</b>
             </div>
             <div class="equipment-grid">
-              <!-- CCTV Card -->
               <div class="equipment-card">
                 <div class="equipment-icon">
                   <i class="fa-solid fa-video"></i>
                 </div>
                 <div><b>CCTV</b><small>High-definition IP cameras, NVRs, remote monitoring and intelligent video analytics.</small></div>
               </div>
-              <!-- Access Control Card -->
               <div class="equipment-card">
                 <div class="equipment-icon">
                   <i class="fa-solid fa-fingerprint"></i>
                 </div>
                 <div><b>ACCESS CONTROL</b><small>Biometric, RFID and card-based access systems with centralized event logging.</small></div>
               </div>
-              <!-- Networking Card -->
               <div class="equipment-card">
                 <div class="equipment-icon">
                   <i class="fa-solid fa-network-wired"></i>
                 </div>
                 <div><b>NETWORKING</b><small>Structured cabling, fiber optics, switching and wireless infrastructure for security systems.</small></div>
               </div>
-              <!-- Fire & Safety Card -->
               <div class="equipment-card">
                 <div class="equipment-icon">
                   <i class="fa-solid fa-fire-extinguisher"></i>
@@ -326,7 +317,6 @@
         </div>
 
         <div class="service-showcase-grid">
-          <!-- CCTV Service -->
           <div class="service-showcase reveal">
             <div class="service-visual sv-cctv">
               <i class="fa-solid fa-video"></i>
@@ -341,7 +331,6 @@
             </div>
           </div>
 
-          <!-- Access Control Service -->
           <div class="service-showcase reveal">
             <div class="service-visual sv-access">
               <i class="fa-solid fa-fingerprint"></i>
@@ -356,7 +345,6 @@
             </div>
           </div>
 
-          <!-- Networking Service -->
           <div class="service-showcase reveal">
             <div class="service-visual sv-network">
               <i class="fa-solid fa-network-wired"></i>
@@ -371,7 +359,6 @@
             </div>
           </div>
 
-          <!-- Fire & Safety Service -->
           <div class="service-showcase reveal">
             <div class="service-visual sv-fire">
               <i class="fa-solid fa-fire-extinguisher"></i>
@@ -447,7 +434,7 @@
       </div>
     </section>
 
-    <!-- ===== WORKS / PROJECTS SECTION ===== -->
+    <!-- ===== PROJECTS SECTION ===== -->
     <section class="section works-section" id="projects">
       <div class="container">
         <div class="section-head reveal">
@@ -459,7 +446,6 @@
         </div>
 
         <div class="works-grid">
-          <!-- Project 1 - PTCL Datacenter -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-server"></i>
@@ -475,7 +461,6 @@
             </div>
           </article>
 
-          <!-- Project 2 - NUST Datacenter -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-microchip"></i>
@@ -491,7 +476,6 @@
             </div>
           </article>
 
-          <!-- Project 3 - Sector D12 -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-building-shield"></i>
@@ -507,7 +491,6 @@
             </div>
           </article>
 
-          <!-- Project 4 - Sector B17 -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-house-circle-check"></i>
@@ -523,7 +506,6 @@
             </div>
           </article>
 
-          <!-- Project 5 - Sector E11 -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-city"></i>
@@ -539,7 +521,6 @@
             </div>
           </article>
 
-          <!-- Project 6 - Multi-Site -->
           <article class="work-card reveal">
             <div class="work-number"></div>
             <i class="fa-solid fa-globe"></i>
@@ -558,7 +539,7 @@
       </div>
     </section>
 
-    <!-- ===== HORIZONTAL 3D PROCESS TIMELINE ===== -->
+    <!-- ===== PROCESS TIMELINE ===== -->
     <section class="section process-section" id="process">
       <div class="container">
         <div class="section-head reveal">
@@ -570,7 +551,6 @@
         </div>
 
         <div class="process-timeline-horizontal">
-          <!-- Step 1 -->
           <div class="process-step-h" data-step="01">
             <div class="step-number-h">01</div>
             <div class="step-icon-h"><i class="fa-solid fa-clipboard-list"></i></div>
@@ -579,7 +559,6 @@
             <div class="step-arrow-h"><i class="fa-solid fa-arrow-right-long"></i></div>
           </div>
 
-          <!-- Step 2 -->
           <div class="process-step-h" data-step="02">
             <div class="step-number-h">02</div>
             <div class="step-icon-h"><i class="fa-solid fa-pen-ruler"></i></div>
@@ -588,7 +567,6 @@
             <div class="step-arrow-h"><i class="fa-solid fa-arrow-right-long"></i></div>
           </div>
 
-          <!-- Step 3 -->
           <div class="process-step-h" data-step="03">
             <div class="step-number-h">03</div>
             <div class="step-icon-h"><i class="fa-solid fa-screwdriver-wrench"></i></div>
@@ -597,7 +575,6 @@
             <div class="step-arrow-h"><i class="fa-solid fa-arrow-right-long"></i></div>
           </div>
 
-          <!-- Step 4 with Handshake -->
           <div class="process-step-h" data-step="04">
             <div class="step-number-h">04</div>
             <div class="step-icon-h handshake-icon-h"><i class="fa-solid fa-handshake"></i></div>
@@ -681,7 +658,7 @@
       </div>
     </section>
 
-    <!-- ===== CTA / CONTACT SECTION ===== -->
+    <!-- ===== CONTACT SECTION ===== -->
     <section class="cta-section" id="contact">
       <div class="cta-grid"></div>
       <div class="container cta-inner reveal">
@@ -738,6 +715,6 @@
   </a>
   <button class="back-top" aria-label="Back to top">↑</button>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
