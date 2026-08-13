@@ -1,3 +1,98 @@
+// ===== FIX 1: Proper GSAP/ScrollTrigger Loading =====
+// Wait for DOM to be ready before initializing GSAP
+document.addEventListener('DOMContentLoaded', function() {
+    initGSAPFeatures();
+});
+
+function initGSAPFeatures() {
+    // Check if GSAP and ScrollTrigger are available
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.warn('GSAP or ScrollTrigger not loaded - using fallback');
+        // Fallback: reveal everything instantly
+        document.querySelectorAll('.hero-copy h1 .split-word span').forEach(s => {
+            s.style.transform = 'translateY(0)';
+            s.style.opacity = '1';
+        });
+        document.querySelectorAll('.eyebrow, .hero-copy p, .hero-actions, .hero-trust, .hero-showcase').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+        // Show all staggered items
+        document.querySelectorAll('.equipment-grid .equipment-card, .service-showcase-grid .service-showcase, .works-grid .work-card').forEach(el => {
+            el.style.opacity = '1';
+        });
+        return;
+    }
+
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Hero Entrance Animation ---
+    gsap.to('.hero-copy h1 .split-word span', {
+        y: '0%',
+        duration: 0.9,
+        stagger: 0.045,
+        ease: 'power4.out'
+    });
+    gsap.fromTo('.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .7, delay: .1, ease: 'power2.out' });
+    gsap.fromTo('.hero-copy p, .hero-actions, .hero-trust', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, delay: .55, stagger: .1, ease: 'power2.out' });
+    gsap.fromTo('.hero-showcase', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 1, delay: .3, ease: 'power3.out' });
+
+    // --- FIX 2: Optimized ScrollTrigger Staggered Entrances ---
+    // Instead of ScrollTrigger.batch (which can cause reflows), use individual triggers
+    const staggerGroups = [
+        '.equipment-grid .equipment-card',
+        '.service-showcase-grid .service-showcase',
+        '.works-grid .work-card',
+        '.process-timeline-horizontal .process-step-h',
+        '.sector-grid .sector',
+        '.about-points > div',
+        '.stats-grid .stat'
+    ];
+
+    staggerGroups.forEach(selector => {
+        const items = document.querySelectorAll(selector);
+        if (!items.length) return;
+        
+        // Set initial state
+        gsap.set(items, { opacity: 0, y: 30 });
+        
+        // Create individual scroll triggers for better performance
+        items.forEach((item, index) => {
+            gsap.to(item, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                delay: index * 0.08,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 88%',
+                    once: true,
+                    invalidateOnRefresh: false
+                }
+            });
+        });
+    });
+
+    // --- Section Headers Animation ---
+    document.querySelectorAll('.section-head, .section-head.light').forEach(head => {
+        gsap.fromTo(head, { opacity: 0, y: 24 }, {
+            opacity: 1, y: 0, duration: .8, ease: 'power2.out',
+            scrollTrigger: { 
+                trigger: head, 
+                start: 'top 90%', 
+                once: true,
+                invalidateOnRefresh: false
+            }
+        });
+    });
+
+    // Refresh ScrollTrigger after animations are set
+    ScrollTrigger.refresh();
+}
+
+// ===== EXISTING CODE (with performance optimizations) =====
 const header = document.querySelector('.site-header');
 const backTop = document.querySelector('.back-top');
 const cursorGlow = document.querySelector('.cursor-glow');
@@ -20,12 +115,25 @@ document.querySelectorAll('.main-nav a').forEach(link => {
 
 backTop?.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
+// ===== FIX 3: Optimized Cursor Glow Performance =====
 if (window.matchMedia('(pointer:fine)').matches) {
+  let rafId = null;
+  let targetX = 0, targetY = 0;
+  
   window.addEventListener('mousemove', e => {
-    cursorGlow.style.opacity = '1';
-    cursorGlow.style.left = `${e.clientX}px`;
-    cursorGlow.style.top = `${e.clientY}px`;
+    targetX = e.clientX;
+    targetY = e.clientY;
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateCursorGlow);
+    }
   });
+  
+  function updateCursorGlow() {
+    cursorGlow.style.opacity = '1';
+    cursorGlow.style.left = `${targetX}px`;
+    cursorGlow.style.top = `${targetY}px`;
+    rafId = null;
+  }
 }
 
 const revealObserver = new IntersectionObserver(entries => {
@@ -39,6 +147,7 @@ const revealObserver = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+// ===== FIX 4: Optimized Counter Animation =====
 const counters = document.querySelectorAll('[data-count]');
 const counterObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -47,11 +156,15 @@ const counterObserver = new IntersectionObserver(entries => {
     const target = Number(el.dataset.count);
     const start = performance.now();
     const duration = 1300;
+    
     function tick(now) {
       const p = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1-p, 3);
-      el.textContent = Math.floor(target * eased).toLocaleString();
-      if (p < 1) requestAnimationFrame(tick);
+      const current = Math.floor(target * eased);
+      el.textContent = current.toLocaleString();
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      }
     }
     requestAnimationFrame(tick);
     counterObserver.unobserve(el);
@@ -106,13 +219,22 @@ document.getElementById('year').textContent = new Date().getFullYear();
 // Small premium tilt effect on project cards (desktop only).
 if (window.matchMedia('(pointer:fine)').matches) {
   document.querySelectorAll('.work-card').forEach(card => {
+    let rafId = null;
     card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      card.style.transform = `perspective(900px) rotateX(${y * -2}deg) rotateY(${x * 2}deg) translateY(-5px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = `perspective(900px) rotateX(${y * -2}deg) rotateY(${x * 2}deg) translateY(-5px)`;
+        rafId = null;
+      });
     });
     card.addEventListener('mouseleave', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       card.style.transform = '';
     });
   });
@@ -127,13 +249,22 @@ if (window.matchMedia('(pointer:fine)').matches) {
   ].filter(t => t.el);
 
   tiltTargets.forEach(({ el, maxTilt, lift }) => {
+    let rafId = null;
     el.addEventListener('mousemove', e => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      el.style.transform = `perspective(1000px) rotateX(${y * -maxTilt}deg) rotateY(${x * maxTilt}deg) translateY(${lift}px) translateZ(10px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = `perspective(1000px) rotateX(${y * -maxTilt}deg) rotateY(${x * maxTilt}deg) translateY(${lift}px) translateZ(10px)`;
+        rafId = null;
+      });
     });
     el.addEventListener('mouseleave', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       el.style.transform = '';
     });
   });
@@ -142,23 +273,26 @@ if (window.matchMedia('(pointer:fine)').matches) {
   const heroBackdrop = document.querySelector('.hero-backdrop');
   const heroSection = document.querySelector('.hero-corporate');
   if (heroBackdrop && heroSection) {
+    let rafId = null;
     heroSection.addEventListener('mousemove', e => {
-      const r = heroSection.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      heroBackdrop.style.transform = `translate3d(${x * -18}px, ${y * -14}px, 0)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const r = heroSection.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        heroBackdrop.style.transform = `translate3d(${x * -18}px, ${y * -14}px, 0)`;
+        rafId = null;
+      });
     });
     heroSection.addEventListener('mouseleave', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       heroBackdrop.style.transform = '';
     });
   }
 }
-
-// =====================================================================
-// ===== AWWWARDS-GRADE INTERACTION LAYER ==============================
-// Preloader, magnetic custom cursor, scroll progress, split-text hero
-// reveal and GSAP ScrollTrigger stagger entrances. Additive only.
-// =====================================================================
 
 // ---- Preloader ----
 const preloader = document.getElementById('preloader');
@@ -175,16 +309,19 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     preloader?.classList.add('done');
     document.body.classList.add('loaded');
-    runHeroEntrance();
+    // GSAP features will be initialized by DOMContentLoaded handler
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      initGSAPFeatures();
+    }
   }, 350);
 });
+
 // Safety net in case 'load' never fires cleanly
 setTimeout(() => {
   if (preloader && !preloader.classList.contains('done')) {
     clearInterval(loadTimer);
     preloader.classList.add('done');
     document.body.classList.add('loaded');
-    runHeroEntrance();
   }
 }, 3500);
 
@@ -193,19 +330,25 @@ const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
 if (window.matchMedia('(pointer:fine)').matches && cursorDot && cursorRing) {
   let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  let rafId = null;
+  
   window.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursorDot.style.left = mouseX + 'px';
     cursorDot.style.top = mouseY + 'px';
+    if (!rafId) {
+      rafId = requestAnimationFrame(trackRing);
+    }
   });
-  (function trackRing() {
+  
+  function trackRing() {
     ringX += (mouseX - ringX) * 0.18;
     ringY += (mouseY - ringY) * 0.18;
     cursorRing.style.left = ringX + 'px';
     cursorRing.style.top = ringY + 'px';
-    requestAnimationFrame(trackRing);
-  })();
+    rafId = requestAnimationFrame(trackRing);
+  }
 
   document.addEventListener('mousedown', () => cursorRing.classList.add('pressed'));
   document.addEventListener('mouseup', () => cursorRing.classList.remove('pressed'));
@@ -232,13 +375,22 @@ if (window.matchMedia('(pointer:fine)').matches) {
   const magnets = document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .whatsapp-float, .back-top');
   magnets.forEach(el => {
     el.classList.add('magnetic');
+    let rafId = null;
     el.addEventListener('mousemove', e => {
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width / 2;
-      const y = e.clientY - r.top - r.height / 2;
-      el.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        el.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
+        rafId = null;
+      });
     });
     el.addEventListener('mouseleave', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       el.style.transform = '';
     });
   });
@@ -272,65 +424,6 @@ function splitHeroText() {
   walk(h1);
 }
 splitHeroText();
-
-function runHeroEntrance() {
-  if (typeof gsap === 'undefined') {
-    // Fallback: GSAP failed to load (CDN blocked/offline) — reveal
-    // everything instantly via plain CSS so content is never stuck hidden.
-    document.querySelectorAll('.hero-copy h1 .split-word span').forEach(s => s.style.transform = 'translateY(0)');
-    document.querySelectorAll('.eyebrow, .hero-copy p, .hero-actions, .hero-trust, .hero-showcase').forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    });
-    return;
-  }
-  gsap.to('.hero-copy h1 .split-word span', {
-    y: '0%',
-    duration: 0.9,
-    stagger: 0.045,
-    ease: 'power4.out'
-  });
-  gsap.fromTo('.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .7, delay: .1, ease: 'power2.out' });
-  gsap.fromTo('.hero-copy p, .hero-actions, .hero-trust', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, delay: .55, stagger: .1, ease: 'power2.out' });
-  gsap.fromTo('.hero-showcase', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 1, delay: .3, ease: 'power3.out' });
-}
-
-// ---- GSAP ScrollTrigger staggered entrances for card grids ----
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-
-  const staggerGroups = [
-    '.equipment-grid .equipment-card',
-    '.service-showcase-grid .service-showcase',
-    '.works-grid .work-card',
-    '.process-timeline-horizontal .process-step-h',
-    '.sector-grid .sector',
-    '.about-points > div',
-    '.stats-grid .stat'
-  ];
-
-  staggerGroups.forEach(selector => {
-    const items = document.querySelectorAll(selector);
-    if (!items.length) return;
-    // Opacity-only reveal: these cards already carry CSS transforms
-    // (idle float animations, translateZ depth) — animating GSAP's own
-    // 'y' would stomp on those inline, so we only fade them in.
-    gsap.set(items, { opacity: 0 });
-    ScrollTrigger.batch(items, {
-      start: 'top 88%',
-      onEnter: batch => gsap.to(batch, { opacity: 1, duration: .7, stagger: 0.08, ease: 'power2.out' }),
-      once: true
-    });
-  });
-
-  // Section kickers + headings get a light rise-in
-  document.querySelectorAll('.section-head, .section-head.light').forEach(head => {
-    gsap.fromTo(head, { opacity: 0, y: 24 }, {
-      opacity: 1, y: 0, duration: .8, ease: 'power2.out',
-      scrollTrigger: { trigger: head, start: 'top 90%', once: true }
-    });
-  });
-}
 
 // ---- Marquee: duplicate footer tagline for a seamless infinite scroll ----
 const marqueeHost = document.querySelector('.equipment-panel-foot span:last-child');
