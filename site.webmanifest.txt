@@ -1,20 +1,40 @@
 {
-  "name": "CNE Zone - Security & Networking",
+  "name": "CNE Zone - Security & Networking Engineering",
   "short_name": "CNE Zone",
-  "description": "Professional CCTV, Access Control, Networking and Fire Safety solutions",
+  "description": "Professional CCTV, Access Control, Networking and Fire Safety solutions in Islamabad, Pakistan",
   "start_url": "https://cnezone.github.io/",
   "display": "standalone",
   "background_color": "#07111f",
   "theme_color": "#07111f",
+  "orientation": "portrait",
+  "scope": "/",
   "icons": [
     {
-      "src": "cne-logo.png",
+      "src": "favicon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "cne-logo.png",
-      "sizes": "512x512",
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     }
   ]
