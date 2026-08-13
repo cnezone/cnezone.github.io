@@ -1,14 +1,11 @@
-// ===== FIX 1: Proper GSAP/ScrollTrigger Loading =====
-// Wait for DOM to be ready before initializing GSAP
+// ===== FIX: GSAP/ScrollTrigger Loading =====
 document.addEventListener('DOMContentLoaded', function() {
     initGSAPFeatures();
 });
 
 function initGSAPFeatures() {
-    // Check if GSAP and ScrollTrigger are available
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         console.warn('GSAP or ScrollTrigger not loaded - using fallback');
-        // Fallback: reveal everything instantly
         document.querySelectorAll('.hero-copy h1 .split-word span').forEach(s => {
             s.style.transform = 'translateY(0)';
             s.style.opacity = '1';
@@ -17,14 +14,12 @@ function initGSAPFeatures() {
             el.style.opacity = '1';
             el.style.transform = 'none';
         });
-        // Show all staggered items
         document.querySelectorAll('.equipment-grid .equipment-card, .service-showcase-grid .service-showcase, .works-grid .work-card').forEach(el => {
             el.style.opacity = '1';
         });
         return;
     }
 
-    // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
     // --- Hero Entrance Animation ---
@@ -38,8 +33,7 @@ function initGSAPFeatures() {
     gsap.fromTo('.hero-copy p, .hero-actions, .hero-trust', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, delay: .55, stagger: .1, ease: 'power2.out' });
     gsap.fromTo('.hero-showcase', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 1, delay: .3, ease: 'power3.out' });
 
-    // --- FIX 2: Optimized ScrollTrigger Staggered Entrances ---
-    // Instead of ScrollTrigger.batch (which can cause reflows), use individual triggers
+    // --- Optimized ScrollTrigger Staggered Entrances ---
     const staggerGroups = [
         '.equipment-grid .equipment-card',
         '.service-showcase-grid .service-showcase',
@@ -54,10 +48,8 @@ function initGSAPFeatures() {
         const items = document.querySelectorAll(selector);
         if (!items.length) return;
         
-        // Set initial state
         gsap.set(items, { opacity: 0, y: 30 });
         
-        // Create individual scroll triggers for better performance
         items.forEach((item, index) => {
             gsap.to(item, {
                 opacity: 1,
@@ -88,14 +80,12 @@ function initGSAPFeatures() {
         });
     });
 
-    // Refresh ScrollTrigger after animations are set
     ScrollTrigger.refresh();
 }
 
-// ===== EXISTING CODE (with performance optimizations) =====
+// ===== MAIN SCRIPT =====
 const header = document.querySelector('.site-header');
 const backTop = document.querySelector('.back-top');
-const cursorGlow = document.querySelector('.cursor-glow');
 const navToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.main-nav');
 
@@ -115,27 +105,6 @@ document.querySelectorAll('.main-nav a').forEach(link => {
 
 backTop?.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-// ===== FIX 3: Optimized Cursor Glow Performance =====
-if (window.matchMedia('(pointer:fine)').matches) {
-  let rafId = null;
-  let targetX = 0, targetY = 0;
-  
-  window.addEventListener('mousemove', e => {
-    targetX = e.clientX;
-    targetY = e.clientY;
-    if (!rafId) {
-      rafId = requestAnimationFrame(updateCursorGlow);
-    }
-  });
-  
-  function updateCursorGlow() {
-    cursorGlow.style.opacity = '1';
-    cursorGlow.style.left = `${targetX}px`;
-    cursorGlow.style.top = `${targetY}px`;
-    rafId = null;
-  }
-}
-
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -147,7 +116,7 @@ const revealObserver = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// ===== FIX 4: Optimized Counter Animation =====
+// ===== Optimized Counter Animation =====
 const counters = document.querySelectorAll('[data-count]');
 const counterObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -216,187 +185,11 @@ document.getElementById('quoteForm')?.addEventListener('submit', e => {
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Small premium tilt effect on project cards (desktop only).
-if (window.matchMedia('(pointer:fine)').matches) {
-  document.querySelectorAll('.work-card').forEach(card => {
-    let rafId = null;
-    card.addEventListener('mousemove', e => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - .5;
-        const y = (e.clientY - r.top) / r.height - .5;
-        card.style.transform = `perspective(900px) rotateX(${y * -2}deg) rotateY(${x * 2}deg) translateY(-5px)`;
-        rafId = null;
-      });
-    });
-    card.addEventListener('mouseleave', () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      card.style.transform = '';
-    });
-  });
-}
+// ===== CUSTOM CURSOR - DISABLED (Using default cursor) =====
+// All custom cursor functionality has been removed to fix the stuck cursor issue
+console.log('🔹 CNE Zone - Using default cursor');
 
-// ===== 8D DEPTH — mouse-tracked 3D tilt for hero equipment panel & service cards =====
-if (window.matchMedia('(pointer:fine)').matches) {
-  const tiltTargets = [
-    { el: document.querySelector('.equipment-panel'), maxTilt: 6, lift: -6 },
-    ...Array.from(document.querySelectorAll('.service-showcase')).map(el => ({ el, maxTilt: 4, lift: -7 })),
-    ...Array.from(document.querySelectorAll('.equipment-card')).map(el => ({ el, maxTilt: 8, lift: -4 }))
-  ].filter(t => t.el);
-
-  tiltTargets.forEach(({ el, maxTilt, lift }) => {
-    let rafId = null;
-    el.addEventListener('mousemove', e => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - .5;
-        const y = (e.clientY - r.top) / r.height - .5;
-        el.style.transform = `perspective(1000px) rotateX(${y * -maxTilt}deg) rotateY(${x * maxTilt}deg) translateY(${lift}px) translateZ(10px)`;
-        rafId = null;
-      });
-    });
-    el.addEventListener('mouseleave', () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      el.style.transform = '';
-    });
-  });
-
-  // Hero backdrop parallax layer follows cursor at very low intensity for depth
-  const heroBackdrop = document.querySelector('.hero-backdrop');
-  const heroSection = document.querySelector('.hero-corporate');
-  if (heroBackdrop && heroSection) {
-    let rafId = null;
-    heroSection.addEventListener('mousemove', e => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        const r = heroSection.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - .5;
-        const y = (e.clientY - r.top) / r.height - .5;
-        heroBackdrop.style.transform = `translate3d(${x * -18}px, ${y * -14}px, 0)`;
-        rafId = null;
-      });
-    });
-    heroSection.addEventListener('mouseleave', () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      heroBackdrop.style.transform = '';
-    });
-  }
-}
-
-// ---- Preloader ----
-const preloader = document.getElementById('preloader');
-const preloaderFill = document.querySelector('.preloader-fill');
-let loadProgress = 0;
-const loadTimer = setInterval(() => {
-  loadProgress = Math.min(loadProgress + Math.random() * 18, 92);
-  if (preloaderFill) preloaderFill.style.width = loadProgress + '%';
-}, 120);
-
-window.addEventListener('load', () => {
-  clearInterval(loadTimer);
-  if (preloaderFill) preloaderFill.style.width = '100%';
-  setTimeout(() => {
-    preloader?.classList.add('done');
-    document.body.classList.add('loaded');
-    // GSAP features will be initialized by DOMContentLoaded handler
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      initGSAPFeatures();
-    }
-  }, 350);
-});
-
-// Safety net in case 'load' never fires cleanly
-setTimeout(() => {
-  if (preloader && !preloader.classList.contains('done')) {
-    clearInterval(loadTimer);
-    preloader.classList.add('done');
-    document.body.classList.add('loaded');
-  }
-}, 3500);
-
-// ---- Custom magnetic cursor ----
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-if (window.matchMedia('(pointer:fine)').matches && cursorDot && cursorRing) {
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-  let rafId = null;
-  
-  window.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
-    if (!rafId) {
-      rafId = requestAnimationFrame(trackRing);
-    }
-  });
-  
-  function trackRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top = ringY + 'px';
-    rafId = requestAnimationFrame(trackRing);
-  }
-
-  document.addEventListener('mousedown', () => cursorRing.classList.add('pressed'));
-  document.addEventListener('mouseup', () => cursorRing.classList.remove('pressed'));
-
-  const hoverables = 'a, button, input, textarea, select, .service-showcase, .work-card, .equipment-card, .sector, .solution-tab';
-  document.querySelectorAll(hoverables).forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
-  });
-}
-
-// ---- Scroll progress bar ----
-const scrollProgress = document.getElementById('scrollProgress');
-function updateScrollProgress() {
-  if (!scrollProgress) return;
-  const h = document.documentElement;
-  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
-  scrollProgress.style.width = scrolled + '%';
-}
-window.addEventListener('scroll', updateScrollProgress, { passive: true });
-
-// ---- Magnetic pull for primary interactive elements ----
-if (window.matchMedia('(pointer:fine)').matches) {
-  const magnets = document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .whatsapp-float, .back-top');
-  magnets.forEach(el => {
-    el.classList.add('magnetic');
-    let rafId = null;
-    el.addEventListener('mousemove', e => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        el.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
-        rafId = null;
-      });
-    });
-    el.addEventListener('mouseleave', () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      el.style.transform = '';
-    });
-  });
-}
-
-// ---- Split-text hero headline reveal (runs once preloader finishes) ----
+// ===== Split-text hero headline reveal =====
 function splitHeroText() {
   const h1 = document.querySelector('.hero-copy h1');
   if (!h1 || h1.dataset.split) return;
@@ -425,7 +218,72 @@ function splitHeroText() {
 }
 splitHeroText();
 
-// ---- Marquee: duplicate footer tagline for a seamless infinite scroll ----
+// ===== Preloader =====
+const preloader = document.getElementById('preloader');
+const preloaderFill = document.querySelector('.preloader-fill');
+let loadProgress = 0;
+const loadTimer = setInterval(() => {
+  loadProgress = Math.min(loadProgress + Math.random() * 18, 92);
+  if (preloaderFill) preloaderFill.style.width = loadProgress + '%';
+}, 120);
+
+window.addEventListener('load', () => {
+  clearInterval(loadTimer);
+  if (preloaderFill) preloaderFill.style.width = '100%';
+  setTimeout(() => {
+    preloader?.classList.add('done');
+    document.body.classList.add('loaded');
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      initGSAPFeatures();
+    }
+  }, 350);
+});
+
+setTimeout(() => {
+  if (preloader && !preloader.classList.contains('done')) {
+    clearInterval(loadTimer);
+    preloader.classList.add('done');
+    document.body.classList.add('loaded');
+  }
+}, 3500);
+
+// ===== Scroll progress bar =====
+const scrollProgress = document.getElementById('scrollProgress');
+function updateScrollProgress() {
+  if (!scrollProgress) return;
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  scrollProgress.style.width = scrolled + '%';
+}
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+// ===== Magnetic pull for buttons (cursor effects without custom cursor) =====
+if (window.matchMedia('(pointer:fine)').matches) {
+  const magnets = document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .whatsapp-float, .back-top');
+  magnets.forEach(el => {
+    el.classList.add('magnetic');
+    let rafId = null;
+    el.addEventListener('mousemove', e => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        el.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
+        rafId = null;
+      });
+    });
+    el.addEventListener('mouseleave', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      el.style.transform = '';
+    });
+  });
+}
+
+// ===== Marquee =====
 const marqueeHost = document.querySelector('.equipment-panel-foot span:last-child');
 if (marqueeHost) {
   const text = marqueeHost.textContent.trim();
