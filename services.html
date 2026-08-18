@@ -8,7 +8,6 @@
     <link rel="canonical" href="https://cnezone.github.io/services.html">
     <meta name="robots" content="index, follow">
 
-    <!-- ===== OPEN GRAPH (Facebook, LinkedIn, WhatsApp Preview) ===== -->
     <meta property="og:title" content="Our Services | CNE Zone — CCTV, Access Control & Networking Solutions">
     <meta property="og:description" content="CNE Zone provides end-to-end security services: Supply & Install, Testing, Annual Maintenance Contracts (AMC), and Modernization across Islamabad.">
     <meta property="og:type" content="website">
@@ -18,9 +17,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_PK">
     <meta property="og:site_name" content="CNE Zone">
-    <meta property="og:image:alt" content="CNE Zone - Security & Networking Engineering">
 
-    <!-- ===== TWITTER CARDS ===== -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Our Services | CNE Zone">
     <meta name="twitter:description" content="CCTV, Access Control, Networking & Fire Safety services across Islamabad.">
@@ -28,32 +25,32 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "CNE Zone",
-      "image": "https://cnezone.github.io/cne-logo.png",
-      "url": "https://cnezone.github.io/services.html",
-      "telephone": "+923008005682",
-      "email": "cne.zonee@gmail.com",
-      "priceRange": "$$",
-      "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "G-11/2, Jafar Chowk",
-        "addressLocality": "Islamabad",
-        "addressRegion": "Islamabad Capital Territory",
-        "postalCode": "44000",
-        "addressCountry": "Pakistan"
-      },
-      "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
-      "openingHours": "Mo-Su 09:00-21:00",
-      "contactPoint": {
-        "@type": "ContactPoint",
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "CNE Zone",
+        "image": "https://cnezone.github.io/cne-logo.png",
+        "url": "https://cnezone.github.io/services.html",
         "telephone": "+923008005682",
-        "contactType": "Sales",
-        "availableLanguage": ["English", "Urdu"]
-      },
-      "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
+        "email": "cne.zonee@gmail.com",
+        "priceRange": "$$",
+        "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "G-11/2, Jafar Chowk",
+            "addressLocality": "Islamabad",
+            "addressRegion": "Islamabad Capital Territory",
+            "postalCode": "44000",
+            "addressCountry": "Pakistan"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
+        "openingHours": "Mo-Su 09:00-21:00",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+923008005682",
+            "contactType": "Sales",
+            "availableLanguage": ["English", "Urdu"]
+        },
+        "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
     }
     </script>
 
@@ -68,11 +65,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./cne-logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./cne-logo.png">
     <meta name="theme-color" content="#07111f">
-    
+
     <style>
-        /* ===== SERVICES PAGE SPECIFIC STYLES ===== */
-        
-        /* ===== LOOPING SUBPAGE BANNER (Matches Home Page) ===== */
         .subpage-banner {
             position: relative;
             padding: 150px 0 80px;
@@ -81,8 +75,6 @@
             overflow: hidden;
             background: linear-gradient(150deg, #07111f 0%, #0b1b2d 35%, #005ea6 65%, #00a7ff 100%);
         }
-
-        /* Services Banner Slider */
         .services-bg-slider {
             position: absolute;
             inset: 0;
@@ -91,37 +83,30 @@
             width: 100%;
             height: 100%;
         }
-
         .services-bg-slider .slide-track {
             display: flex;
-            width: calc(300% * 2); /* 3 images * 2 (for infinite loop) = 600% */
+            width: calc(300% * 2);
             height: 100%;
-            animation: slideImagesServices 24s ease-in-out infinite; 
+            animation: slideImagesServices 24s ease-in-out infinite;
         }
-
         .services-bg-slider .slide-item {
-            width: calc(100% / 6); /* 100% / 6 total slides (3 originals + 3 clones) */
+            width: calc(100% / 6);
             height: 100%;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         .services-bg-slider .slide-item img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             opacity: 0.3;
-            transition: opacity 2s ease, filter 2s ease;
         }
-
-        .services-bg-slider .slide-item.active img {
-            opacity: 0.8;
-            filter: blur(35%) brightness(0.6);
+        @keyframes slideImagesServices {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
         }
-
-        /* Dark Gradient Overlay on top of slider to make text readable */
         .subpage-banner::after {
             content: '';
             position: absolute;
@@ -129,51 +114,22 @@
             z-index: 1;
             background: linear-gradient(180deg, rgba(7, 17, 31, 0.7) 0%, rgba(7, 17, 31, 0.3) 50%, rgba(7, 17, 31, 0.7) 100%);
         }
-
-        .banner-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Smooth Infinite Loop Animation for Services */
-        @keyframes slideImagesServices {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); } /* Moves exactly half (3 images) to create perfect loop */
-        }
-
-        .banner-breadcrumb {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 16px;
-        }
-        .banner-breadcrumb a { color: var(--orange-500); }
-        .subpage-banner h1 { font-size: 46px; font-weight: 900; margin-bottom: 14px; }
-        .subpage-banner p { font-size: 17px; max-width: 560px; margin: 0 auto; color: rgba(255,255,255,0.8); line-height: 1.7; }
-        .banner-gold-bar { display: block; width: 60px; height: 3px; background: linear-gradient(90deg, var(--blue-500), var(--orange-500)); border-radius: 2px; margin: 20px auto 0; }
-
-        /* ===== CERTIFIED INSTALLATION SECTION ===== */
         .installation-section {
             padding: 80px 0;
-            background: #f4f7fa; /* Matches Home BG */
+            background: #f4f7fa;
             border-bottom: 1px solid var(--border);
         }
-
         .install-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
         }
-
         .install-image-wrapper {
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
             background: white;
             padding: 10px;
         }
@@ -195,7 +151,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .install-badge span {
             font-size: 10px;
@@ -212,7 +168,6 @@
             display: block;
             margin-top: 2px;
         }
-
         .install-content .section-tag {
             display: inline-block;
             color: var(--orange-500);
@@ -232,14 +187,15 @@
             margin: 16px 0 20px;
             line-height: 1.2;
         }
-        .install-content h2 span { color: var(--blue-500); }
-        .install-content > p {
+        .install-content h2 span {
+            color: var(--blue-500);
+        }
+        .install-content>p {
             font-size: 16px;
             color: var(--text-muted);
             line-height: 1.8;
             margin-bottom: 30px;
         }
-
         .install-steps {
             display: flex;
             flex-direction: column;
@@ -277,8 +233,6 @@
             line-height: 1.6;
             margin: 0;
         }
-
-        /* ===== SERVICES OVERVIEW CARDS ===== */
         .services-overview {
             padding: 80px 0;
             background: #f4f7fa;
@@ -293,29 +247,31 @@
             border-radius: 20px;
             padding: 36px 32px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             transition: 0.35s;
             position: relative;
             text-align: center;
         }
-        .svc-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,167,255,0.12); }
+        .svc-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 167, 255, 0.12);
+        }
         .svc-num {
             font-size: 60px;
             font-weight: 900;
-            color: rgba(0,167,255,0.06);
+            color: rgba(0, 167, 255, 0.06);
             line-height: 1;
             position: absolute;
             top: 16px;
             right: 24px;
         }
-        
         .svc-icon-wrapper {
             width: 80px;
             height: 80px;
             margin: 0 auto 22px;
             border-radius: 16px;
             overflow: hidden;
-            background: rgba(0,167,255,0.06);
+            background: rgba(0, 167, 255, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -326,14 +282,18 @@
             object-fit: contain;
             display: block;
         }
-        
-        .svc-card h3 { font-size: 22px; font-weight: 800; color: var(--blue-900); margin-bottom: 12px; }
-        .svc-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; margin-bottom: 20px; }
-        .svc-list { list-style: none; padding: 0; margin: 0; text-align: left; display: inline-block; }
-        .svc-list li { font-size: 14px; color: var(--blue-800); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 500; }
-        .svc-list li i { color: var(--blue-500); font-size: 13px; }
-
-        /* ===== SLA / MAINTENANCE SECTION ===== */
+        .svc-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--blue-900);
+            margin-bottom: 12px;
+        }
+        .svc-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
         .sla-section {
             padding: 80px 0;
             background: #f4f7fa;
@@ -346,31 +306,33 @@
             margin-top: 40px;
             align-items: stretch;
         }
-        
         .sla-card {
             background: white;
             border-radius: 24px;
             padding: 40px 30px;
             border: 1px solid var(--border);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
             transition: all 0.4s ease;
             text-align: center;
             display: flex;
             flex-direction: column;
             position: relative;
         }
-        .sla-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,167,255,0.12); }
-        
+        .sla-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 167, 255, 0.12);
+        }
         .sla-card.featured {
             background: linear-gradient(135deg, #0b1b2d 0%, #005ea6 50%, #00a7ff 100%);
             color: white;
             border: 2px solid var(--orange-500);
             transform: scale(1.03);
-            box-shadow: 0 20px 50px rgba(0,167,255,0.25);
+            box-shadow: 0 20px 50px rgba(0, 167, 255, 0.25);
             z-index: 2;
         }
-        .sla-card.featured:hover { transform: scale(1.05) translateY(-8px); }
-        
+        .sla-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
         .sla-badge {
             display: inline-block;
             font-size: 10px;
@@ -389,25 +351,32 @@
             background: var(--orange-500);
             color: white;
         }
-        .sla-card.featured .sla-badge i { margin-right: 6px; }
-        
+        .sla-card.featured .sla-badge i {
+            margin-right: 6px;
+        }
         .sla-card h3 {
             font-size: 24px;
             font-weight: 800;
             margin-bottom: 12px;
         }
-        .sla-card:not(.featured) h3 { color: var(--blue-900); }
-        .sla-card.featured h3 { color: white; }
-        
+        .sla-card:not(.featured) h3 {
+            color: var(--blue-900);
+        }
+        .sla-card.featured h3 {
+            color: white;
+        }
         .sla-desc {
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 24px;
             min-height: 48px;
         }
-        .sla-card:not(.featured) .sla-desc { color: var(--text-muted); }
-        .sla-card.featured .sla-desc { color: rgba(255,255,255,0.8); }
-        
+        .sla-card:not(.featured) .sla-desc {
+            color: var(--text-muted);
+        }
+        .sla-card.featured .sla-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
         .sla-features-list {
             list-style: none;
             padding: 0;
@@ -421,20 +390,28 @@
             gap: 10px;
             padding: 10px 0;
             font-size: 14px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-        .sla-card:not(.featured) .sla-features-list li { color: var(--text-body); border-bottom-color: var(--border); }
-        .sla-card.featured .sla-features-list li { color: rgba(255,255,255,0.9); border-bottom-color: rgba(255,255,255,0.1); }
-        
+        .sla-card:not(.featured) .sla-features-list li {
+            color: var(--text-body);
+            border-bottom-color: var(--border);
+        }
+        .sla-card.featured .sla-features-list li {
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
         .sla-features-list li i {
             color: var(--orange-500);
             font-size: 14px;
             margin-top: 2px;
             flex-shrink: 0;
         }
-        .sla-card.featured .sla-features-list li i { color: var(--orange-300); }
-        .sla-features-list li:last-child { border-bottom: none; }
-
+        .sla-card.featured .sla-features-list li i {
+            color: var(--orange-300);
+        }
+        .sla-features-list li:last-child {
+            border-bottom: none;
+        }
         .sla-btn {
             display: block;
             width: 100%;
@@ -465,25 +442,57 @@
             color: white;
         }
 
-        /* Responsive */
         @media (max-width: 991px) {
-            .install-layout { grid-template-columns: 1fr; gap: 40px; }
-            .install-image-wrapper img { min-height: 250px; }
-            .sla-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
-            .sla-card.featured { transform: scale(1); }
-            .sla-card.featured:hover { transform: translateY(-8px); }
+            .install-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .install-image-wrapper img {
+                min-height: 250px;
+            }
+            .sla-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .sla-card.featured {
+                transform: scale(1);
+            }
+            .sla-card.featured:hover {
+                transform: translateY(-8px);
+            }
         }
         @media (max-width: 767px) {
-            .subpage-banner h1 { font-size: 36px; }
-            .install-content h2 { font-size: 32px; }
-            .install-badge { left: 20px; bottom: 20px; padding: 10px 16px; }
-            .install-badge strong { font-size: 14px; }
-            .sla-grid { grid-template-columns: 1fr; gap: 16px; }
+            .subpage-banner h1 {
+                font-size: 32px;
+            }
+            .install-content h2 {
+                font-size: 28px;
+            }
+            .install-badge {
+                left: 16px;
+                bottom: 16px;
+                padding: 10px 16px;
+            }
+            .install-badge strong {
+                font-size: 14px;
+            }
+            .sla-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .sla-card.featured {
+                transform: scale(1);
+                order: -1;
+            }
+            .sla-card.featured:hover {
+                transform: translateY(-8px);
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== HEADER ===== -->
     <header class="main-header" id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo-container">
@@ -498,31 +507,33 @@
                 <a href="contact.html" class="nav-link">Contact</a>
             </nav>
             <div class="header-actions">
-                <a href="tel:03008005682" class="btn btn-phone btn-header"><i class="fas fa-phone-alt"></i> Call Now</a>
-                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <button class="mobile-nav-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+                <a href="tel:03008005682" class="btn btn-phone btn-header">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="btn-text">Call Now</span>
+                </a>
+                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="btn-text">WhatsApp</span>
+                </a>
+                <button class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- ===== SUBPAGE BANNER WITH LOOPING BACKGROUND ===== -->
+    <!-- ===== BANNER ===== -->
     <section class="subpage-banner" id="services-banner">
-        
-        <!-- Background Slider -->
         <div class="services-bg-slider" id="servicesBgSlider">
             <div class="slide-track" id="slideTrack">
-                <!-- Original 3 Images -->
-                <div class="slide-item active"><img src="./supply-import.png" alt="Supply & Import Background"></div>
-                <div class="slide-item"><img src="./consultation-design.png" alt="Consultation & Design Background"></div>
-                <div class="slide-item"><img src="./Installation.png" alt="Installation Background"></div>
-                
-                <!-- CLONED 3 Images (For Infinite Loop) -->
-                <div class="slide-item"><img src="./supply-import.png" alt="Supply & Import Background Clone"></div>
-                <div class="slide-item"><img src="./consultation-design.png" alt="Consultation & Design Background Clone"></div>
-                <div class="slide-item"><img src="./Installation.png" alt="Installation Background Clone"></div>
+                <div class="slide-item active"><img src="./supply-import.png" alt="Supply & Import"></div>
+                <div class="slide-item"><img src="./consultation-design.png" alt="Consultation & Design"></div>
+                <div class="slide-item"><img src="./Installation.png" alt="Installation"></div>
+                <div class="slide-item"><img src="./supply-import.png" alt="Supply & Import Clone"></div>
+                <div class="slide-item"><img src="./consultation-design.png" alt="Consultation & Design Clone"></div>
+                <div class="slide-item"><img src="./Installation.png" alt="Installation Clone"></div>
             </div>
         </div>
-
         <div class="container banner-container">
             <div class="banner-breadcrumb">
                 <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:10px;"></i> <span>Services</span>
@@ -533,12 +544,10 @@
         </div>
     </section>
 
-    <!-- ===== CERTIFIED INSTALLATION SECTION ===== -->
+    <!-- ===== INSTALLATION ===== -->
     <section class="installation-section" id="installation">
         <div class="container">
             <div class="install-layout">
-                
-                <!-- Left Side: Image -->
                 <div class="install-image-wrapper scroll-reveal">
                     <img src="./installation_boy.png" alt="Professional Engineer Installing System" onerror="this.src='https://placehold.co/600x600/07111f/ffffff?text=Installation+Image';">
                     <div class="install-badge">
@@ -546,43 +555,39 @@
                         <strong>Within 2 Hours</strong>
                     </div>
                 </div>
-
-                <!-- Right Side: Content -->
                 <div class="install-content scroll-reveal delay-1">
                     <span class="section-tag">Professional Installation</span>
                     <h2>Certified <span>Installation</span> &amp; Commissioning</h2>
-                    <p>Our experienced engineers follow a structured, step-by-step installation process that ensures your security system operates safely and optimally from day one. We handle everything — from CCTV camera positioning, access control wiring, network cabling, and fire system integration to complete electrical wiring and final safety certification.</p>
-                    
+                    <p>Our experienced engineers follow a structured, step-by-step installation process that ensures your security system operates safely and optimally from day one.</p>
                     <div class="install-steps">
                         <div class="install-step">
                             <div class="step-number-circle">1</div>
                             <div class="step-text">
                                 <h4>Site Survey &amp; CCTV Planning</h4>
-                                <p>Comprehensive site assessment to identify blind spots, determine optimal camera angles, and plan NVR placement for maximum coverage and security.</p>
+                                <p>Comprehensive site assessment to identify blind spots, determine optimal camera angles, and plan NVR placement.</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number-circle">2</div>
                             <div class="step-text">
                                 <h4>Access Control &amp; Fire System Integration</h4>
-                                <p>Installation of biometric readers, RFID access panels, and fire detection alarms. Complete integration with existing building management systems for centralized monitoring.</p>
+                                <p>Installation of biometric readers, RFID access panels, and fire detection alarms with complete integration.</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number-circle">3</div>
                             <div class="step-text">
                                 <h4>Networking &amp; Electrical Wiring</h4>
-                                <p>Structured Cat6/Fiber cabling, network switch configuration, and secure power backup solutions. All wiring is tested and labeled for future maintenance ease.</p>
+                                <p>Structured Cat6/Fiber cabling, network switch configuration, and secure power backup solutions.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ===== SERVICES OVERVIEW CARDS ===== -->
+    <!-- ===== SERVICES OVERVIEW ===== -->
     <section class="services-overview">
         <div class="container">
             <div class="section-header scroll-reveal" style="margin-bottom: 50px;">
@@ -594,25 +599,23 @@
                 <div class="svc-card scroll-reveal">
                     <div class="svc-num">01</div>
                     <div class="svc-icon-wrapper">
-                        <img src="./supply-import.png" alt="Supply & Import Icon" onerror="this.outerHTML='<i class=\'fas fa-ship\' style=\'font-size: 32px; color: var(--blue-500);\'></i>';">
+                        <img src="./supply-import.png" alt="Supply & Import" onerror="this.outerHTML='<i class=\'fas fa-ship\' style=\'font-size:32px;color:var(--blue-500);\'></i>';">
                     </div>
                     <h3>Supply &amp; Import</h3>
                     <p>We source premium security components from trusted global manufacturers and integrate them into customized solutions.</p>
                 </div>
-
                 <div class="svc-card scroll-reveal delay-1">
                     <div class="svc-num">02</div>
                     <div class="svc-icon-wrapper">
-                        <img src="./consultation-design.png" alt="Consultation & Design Icon" onerror="this.outerHTML='<i class=\'fas fa-drafting-compass\' style=\'font-size: 32px; color: var(--blue-500);\'></i>';">
+                        <img src="./consultation-design.png" alt="Consultation & Design" onerror="this.outerHTML='<i class=\'fas fa-drafting-compass\' style=\'font-size:32px;color:var(--blue-500);\'></i>';">
                     </div>
                     <h3>Consultation &amp; Design</h3>
                     <p>Our engineers visit your site, assess security requirements, and design the optimal system architecture.</p>
                 </div>
-
                 <div class="svc-card scroll-reveal delay-2">
                     <div class="svc-num">03</div>
                     <div class="svc-icon-wrapper">
-                        <img src="./Installation.png" alt="Installation Icon" onerror="this.outerHTML='<i class=\'fas fa-hard-hat\' style=\'font-size: 32px; color: var(--blue-500);\'></i>';">
+                        <img src="./Installation.png" alt="Installation" onerror="this.outerHTML='<i class=\'fas fa-hard-hat\' style=\'font-size:32px;color:var(--blue-500);\'></i>';">
                     </div>
                     <h3>Installation</h3>
                     <p>Our certified installation teams handle complete mechanical and electrical setup with strict adherence to safety standards.</p>
@@ -621,18 +624,16 @@
         </div>
     </section>
 
-    <!-- ===== SLA / MAINTENANCE SECTION ===== -->
+    <!-- ===== SLA ===== -->
     <section class="sla-section" id="sla">
         <div class="container">
             <div class="section-header scroll-reveal" style="margin-bottom: 0;">
                 <span class="section-tag">Maintenance Contracts</span>
                 <h2>Annual Maintenance Packages</h2>
-                <p style="max-width: 600px; margin: 15px auto 0; color: var(--text-muted);">Protect your investment with a tailored SLA plan. All packages include scheduled visits and priority support for your security and networking infrastructure.</p>
+                <p style="max-width: 600px; margin: 15px auto 0; color: var(--text-muted);">Protect your investment with a tailored SLA plan. All packages include scheduled visits and priority support.</p>
                 <div class="header-line" style="margin: 20px auto 0;"></div>
             </div>
-
             <div class="sla-grid">
-                <!-- Card 1: Basic / Starter -->
                 <div class="sla-card scroll-reveal">
                     <div class="sla-badge">Basic</div>
                     <h3>Starter SLA</h3>
@@ -647,8 +648,6 @@
                     </ul>
                     <a href="contact.html" class="sla-btn">Get Quote</a>
                 </div>
-
-                <!-- Card 2: Standard / Most Popular -->
                 <div class="sla-card featured scroll-reveal delay-1">
                     <div class="sla-badge"><i class="fas fa-star"></i> Most Popular</div>
                     <h3>Standard SLA</h3>
@@ -663,8 +662,6 @@
                     </ul>
                     <a href="https://wa.me/923008005682?text=I%20want%20Standard%20SLA%20details" target="_blank" class="sla-btn">WhatsApp Us</a>
                 </div>
-
-                <!-- Card 3: Premium / Comprehensive -->
                 <div class="sla-card scroll-reveal delay-2">
                     <div class="sla-badge">Premium</div>
                     <h3>Comprehensive SLA</h3>
@@ -673,7 +670,7 @@
                         <li><i class="fas fa-check"></i> Bi-weekly preventative maintenance visits</li>
                         <li><i class="fas fa-check"></i> Full network, firewall & switch diagnostics</li>
                         <li><i class="fas fa-check"></i> Fire safety & alarm system compliance testing</li>
-                        <li><i class="fas fa-check"></i> 24/7 Priority emergency response (< 1 hour)</li>
+                        <li><i class="fas fa-check"></i> 24/7 Priority emergency response (&lt; 1 hour)</li>
                         <li><i class="fas fa-check"></i> All parts & labor included</li>
                         <li><i class="fas fa-check"></i> Dedicated account manager & detailed audits</li>
                     </ul>
@@ -683,7 +680,7 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER SECTION ===== -->
+    <!-- ===== FOOTER ===== -->
     <footer class="main-footer">
         <div class="container footer-container">
             <div class="footer-brand">
@@ -722,19 +719,32 @@
         </div>
     </footer>
 
-    <!-- Floating Widgets Container -->
+    <!-- ===== FLOATING WIDGETS ===== -->
     <div class="floating-widgets-container">
         <div class="quick-call-actions">
-            <a href="tel:03008005682" class="qca-btn qca-phone"><i class="fas fa-phone-alt"></i><span class="qca-tooltip">Call HotLine</span></a>
-            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp"><i class="fab fa-whatsapp"></i><span class="qca-tooltip">WhatsApp</span></a>
+            <a href="tel:03008005682" class="qca-btn qca-phone" aria-label="Call Office">
+                <i class="fas fa-phone-alt"></i>
+                <span class="qca-tooltip">Call HotLine</span>
+            </a>
+            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp" aria-label="Chat on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span class="qca-tooltip">WhatsApp</span>
+            </a>
         </div>
         <div class="assistant-chat-widget">
-            <button class="qca-btn qca-chat" id="assistantToggleBtn"><span class="pulse-indicator"></span><i class="fas fa-robot"></i><span class="qca-tooltip">Ask Assistant</span></button>
+            <button class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
+                <span class="pulse-indicator"></span>
+                <i class="fas fa-robot"></i>
+                <span class="qca-tooltip">Ask Assistant</span>
+            </button>
             <div class="assistant-chat-window" id="assistantChatWindow">
                 <div class="acw-header">
                     <div class="acw-header-info" style="display:flex; align-items:center; gap:12px;">
                         <div class="acw-avatar"><i class="fas fa-robot"></i></div>
-                        <div><h4 style="color:white;">CNE Zone Assistant</h4><span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span></div>
+                        <div>
+                            <h4 style="color:white;">CNE Zone Assistant</h4>
+                            <span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span>
+                        </div>
                     </div>
                     <button class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
                 </div>
@@ -747,7 +757,9 @@
                     <button class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
                 </div>
                 <div class="acw-footer">
-                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct"><i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp</a>
+                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct">
+                        <i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
