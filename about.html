@@ -8,7 +8,6 @@
     <link rel="canonical" href="https://cnezone.github.io/about.html">
     <meta name="robots" content="index, follow">
 
-    <!-- ===== OPEN GRAPH (Facebook, LinkedIn, WhatsApp Preview) ===== -->
     <meta property="og:title" content="About Us | CNE Zone Security & Networking Islamabad">
     <meta property="og:description" content="Discover the engineering expertise and safety values behind CNE Zone. Professional CCTV, access control, and networking experts in Pakistan.">
     <meta property="og:type" content="website">
@@ -18,42 +17,40 @@
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_PK">
     <meta property="og:site_name" content="CNE Zone">
-    <meta property="og:image:alt" content="CNE Zone - Security & Networking Engineering">
 
-    <!-- ===== TWITTER CARDS ===== -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About Us | CNE Zone Security & Networking Islamabad">
+    <meta name="twitter:title" content="About Us | CNE Zone">
     <meta name="twitter:description" content="Discover the engineering expertise and safety values behind CNE Zone.">
     <meta name="twitter:image" content="https://cnezone.github.io/cne-logo.png">
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "CNE Zone",
-      "image": "https://cnezone.github.io/cne-logo.png",
-      "url": "https://cnezone.github.io/about.html",
-      "telephone": "+923008005682",
-      "email": "cne.zonee@gmail.com",
-      "priceRange": "$$",
-      "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "G-11/2, Jafar Chowk",
-        "addressLocality": "Islamabad",
-        "addressRegion": "Islamabad Capital Territory",
-        "postalCode": "44000",
-        "addressCountry": "Pakistan"
-      },
-      "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
-      "openingHours": "Mo-Su 09:00-21:00",
-      "contactPoint": {
-        "@type": "ContactPoint",
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "CNE Zone",
+        "image": "https://cnezone.github.io/cne-logo.png",
+        "url": "https://cnezone.github.io/about.html",
         "telephone": "+923008005682",
-        "contactType": "Sales",
-        "availableLanguage": ["English", "Urdu"]
-      },
-      "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
+        "email": "cne.zonee@gmail.com",
+        "priceRange": "$$",
+        "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "G-11/2, Jafar Chowk",
+            "addressLocality": "Islamabad",
+            "addressRegion": "Islamabad Capital Territory",
+            "postalCode": "44000",
+            "addressCountry": "Pakistan"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
+        "openingHours": "Mo-Su 09:00-21:00",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+923008005682",
+            "contactType": "Sales",
+            "availableLanguage": ["English", "Urdu"]
+        },
+        "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
     }
     </script>
 
@@ -68,11 +65,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./cne-logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./cne-logo.png">
     <meta name="theme-color" content="#07111f">
-    
+
     <style>
-        /* ===== ABOUT PAGE SPECIFIC STYLES ===== */
-        
-        /* Banner Override (Matches Home Page) */
         .subpage-banner {
             background: linear-gradient(150deg, #07111f 0%, #0b1b2d 35%, #005ea6 65%, #00a7ff 100%);
             padding: 150px 0 80px;
@@ -81,41 +75,133 @@
             position: relative;
             overflow: hidden;
         }
-        .subpage-banner h1 { font-size: 46px; font-weight: 900; margin-bottom: 14px; }
-        .subpage-banner p { font-size: 17px; max-width: 560px; margin: 0 auto; color: rgba(255,255,255,0.8); line-height: 1.7; }
-        .banner-gold-bar { display: block; width: 60px; height: 3px; background: linear-gradient(90deg, var(--blue-500), var(--orange-500)); border-radius: 2px; margin: 20px auto 0; }
-
-        /* About Main Section */
-        .about-main-section { padding: 100px 0; background: #f4f7fa; } /* Matched Home BG */
-        .about-row { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
-        
-        .section-header.left { text-align: left; margin: 0 0 24px; }
-        .section-tag { display: inline-block; color: var(--orange-500); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 2.5px; background: var(--orange-100); padding: 5px 14px; border-radius: 100px; border: 1px solid var(--orange-300); }
-        .section-header h2 { font-size: 38px; font-weight: 900; color: var(--blue-900); margin-top: 10px; }
-        .header-line { width: 56px; height: 3px; background: linear-gradient(90deg, var(--blue-500), var(--orange-500)); margin: 16px 0 0; border-radius: 2px; }
-        
-        .about-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
-        .about-bullets { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
-        .bullet-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-body); background: white; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .bullet-item i { color: var(--blue-500); margin-top: 2px; flex-shrink: 0; }
-
-        /* CEO Block */
-        .ceo-about-block { background: white; border-radius: 24px; border: 1px solid rgba(0,167,255,0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.1); overflow: hidden; }
-        .ceo-block-header { background: linear-gradient(135deg, #07111f 0%, #0b1b2d 55%, #005ea6 100%); padding: 36px 36px 28px; color: white; border-bottom: 2px solid rgba(255,90,0,0.35); }
-        .ceo-avatar-ring { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,90,0,0.45); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; color: var(--orange-400); }
-        .ceo-block-header h3 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-        .ceo-role-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--orange-400); }
-        .ceo-block-body { padding: 28px 36px 36px; }
-        .ceo-statement { font-style: italic; font-size: 15px; color: var(--text-muted); line-height: 1.7; border-left: 3px solid var(--blue-500); padding-left: 16px; margin-bottom: 24px; }
-        .ceo-contact-links { display: flex; flex-direction: column; gap: 10px; }
-        .ceo-contact-link { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-body); padding: 10px 14px; background: #f4f7fa; border-radius: 10px; border: 1px solid var(--border); transition: 0.3s; }
-        .ceo-contact-link i { color: var(--blue-500); width: 16px; text-align: center; }
-        .ceo-contact-link:hover { border-color: var(--blue-500); color: var(--blue-500); }
-
-        /* ===== TABS SECTION (4 TABS - VERTICAL LAYOUT) ===== */
-        .technical-tabs-section { padding: 80px 0; background: #f4f7fa; }
-        .tabs-wrapper { max-width: 1100px; margin: 0 auto; }
-        
+        .about-main-section {
+            padding: 100px 0;
+            background: #f4f7fa;
+        }
+        .about-row {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .section-header.left {
+            text-align: left;
+            margin: 0 0 24px;
+        }
+        .about-text p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .about-bullets {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .bullet-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--text-body);
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        .bullet-item i {
+            color: var(--blue-500);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .ceo-about-block {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 167, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .ceo-block-header {
+            background: linear-gradient(135deg, #07111f 0%, #0b1b2d 55%, #005ea6 100%);
+            padding: 36px 36px 28px;
+            color: white;
+            border-bottom: 2px solid rgba(255, 90, 0, 0.35);
+        }
+        .ceo-avatar-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 90, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--orange-400);
+        }
+        .ceo-block-header h3 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .ceo-role-tag {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--orange-400);
+        }
+        .ceo-block-body {
+            padding: 28px 36px 36px;
+        }
+        .ceo-statement {
+            font-style: italic;
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            border-left: 3px solid var(--blue-500);
+            padding-left: 16px;
+            margin-bottom: 24px;
+        }
+        .ceo-contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .ceo-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-body);
+            padding: 10px 14px;
+            background: #f4f7fa;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        .ceo-contact-link i {
+            color: var(--blue-500);
+            width: 16px;
+            text-align: center;
+        }
+        .ceo-contact-link:hover {
+            border-color: var(--blue-500);
+            color: var(--blue-500);
+        }
+        .technical-tabs-section {
+            padding: 80px 0;
+            background: #f4f7fa;
+        }
+        .tabs-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
         .tabs-nav {
             display: flex;
             background: white;
@@ -124,7 +210,7 @@
             padding: 6px;
             gap: 4px;
             margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
         .tab-btn {
             flex: 1;
@@ -143,31 +229,41 @@
             justify-content: center;
             gap: 10px;
         }
-        .tab-btn i { font-size: 18px; }
-        .tab-btn:hover { color: var(--primary); background-color: #f4f7fa; }
+        .tab-btn i {
+            font-size: 18px;
+        }
+        .tab-btn:hover {
+            color: var(--primary);
+            background-color: #f4f7fa;
+        }
         .tab-btn.active {
             background: var(--blue-500);
             color: white;
             box-shadow: var(--shadow-blue);
         }
-        
-        .tab-pane { display: none; animation: fadeUp 0.5s ease forwards; }
-        .tab-pane.active { display: block; }
-        
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .tab-pane {
+            display: none;
+            animation: fadeUp 0.5s ease forwards;
         }
-
-        /* ===== NEW VERTICAL LAYOUT (Split View) ===== */
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         .tab-split-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Left 50%, Right 50% */
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
             align-items: stretch;
         }
-
-        /* LEFT SIDE: Vertical Cards */
         .tab-cards-vertical {
             display: flex;
             flex-direction: column;
@@ -175,80 +271,150 @@
             height: 100%;
         }
         .tab-card-item {
-            flex: 1; /* Distribute height equally */
+            flex: 1;
             background: white;
             border-radius: 16px;
             padding: 24px 28px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             transition: 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            opacity: 0; 
-            transform: translateY(30px); 
+            opacity: 0;
+            transform: translateY(30px);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .tab-card-item.visible { opacity: 1; transform: translateY(0); }
-        .tab-card-item:hover { border-color: var(--blue-300); box-shadow: 0 8px 25px rgba(0,167,255,0.08); transform: translateY(-3px); }
-        
-        .tab-card-item .tci-icon {
-            width: 44px; height: 44px;
-            background: var(--blue-100); color: var(--blue-500);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; margin-bottom: 12px;
+        .tab-card-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .tab-card-item h4 { font-size: 18px; font-weight: 800; color: var(--blue-900); margin-bottom: 6px; }
-        .tab-card-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
-
-        /* RIGHT SIDE: Layout Image */
+        .tab-card-item:hover {
+            border-color: var(--blue-300);
+            box-shadow: 0 8px 25px rgba(0, 167, 255, 0.08);
+            transform: translateY(-3px);
+        }
+        .tab-card-item .tci-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--blue-100);
+            color: var(--blue-500);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .tab-card-item h4 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--blue-900);
+            margin-bottom: 6px;
+        }
+        .tab-card-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
         .tab-layout-image {
             background: white;
             border-radius: 16px;
             border: 1px solid var(--border);
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            height: 100%; /* Force height to match */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            min-height: 300px; /* Ensures minimum height for images */
+            min-height: 300px;
         }
         .tab-layout-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Keeps aspect ratio */
+            object-fit: contain;
             max-height: 400px;
             display: block;
             border-radius: 8px;
         }
-        .tab-layout-image .no-image-placeholder {
-            color: var(--text-muted);
-            font-size: 14px;
-            text-align: center;
-            opacity: 0.5;
-        }
 
-        /* Responsive adjustments */
         @media (max-width: 991px) {
-            .about-row { grid-template-columns: 1fr; gap: 40px; }
-            .tabs-nav { flex-wrap: nowrap; overflow-x: auto; padding: 6px; justify-content: flex-start; }
-            .tab-btn { white-space: nowrap; padding: 12px 20px; font-size: 14px; }
-            .tab-split-layout { grid-template-columns: 1fr; gap: 24px; }
-            .tab-layout-image { min-height: 250px; }
+            .about-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .tabs-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 6px;
+                justify-content: flex-start;
+            }
+            .tab-btn {
+                white-space: nowrap;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            .tab-split-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .tab-layout-image {
+                min-height: 250px;
+            }
         }
         @media (max-width: 767px) {
-            .subpage-banner h1 { font-size: 36px; }
-            .section-header h2 { font-size: 32px; }
-            .tab-card-item { padding: 20px; }
-            .tab-layout-image { min-height: 200px; padding: 15px; }
+            .subpage-banner h1 {
+                font-size: 32px;
+            }
+            .section-header h2 {
+                font-size: 28px;
+            }
+            .ceo-about-block {
+                margin-top: 0;
+            }
+            .tabs-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 4px;
+                gap: 4px;
+                border-radius: 12px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tab-btn {
+                flex: 0 0 auto;
+                padding: 10px 16px;
+                font-size: 13px;
+                white-space: nowrap;
+                border-radius: 8px;
+            }
+            .tab-btn i {
+                font-size: 14px;
+            }
+            .tab-split-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .tab-cards-vertical {
+                gap: 12px;
+            }
+            .tab-card-item {
+                padding: 16px 20px;
+            }
+            .tab-card-item h4 {
+                font-size: 16px;
+            }
+            .tab-layout-image {
+                min-height: 180px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== HEADER ===== -->
     <header class="main-header" id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo-container">
@@ -263,17 +429,26 @@
                 <a href="contact.html" class="nav-link">Contact</a>
             </nav>
             <div class="header-actions">
-                <a href="tel:03008005682" class="btn btn-phone btn-header"><i class="fas fa-phone-alt"></i> Call Now</a>
-                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <button class="mobile-nav-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+                <a href="tel:03008005682" class="btn btn-phone btn-header">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="btn-text">Call Now</span>
+                </a>
+                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="btn-text">WhatsApp</span>
+                </a>
+                <button class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- ===== BANNER ===== -->
     <section class="subpage-banner">
-        <div class="container">
-            <div style="display:flex; justify-content:center; gap:8px; font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">
-                <a href="index.html" style="color:var(--orange-500);">Home</a> <i class="fas fa-chevron-right" style="font-size:10px;"></i> <span>About Us</span>
+        <div class="container banner-container">
+            <div class="banner-breadcrumb">
+                <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:10px;"></i> <span>About Us</span>
             </div>
             <h1>About CNE Zone</h1>
             <p>Our engineering expertise, commitment to security, and vision for protecting modern Pakistan — one system at a time.</p>
@@ -281,6 +456,7 @@
         </div>
     </section>
 
+    <!-- ===== ABOUT CONTENT ===== -->
     <section class="about-main-section">
         <div class="container">
             <div class="about-row">
@@ -301,7 +477,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="scroll-reveal delay-2">
                     <div class="ceo-about-block">
                         <div class="ceo-block-header">
@@ -324,7 +499,7 @@
         </div>
     </section>
 
-    <!-- ===== TABS SECTION (4 TABS - VERTICAL LAYOUT) ===== -->
+    <!-- ===== TABS ===== -->
     <section class="technical-tabs-section">
         <div class="container">
             <div class="section-header scroll-reveal">
@@ -333,7 +508,6 @@
                 <p>Certified components, engineered for performance, safety, and long-term reliability.</p>
                 <div class="header-line" style="margin: 16px auto 0;"></div>
             </div>
-
             <div class="tabs-wrapper scroll-reveal">
                 <div class="tabs-nav">
                     <button class="tab-btn active" data-tab="cctv-specs">
@@ -350,10 +524,8 @@
                     </button>
                 </div>
 
-                <!-- Tab 1: CCTV Systems -->
                 <div class="tab-pane active" id="cctv-specs">
                     <div class="tab-split-layout">
-                        <!-- Left: Vertical Cards -->
                         <div class="tab-cards-vertical">
                             <div class="tab-card-item">
                                 <div class="tci-icon"><i class="fas fa-camera"></i></div>
@@ -366,21 +538,14 @@
                                 <p>Powerful Network Video Recorders with AI motion detection and central Video Management Software.</p>
                             </div>
                         </div>
-                        <!-- Right: Layout Image -->
                         <div class="tab-layout-image">
-                            <img src="./CCTV_Layout.png" alt="CCTV System Layout" onerror="this.style.display='none'; document.getElementById('cctv-placeholder').style.display='flex';">
-                            <div id="cctv-placeholder" class="no-image-placeholder" style="display:none; flex-direction:column; gap:10px;">
-                                <i class="fas fa-image" style="font-size:40px; opacity:0.3;"></i>
-                                <span>CCTV Layout Image</span>
-                            </div>
+                            <img src="./CCTV_Layout.png" alt="CCTV System Layout" onerror="this.outerHTML='<div style=\'display:flex;flex-direction:column;align-items:center;gap:10px;color:#94a3b8;\'><i class=\'fas fa-image\' style=\'font-size:40px;opacity:0.3;\'></i><span>CCTV Layout Image</span></div>'">
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 2: Access Control -->
                 <div class="tab-pane" id="access-models">
                     <div class="tab-split-layout">
-                        <!-- Left: Vertical Cards -->
                         <div class="tab-cards-vertical">
                             <div class="tab-card-item">
                                 <div class="tci-icon"><i class="fas fa-fingerprint"></i></div>
@@ -393,21 +558,14 @@
                                 <p>Touchless facial recognition terminals integrated with AI cameras for high-security zones.</p>
                             </div>
                         </div>
-                        <!-- Right: Layout Image -->
                         <div class="tab-layout-image">
-                            <img src="./Access_control_layout.png" alt="Access Control Layout" onerror="this.style.display='none'; document.getElementById('access-placeholder').style.display='flex';">
-                            <div id="access-placeholder" class="no-image-placeholder" style="display:none; flex-direction:column; gap:10px;">
-                                <i class="fas fa-image" style="font-size:40px; opacity:0.3;"></i>
-                                <span>Access Control Layout</span>
-                            </div>
+                            <img src="./Access_control_layout.png" alt="Access Control Layout" onerror="this.outerHTML='<div style=\'display:flex;flex-direction:column;align-items:center;gap:10px;color:#94a3b8;\'><i class=\'fas fa-image\' style=\'font-size:40px;opacity:0.3;\'></i><span>Access Control Layout</span></div>'">
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 3: Networking -->
                 <div class="tab-pane" id="networking-safety">
                     <div class="tab-split-layout">
-                        <!-- Left: Vertical Cards -->
                         <div class="tab-cards-vertical">
                             <div class="tab-card-item">
                                 <div class="tci-icon"><i class="fas fa-wifi"></i></div>
@@ -420,21 +578,14 @@
                                 <p>Enterprise-grade network switches and routers to handle high-bandwidth traffic securely.</p>
                             </div>
                         </div>
-                        <!-- Right: Layout Image -->
                         <div class="tab-layout-image">
-                            <img src="./netwok_layout.png" alt="Network Layout" onerror="this.style.display='none'; document.getElementById('net-placeholder').style.display='flex';">
-                            <div id="net-placeholder" class="no-image-placeholder" style="display:none; flex-direction:column; gap:10px;">
-                                <i class="fas fa-image" style="font-size:40px; opacity:0.3;"></i>
-                                <span>Network Layout</span>
-                            </div>
+                            <img src="./netwok_layout.png" alt="Network Layout" onerror="this.outerHTML='<div style=\'display:flex;flex-direction:column;align-items:center;gap:10px;color:#94a3b8;\'><i class=\'fas fa-image\' style=\'font-size:40px;opacity:0.3;\'></i><span>Network Layout</span></div>'">
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 4: Fire Safety -->
                 <div class="tab-pane" id="fire-safety">
                     <div class="tab-split-layout">
-                        <!-- Left: Vertical Cards -->
                         <div class="tab-cards-vertical">
                             <div class="tab-card-item">
                                 <div class="tci-icon" style="color:var(--orange-500); background:var(--orange-100);"><i class="fas fa-fire-extinguisher"></i></div>
@@ -447,13 +598,8 @@
                                 <p>Integrated audible and visual alarm systems with central monitoring for critical events.</p>
                             </div>
                         </div>
-                        <!-- Right: Layout Image -->
                         <div class="tab-layout-image">
-                            <img src="./fire_layout_plan.png" alt="Fire Safety Layout" onerror="this.style.display='none'; document.getElementById('fire-placeholder').style.display='flex';">
-                            <div id="fire-placeholder" class="no-image-placeholder" style="display:none; flex-direction:column; gap:10px;">
-                                <i class="fas fa-image" style="font-size:40px; opacity:0.3;"></i>
-                                <span>Fire Safety Layout</span>
-                            </div>
+                            <img src="./fire_layout_plan.png" alt="Fire Safety Layout" onerror="this.outerHTML='<div style=\'display:flex;flex-direction:column;align-items:center;gap:10px;color:#94a3b8;\'><i class=\'fas fa-image\' style=\'font-size:40px;opacity:0.3;\'></i><span>Fire Safety Layout</span></div>'">
                         </div>
                     </div>
                 </div>
@@ -461,7 +607,7 @@
         </div>
     </section>
 
-    <!-- Footer Section -->
+    <!-- ===== FOOTER ===== -->
     <footer class="main-footer">
         <div class="container footer-container">
             <div class="footer-brand">
@@ -500,19 +646,32 @@
         </div>
     </footer>
 
-    <!-- Floating Widgets Container -->
+    <!-- ===== FLOATING WIDGETS ===== -->
     <div class="floating-widgets-container">
         <div class="quick-call-actions">
-            <a href="tel:03008005682" class="qca-btn qca-phone"><i class="fas fa-phone-alt"></i><span class="qca-tooltip">Call HotLine</span></a>
-            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp"><i class="fab fa-whatsapp"></i><span class="qca-tooltip">WhatsApp</span></a>
+            <a href="tel:03008005682" class="qca-btn qca-phone" aria-label="Call Office">
+                <i class="fas fa-phone-alt"></i>
+                <span class="qca-tooltip">Call HotLine</span>
+            </a>
+            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp" aria-label="Chat on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span class="qca-tooltip">WhatsApp</span>
+            </a>
         </div>
         <div class="assistant-chat-widget">
-            <button class="qca-btn qca-chat" id="assistantToggleBtn"><span class="pulse-indicator"></span><i class="fas fa-robot"></i><span class="qca-tooltip">Ask Assistant</span></button>
+            <button class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
+                <span class="pulse-indicator"></span>
+                <i class="fas fa-robot"></i>
+                <span class="qca-tooltip">Ask Assistant</span>
+            </button>
             <div class="assistant-chat-window" id="assistantChatWindow">
                 <div class="acw-header">
                     <div class="acw-header-info" style="display:flex; align-items:center; gap:12px;">
                         <div class="acw-avatar"><i class="fas fa-robot"></i></div>
-                        <div><h4 style="color:white;">CNE Zone Assistant</h4><span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span></div>
+                        <div>
+                            <h4 style="color:white;">CNE Zone Assistant</h4>
+                            <span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span>
+                        </div>
                     </div>
                     <button class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
                 </div>
@@ -525,7 +684,9 @@
                     <button class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
                 </div>
                 <div class="acw-footer">
-                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct"><i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp</a>
+                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct">
+                        <i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
@@ -533,55 +694,42 @@
 
     <script src="./main.js"></script>
     <script>
-        /* ===== 1. TAB SWITCHING LOGIC ===== */
-        document.addEventListener("DOMContentLoaded", () => {
-            const tabBtns = document.querySelectorAll(".tab-btn");
-            const tabPanes = document.querySelectorAll(".tab-pane");
-
+        document.addEventListener("DOMContentLoaded", function() {
+            var tabBtns = document.querySelectorAll(".tab-btn");
+            var tabPanes = document.querySelectorAll(".tab-pane");
             if (tabBtns.length > 0) {
-                tabBtns.forEach(btn => {
-                    btn.addEventListener("click", () => {
-                        // Remove active from all buttons and panes
-                        tabBtns.forEach(b => b.classList.remove("active"));
-                        tabPanes.forEach(p => p.classList.remove("active"));
-
-                        // Add active to clicked button and its target pane
+                tabBtns.forEach(function(btn) {
+                    btn.addEventListener("click", function() {
+                        var target = btn.getAttribute("data-tab");
+                        tabBtns.forEach(function(b) { b.classList.remove("active"); });
+                        tabPanes.forEach(function(p) { p.classList.remove("active"); });
                         btn.classList.add("active");
-                        const target = btn.getAttribute("data-tab");
-                        const pane = document.getElementById(target);
+                        var pane = document.getElementById(target);
                         if (pane) pane.classList.add("active");
-
-                        // Re-trigger float animation for new content
-                        setTimeout(() => {
-                            const cards = pane.querySelectorAll('.tab-card-item');
-                            const observer = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => {
+                        setTimeout(function() {
+                            var cards = pane.querySelectorAll('.tab-card-item');
+                            var observer = new IntersectionObserver(function(entries) {
+                                entries.forEach(function(entry) {
                                     if (entry.isIntersecting) {
                                         entry.target.classList.add('visible');
                                     }
                                 });
                             }, { threshold: 0.1 });
-                            cards.forEach(card => observer.observe(card));
+                            cards.forEach(function(card) { observer.observe(card); });
                         }, 100);
                     });
                 });
             }
-        });
-
-        /* ===== 2. SCROLL FLOAT-UP ANIMATION (Bottom to Top) ===== */
-        document.addEventListener("DOMContentLoaded", () => {
-            const cards = document.querySelectorAll('.tab-card-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            var cards = document.querySelectorAll('.tab-card-item');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // Animation runs only ONCE
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.15 });
-
-            cards.forEach(card => observer.observe(card));
+            cards.forEach(function(card) { observer.observe(card); });
         });
     </script>
 </body>
