@@ -8,7 +8,6 @@
     <link rel="canonical" href="https://cnezone.github.io/projects.html">
     <meta name="robots" content="index, follow">
 
-    <!-- ===== OPEN GRAPH (Facebook, LinkedIn, WhatsApp Preview) ===== -->
     <meta property="og:title" content="Our Projects | CNE Zone Security & Networking Islamabad">
     <meta property="og:description" content="View completed security and networking projects by CNE Zone across Islamabad, Rawalpindi, and Lahore.">
     <meta property="og:type" content="website">
@@ -18,9 +17,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_PK">
     <meta property="og:site_name" content="CNE Zone">
-    <meta property="og:image:alt" content="CNE Zone - Security & Networking Engineering">
 
-    <!-- ===== TWITTER CARDS ===== -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Our Projects | CNE Zone">
     <meta name="twitter:description" content="Completed security & networking projects across Islamabad, Rawalpindi, and Lahore.">
@@ -28,32 +25,32 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "CNE Zone",
-      "image": "https://cnezone.github.io/cne-logo.png",
-      "url": "https://cnezone.github.io/projects.html",
-      "telephone": "+923008005682",
-      "email": "cne.zonee@gmail.com",
-      "priceRange": "$$",
-      "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "G-11/2, Jafar Chowk",
-        "addressLocality": "Islamabad",
-        "addressRegion": "Islamabad Capital Territory",
-        "postalCode": "44000",
-        "addressCountry": "Pakistan"
-      },
-      "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
-      "openingHours": "Mo-Su 09:00-21:00",
-      "contactPoint": {
-        "@type": "ContactPoint",
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "CNE Zone",
+        "image": "https://cnezone.github.io/cne-logo.png",
+        "url": "https://cnezone.github.io/projects.html",
         "telephone": "+923008005682",
-        "contactType": "Sales",
-        "availableLanguage": ["English", "Urdu"]
-      },
-      "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
+        "email": "cne.zonee@gmail.com",
+        "priceRange": "$$",
+        "description": "CNE Zone provides professional CCTV installation, biometric access control, networking infrastructure, and fire safety solutions across Pakistan.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "G-11/2, Jafar Chowk",
+            "addressLocality": "Islamabad",
+            "addressRegion": "Islamabad Capital Territory",
+            "postalCode": "44000",
+            "addressCountry": "Pakistan"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": "33.6844", "longitude": "73.0479" },
+        "openingHours": "Mo-Su 09:00-21:00",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+923008005682",
+            "contactType": "Sales",
+            "availableLanguage": ["English", "Urdu"]
+        },
+        "sameAs": ["https://wa.me/923008005682", "https://cnezone.github.io/"]
     }
     </script>
 
@@ -70,9 +67,6 @@
     <meta name="theme-color" content="#07111f">
 
     <style>
-        /* ===== PROJECTS PAGE SPECIFIC STYLES ===== */
-        
-        /* Banner Override (With Vertical Bouncing Logo Rain) */
         .subpage-banner {
             position: relative;
             padding: 150px 0 80px;
@@ -81,8 +75,6 @@
             overflow: hidden;
             background: linear-gradient(150deg, #07111f 0%, #0b1b2d 35%, #005ea6 65%, #00a7ff 100%);
         }
-
-        /* Vertical Logo Rain Container */
         .logo-rain-container {
             position: absolute;
             top: 0;
@@ -93,55 +85,25 @@
             overflow: hidden;
             pointer-events: none;
         }
-
-        /* Each drop is positioned randomly */
         .logo-drop {
             position: absolute;
-            top: -150px; /* Starts from above the screen */
-            height: 100px; /* Size fixed to 100px */
+            top: -150px;
+            height: 100px;
             width: auto;
             object-fit: contain;
-            opacity: 0.8; /* Glassy visibility */
+            opacity: 0.8;
             animation: glassyBounceDrop 4.2s ease-in forwards;
-            filter: drop-shadow(0 0 8px rgba(0, 167, 255, 0.3)); /* Glassy Glow */
+            filter: drop-shadow(0 0 8px rgba(0, 167, 255, 0.3));
             will-change: transform, opacity;
         }
-
-        /* NEW GLASSY BOUNCE MOTION */
         @keyframes glassyBounceDrop {
-            0% {
-                transform: translateY(0) scale(0.6) rotate(-5deg);
-                opacity: 0.2;
-                filter: drop-shadow(0 0 20px rgba(0, 167, 255, 0.6));
-            }
-            20% {
-                transform: translateY(20vh) scale(0.9) rotate(3deg);
-                opacity: 0.9;
-                filter: drop-shadow(0 0 15px rgba(255, 90, 0, 0.4));
-            }
-            40% {
-                transform: translateY(45vh) scale(1.1) rotate(-3deg);
-                opacity: 1;
-                filter: drop-shadow(0 0 25px rgba(0, 167, 255, 0.8));
-            }
-            60% {
-                transform: translateY(65vh) scale(0.95) rotate(2deg);
-                opacity: 0.9;
-                filter: drop-shadow(0 0 10px rgba(255, 90, 0, 0.2));
-            }
-            80% {
-                transform: translateY(85vh) scale(1.05) rotate(-2deg);
-                opacity: 0.8;
-                filter: drop-shadow(0 0 5px rgba(0, 167, 255, 0.2));
-            }
-            100% {
-                transform: translateY(110vh) scale(0.7) rotate(0deg);
-                opacity: 0.1;
-                filter: drop-shadow(0 0 0px rgba(0, 167, 255, 0));
-            }
+            0% { transform: translateY(0) scale(0.6) rotate(-5deg); opacity: 0.2; filter: drop-shadow(0 0 20px rgba(0, 167, 255, 0.6)); }
+            20% { transform: translateY(20vh) scale(0.9) rotate(3deg); opacity: 0.9; filter: drop-shadow(0 0 15px rgba(255, 90, 0, 0.4)); }
+            40% { transform: translateY(45vh) scale(1.1) rotate(-3deg); opacity: 1; filter: drop-shadow(0 0 25px rgba(0, 167, 255, 0.8)); }
+            60% { transform: translateY(65vh) scale(0.95) rotate(2deg); opacity: 0.9; filter: drop-shadow(0 0 10px rgba(255, 90, 0, 0.2)); }
+            80% { transform: translateY(85vh) scale(1.05) rotate(-2deg); opacity: 0.8; filter: drop-shadow(0 0 5px rgba(0, 167, 255, 0.2)); }
+            100% { transform: translateY(110vh) scale(0.7) rotate(0deg); opacity: 0.1; filter: drop-shadow(0 0 0px rgba(0, 167, 255, 0)); }
         }
-
-        /* Dark Overlay on top of logos to keep text readable */
         .subpage-banner::after {
             content: '';
             position: absolute;
@@ -149,26 +111,9 @@
             z-index: 1;
             background: rgba(7, 17, 31, 0.4);
         }
-
-        .banner-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .banner-breadcrumb {
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            font-size: 14px; color: rgba(255,255,255,0.7);
-            margin-bottom: 16px;
-        }
-        .banner-breadcrumb a { color: var(--orange-500); }
-        .subpage-banner h1 { font-size: 46px; font-weight: 900; margin-bottom: 14px; }
-        .subpage-banner p { font-size: 17px; max-width: 560px; margin: 0 auto; color: rgba(255,255,255,0.8); line-height: 1.7; }
-        .banner-gold-bar { display: block; width: 60px; height: 3px; background: linear-gradient(90deg, var(--blue-500), var(--orange-500)); border-radius: 2px; margin: 20px auto 0; }
-
-        /* ===== PROJECTS STATS STRIP ===== */
         .proj-stats-strip {
             background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 100%);
-            border-bottom: 3px solid rgba(255,90,0,0.3);
+            border-bottom: 3px solid rgba(255, 90, 0, 0.3);
             padding: 0;
         }
         .proj-stats-grid {
@@ -176,194 +121,418 @@
             grid-template-columns: repeat(4, 1fr);
         }
         .proj-stat {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 28px 16px; gap: 4px;
-            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 16px;
+            gap: 4px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
-        .proj-stat:last-child { border-right: none; }
-        .proj-stat-num { font-size: 36px; font-weight: 900; color: var(--orange-500); line-height: 1; letter-spacing: -1px; }
-        .proj-stat-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-
-        /* ===== SECTION HEADER (REMOVED BUTTONS) ===== */
+        .proj-stat:last-child {
+            border-right: none;
+        }
+        .proj-stat-num {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--orange-500);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .proj-stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.65);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
         .projects-header-section {
             padding: 60px 0 30px;
             background: #f4f7fa;
             text-align: center;
         }
         .projects-header-section h2 {
-            font-size: 38px; font-weight: 900; color: var(--blue-900);
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--blue-900);
             margin-bottom: 10px;
         }
         .projects-header-section p {
-            font-size: 16px; color: var(--text-muted);
-            max-width: 600px; margin: 0 auto;
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        /* ===== PROJECTS GRID ===== */
-        .projects-main-section { padding: 30px 0 80px; background: #f4f7fa; }
+        .projects-main-section {
+            padding: 30px 0 80px;
+            background: #f4f7fa;
+        }
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 32px;
         }
-        
         .project-card {
-            background: white; border-radius: 24px; border: 1px solid var(--border);
-            overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            transition: all 0.35s ease; position: relative;
-            /* All projects visible now */
-            display: block; 
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.35s ease;
+            position: relative;
+            display: block;
         }
-        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,167,255,0.12); border-color: var(--blue-300); }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 167, 255, 0.12);
+            border-color: var(--blue-300);
         }
-
-        /* ===== DYNAMIC MEDIA SLIDER ===== */
         .project-media-wrapper {
             position: relative;
             overflow: hidden;
             background: linear-gradient(150deg, #07111f 0%, #0b1b2d 100%);
             cursor: pointer;
         }
-        
         .media-slider-track {
             display: flex;
             width: 100%;
             height: 250px;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
         .media-slide {
             width: 100%;
             height: 100%;
             flex-shrink: 0;
             position: relative;
         }
-        
-        .media-slide img, .media-slide video {
+        .media-slide img,
+        .media-slide video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             cursor: pointer;
         }
-        
-        .media-slide video { background: #000; }
-
+        .media-slide video {
+            background: #000;
+        }
         .play-btn-overlay {
-            position: absolute; top: 50%; left: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            background: rgba(0,167,255,0.85); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 24px; pointer-events: none;
-            backdrop-filter: blur(4px); border: 2px solid rgba(255,255,255,0.8);
-            transition: 0.3s ease; z-index: 2;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 167, 255, 0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transition: 0.3s ease;
+            z-index: 2;
         }
         .media-slide:hover .play-btn-overlay {
             transform: translate(-50%, -50%) scale(1.08);
             background: var(--orange-500);
         }
-
         .project-number {
-            position: absolute; bottom: 16px; right: 16px;
-            font-size: 48px; font-weight: 900;
-            color: rgba(255,255,255,0.15); line-height: 1; z-index: 2;
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            font-size: 48px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.15);
+            line-height: 1;
+            z-index: 2;
         }
         .project-category-badge {
-            position: absolute; top: 16px; left: 16px;
-            background: var(--orange-500); color: white;
-            font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-            padding: 6px 14px; border-radius: 100px; z-index: 2;
-            box-shadow: 0 4px 10px rgba(255,90,0,0.3);
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--orange-500);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(255, 90, 0, 0.3);
         }
-
         .media-thumbnails {
-            position: absolute; bottom: 12px; left: 50%;
-            transform: translateX(-50%); display: flex; gap: 8px; z-index: 3;
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
         }
         .media-thumbnail {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.2);
-            cursor: pointer; transition: 0.3s ease; padding: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s ease;
+            padding: 0;
         }
-        .media-thumbnail.active { background: white; width: 24px; border-radius: 20px; }
-        .media-thumbnail:hover { background: white; transform: scale(1.2); }
-
+        .media-thumbnail.active {
+            background: white;
+            width: 24px;
+            border-radius: 20px;
+        }
+        .media-thumbnail:hover {
+            background: white;
+            transform: scale(1.2);
+        }
         .open-gallery-btn {
-            position: absolute; bottom: 12px; right: 12px; z-index: 3;
-            background: rgba(7, 17, 31, 0.7); color: white;
-            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(4px);
-            padding: 6px 12px; border-radius: 20px; font-size: 10px; font-weight: 700;
-            cursor: pointer; transition: 0.3s ease; display: flex; align-items: center; gap: 6px;
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            z-index: 3;
+            background: rgba(7, 17, 31, 0.7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .open-gallery-btn:hover { background: var(--blue-500); border-color: var(--blue-500); }
-
-        .project-info { padding: 28px 28px 32px; }
+        .open-gallery-btn:hover {
+            background: var(--blue-500);
+            border-color: var(--blue-500);
+        }
+        .project-info {
+            padding: 28px 28px 32px;
+        }
         .project-location {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-size: 12px; font-weight: 800; color: var(--blue-700);
-            background: var(--blue-100); padding: 4px 12px; border-radius: 100px;
-            border: 1px solid var(--blue-200); margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--blue-700);
+            background: var(--blue-100);
+            padding: 4px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--blue-200);
+            margin-bottom: 16px;
         }
-        .project-info h3 { font-size: 22px; font-weight: 900; color: var(--blue-900); margin-bottom: 10px; }
-        .project-info p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
-
-        /* ===== LIGHTBOX ===== */
+        .project-info h3 {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--blue-900);
+            margin-bottom: 10px;
+        }
+        .project-info p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
         .lightbox-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92);
-            z-index: 99999; display: none; align-items: center; justify-content: center;
-            padding: 40px; backdrop-filter: blur(10px);
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            backdrop-filter: blur(10px);
         }
-        .lightbox-overlay.active { display: flex; }
+        .lightbox-overlay.active {
+            display: flex;
+        }
         .lightbox-close {
-            position: absolute; top: 20px; right: 30px; color: white; font-size: 40px;
-            cursor: pointer; transition: 0.3s ease; z-index: 10;
-            background: rgba(255,255,255,0.1); width: 50px; height: 50px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: none;
         }
-        .lightbox-close:hover { background: var(--orange-500); transform: rotate(90deg); }
-        .lightbox-content { max-width: 900px; width: 100%; max-height: 85vh; position: relative; display: flex; align-items: center; justify-content: center; }
-        .lightbox-content img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .lightbox-content video { width: 100%; height: auto; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); background: black; }
-        .lightbox-nav {
-            position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 30px;
-            cursor: pointer; background: rgba(255,255,255,0.1); width: 50px; height: 50px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: 0.3s ease; border: none;
+        .lightbox-close:hover {
+            background: var(--orange-500);
+            transform: rotate(90deg);
         }
-        .lightbox-nav:hover { background: var(--orange-500); }
-        .lightbox-nav.prev { left: -60px; }
-        .lightbox-nav.next { right: -60px; }
+        .lightbox-content {
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content img {
+            width: 100%;
+            height: auto;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .lightbox-content video {
+            width: 100%;
+            height: auto;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            background: black;
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease;
+            border: none;
+        }
+        .lightbox-nav:hover {
+            background: var(--orange-500);
+        }
+        .lightbox-nav.prev {
+            left: -60px;
+        }
+        .lightbox-nav.next {
+            right: -60px;
+        }
 
         @media (max-width: 991px) {
-            .proj-stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .proj-stat:nth-child(2) { border-right: none; }
-            .proj-stat:nth-child(3), .proj-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); }
-            .projects-grid { grid-template-columns: repeat(2, 1fr); }
-            .media-slider-track { height: 220px; }
-            .lightbox-nav.prev { left: 10px; }
-            .lightbox-nav.next { right: 10px; }
-            .lightbox-nav { width: 40px; height: 40px; font-size: 20px; }
+            .proj-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .proj-stat:nth-child(2) {
+                border-right: none;
+            }
+            .proj-stat:nth-child(3),
+            .proj-stat:nth-child(4) {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .media-slider-track {
+                height: 220px;
+            }
+            .lightbox-nav.prev {
+                left: 10px;
+            }
+            .lightbox-nav.next {
+                right: 10px;
+            }
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
         }
-        @media (max-width: 640px) {
-            .proj-stats-grid { grid-template-columns: 1fr; }
-            .proj-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 20px 12px; }
-            .proj-stat:last-child { border-bottom: none; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .project-info { padding: 20px 20px 24px; }
-            .media-slider-track { height: 180px; }
-            .lightbox-overlay { padding: 20px; }
+        @media (max-width: 767px) {
+            .proj-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+            }
+            .proj-stat {
+                padding: 16px 12px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .proj-stat:nth-child(even) {
+                border-right: none;
+            }
+            .proj-stat:nth-child(3),
+            .proj-stat:nth-child(4) {
+                border-top: none;
+            }
+            .proj-stat-num {
+                font-size: 28px;
+            }
+            .proj-stat-label {
+                font-size: 10px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .project-card {
+                border-radius: 16px;
+            }
+            .project-info {
+                padding: 16px 18px 20px;
+            }
+            .project-info h3 {
+                font-size: 18px;
+            }
+            .media-slider-track {
+                height: 200px;
+            }
+            .lightbox-overlay {
+                padding: 16px;
+            }
+            .lightbox-nav {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .lightbox-nav.prev {
+                left: 8px;
+            }
+            .lightbox-nav.next {
+                right: 8px;
+            }
+            .lightbox-close {
+                top: 12px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 28px;
+            }
+            .lightbox-content {
+                max-height: 80vh;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== HEADER ===== -->
     <header class="main-header" id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo-container">
@@ -378,19 +547,24 @@
                 <a href="contact.html" class="nav-link">Contact</a>
             </nav>
             <div class="header-actions">
-                <a href="tel:03008005682" class="btn btn-phone btn-header"><i class="fas fa-phone-alt"></i> Call Now</a>
-                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <button class="mobile-nav-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+                <a href="tel:03008005682" class="btn btn-phone btn-header">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="btn-text">Call Now</span>
+                </a>
+                <a href="https://wa.me/923008005682" target="_blank" class="btn btn-whatsapp btn-header">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="btn-text">WhatsApp</span>
+                </a>
+                <button class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- ===== BANNER ===== -->
     <section class="subpage-banner">
-        <!-- Vertical Bouncing Logo Rain Background -->
-        <div class="logo-rain-container" id="logoRainContainer">
-            <!-- Logos will be generated dynamically via JS -->
-        </div>
-
+        <div class="logo-rain-container" id="logoRainContainer"></div>
         <div class="container banner-container">
             <div class="banner-breadcrumb">
                 <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:10px;"></i> <span>Projects</span>
@@ -401,7 +575,7 @@
         </div>
     </section>
 
-    <!-- ===== PROJECT STATS STRIP ===== -->
+    <!-- ===== STATS ===== -->
     <section class="proj-stats-strip">
         <div class="container proj-stats-grid">
             <div class="proj-stat">
@@ -423,7 +597,7 @@
         </div>
     </section>
 
-    <!-- ===== NEW SECTION: SUCCESSFULLY COMPLETED SITES (BUTTONS REMOVED) ===== -->
+    <!-- ===== PROJECTS HEADER ===== -->
     <section class="projects-header-section">
         <div class="container">
             <h2>Successfully Completed Sites</h2>
@@ -432,7 +606,7 @@
         </div>
     </section>
 
-    <!-- ===== LIGHTBOX HTML ===== -->
+    <!-- ===== LIGHTBOX ===== -->
     <div class="lightbox-overlay" id="lightboxOverlay">
         <button class="lightbox-close" id="lightboxClose">&times;</button>
         <button class="lightbox-nav prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
@@ -445,7 +619,6 @@
         <div class="container">
             <div class="projects-grid" id="projectsGrid">
 
-                <!-- Project 1: PTCL Datacenter -->
                 <div class="project-card" data-folder="ptcl" data-count="8">
                     <div class="project-media-wrapper" data-folder="ptcl" data-count="8">
                         <div class="media-slider-track"></div>
@@ -461,7 +634,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2: NUST Datacenter -->
                 <div class="project-card" data-folder="nust" data-count="6">
                     <div class="project-media-wrapper" data-folder="nust" data-count="6">
                         <div class="media-slider-track"></div>
@@ -477,7 +649,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3: Sector D12 -->
                 <div class="project-card" data-folder="d12" data-count="4">
                     <div class="project-media-wrapper" data-folder="d12" data-count="4">
                         <div class="media-slider-track"></div>
@@ -493,7 +664,6 @@
                     </div>
                 </div>
 
-                <!-- Project 4: Sector B17 -->
                 <div class="project-card" data-folder="b17" data-count="4">
                     <div class="project-media-wrapper" data-folder="b17" data-count="4">
                         <div class="media-slider-track"></div>
@@ -509,7 +679,6 @@
                     </div>
                 </div>
 
-                <!-- Project 5: Sector E11 -->
                 <div class="project-card" data-folder="e11" data-count="4">
                     <div class="project-media-wrapper" data-folder="e11" data-count="4">
                         <div class="media-slider-track"></div>
@@ -525,7 +694,6 @@
                     </div>
                 </div>
 
-                <!-- Project 6: Fire Safety -->
                 <div class="project-card" data-folder="fire" data-count="4">
                     <div class="project-media-wrapper" data-folder="fire" data-count="4">
                         <div class="media-slider-track"></div>
@@ -545,7 +713,7 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER SECTION ===== -->
+    <!-- ===== FOOTER ===== -->
     <footer class="main-footer">
         <div class="container footer-container">
             <div class="footer-brand">
@@ -584,19 +752,32 @@
         </div>
     </footer>
 
-    <!-- Floating Widgets Container -->
+    <!-- ===== FLOATING WIDGETS ===== -->
     <div class="floating-widgets-container">
         <div class="quick-call-actions">
-            <a href="tel:03008005682" class="qca-btn qca-phone"><i class="fas fa-phone-alt"></i><span class="qca-tooltip">Call HotLine</span></a>
-            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp"><i class="fab fa-whatsapp"></i><span class="qca-tooltip">WhatsApp</span></a>
+            <a href="tel:03008005682" class="qca-btn qca-phone" aria-label="Call Office">
+                <i class="fas fa-phone-alt"></i>
+                <span class="qca-tooltip">Call HotLine</span>
+            </a>
+            <a href="https://wa.me/923008005682" target="_blank" class="qca-btn qca-whatsapp" aria-label="Chat on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span class="qca-tooltip">WhatsApp</span>
+            </a>
         </div>
         <div class="assistant-chat-widget">
-            <button class="qca-btn qca-chat" id="assistantToggleBtn"><span class="pulse-indicator"></span><i class="fas fa-robot"></i><span class="qca-tooltip">Ask Assistant</span></button>
+            <button class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
+                <span class="pulse-indicator"></span>
+                <i class="fas fa-robot"></i>
+                <span class="qca-tooltip">Ask Assistant</span>
+            </button>
             <div class="assistant-chat-window" id="assistantChatWindow">
                 <div class="acw-header">
                     <div class="acw-header-info" style="display:flex; align-items:center; gap:12px;">
                         <div class="acw-avatar"><i class="fas fa-robot"></i></div>
-                        <div><h4 style="color:white;">CNE Zone Assistant</h4><span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span></div>
+                        <div>
+                            <h4 style="color:white;">CNE Zone Assistant</h4>
+                            <span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span>
+                        </div>
                     </div>
                     <button class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
                 </div>
@@ -609,219 +790,14 @@
                     <button class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
                 </div>
                 <div class="acw-footer">
-                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct"><i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp</a>
+                    <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct">
+                        <i class="fab fa-whatsapp"></i> Speak to Engineer on WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="./main.js"></script>
-    <script>
-        /* ===== DYNAMIC BOUNCING LOGO RAIN GENERATOR (FIXED: ALL 10 LOGOS DROP RANDOMLY) ===== */
-        document.addEventListener("DOMContentLoaded", () => {
-            const rainContainer = document.getElementById('logoRainContainer');
-            const logoList = [
-                './logo1.png', './logo2.png', './logo3.png', './logo4.png', './logo5.png',
-                './logo6.png', './logo7.png', './logo8.png', './logo9.png', './logo10.png'
-            ];
-
-            // Function to create a single dropping logo
-            function createLogoDrop() {
-                const img = document.createElement('img');
-                // Pick a random logo from the list
-                const randomLogo = logoList[Math.floor(Math.random() * logoList.length)];
-                img.src = randomLogo;
-                img.className = 'logo-drop';
-                
-                // Random horizontal position (between 5% and 95%)
-                const randomLeft = Math.random() * 90 + 5;
-                img.style.left = randomLeft + '%';
-                
-                // Random animation delay (so they don't all fall at once)
-                const randomDelay = Math.random() * 2;
-                img.style.animationDelay = randomDelay + 's';
-                
-                // Add to container
-                rainContainer.appendChild(img);
-
-                // Remove the element after animation ends to prevent memory leak
-                img.addEventListener('animationend', () => {
-                    img.remove();
-                    // Create a new one to keep the rain infinite
-                    setTimeout(() => createLogoDrop(), Math.random() * 2000 + 1000);
-                });
-            }
-
-            // Create initial 3-4 drops at the start
-            for (let i = 0; i < 4; i++) {
-                setTimeout(() => createLogoDrop(), i * 800);
-            }
-        });
-
-        /* ===== DYNAMIC MEDIA LOADER (UNLIMITED IMAGES/VIDEOS) ===== */
-        document.addEventListener("DOMContentLoaded", () => {
-            const projectWrappers = document.querySelectorAll('.project-media-wrapper');
-
-            projectWrappers.forEach(wrapper => {
-                const track = wrapper.querySelector('.media-slider-track');
-                const thumbnailsContainer = wrapper.querySelector('.media-thumbnails');
-                const folder = wrapper.getAttribute('data-folder');
-                const count = parseInt(wrapper.getAttribute('data-count'));
-
-                let mediaItems = [];
-
-                for(let i = 1; i <= count; i++) {
-                    const slide = document.createElement('div');
-                    slide.className = 'media-slide';
-                    
-                    const imgPath = `./${folder}_img_${i}.jpg`;
-                    const vidPath = `./${folder}_vid_${i}.mp4`;
-                    
-                    const testImg = new Image();
-                    testImg.src = imgPath;
-
-                    testImg.onload = function() {
-                        slide.innerHTML = `<img src="${imgPath}" alt="${folder} Image ${i}" onclick="openLightbox('${folder}', ${count}, ${i-1})">`;
-                        track.appendChild(slide);
-                        mediaItems.push({ type: 'image', index: i-1 });
-                        updateThumbnails(thumbnailsContainer, count, track);
-                    };
-
-                    testImg.onerror = function() {
-                        const testVideo = document.createElement('video');
-                        testVideo.src = vidPath;
-                        
-                        testVideo.onloadeddata = function() {
-                            slide.innerHTML = `
-                                <video autoplay loop muted playsinline onclick="openLightbox('${folder}', ${count}, ${i-1})">
-                                    <source src="${vidPath}" type="video/mp4">
-                                </video>
-                                <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
-                            `;
-                            track.appendChild(slide);
-                            mediaItems.push({ type: 'video', index: i-1 });
-                            updateThumbnails(thumbnailsContainer, count, track);
-                        };
-                        
-                        testVideo.onerror = function() {
-                            slide.innerHTML = `<img src="https://placehold.co/600x400/07111f/ffffff?text=${folder.toUpperCase()}+${i}" alt="Placeholder ${i}" onclick="openLightbox('${folder}', ${count}, ${i-1})">`;
-                            track.appendChild(slide);
-                            mediaItems.push({ type: 'placeholder', index: i-1 });
-                            updateThumbnails(thumbnailsContainer, count, track);
-                        };
-                    };
-                }
-            });
-        });
-
-        function updateThumbnails(container, count, track) {
-            container.innerHTML = '';
-            for(let i = 0; i < count; i++) {
-                const dot = document.createElement('button');
-                dot.className = i === 0 ? 'media-thumbnail active' : 'media-thumbnail';
-                dot.setAttribute('data-index', i);
-                dot.addEventListener('click', function() {
-                    const thumbnails = container.querySelectorAll('.media-thumbnail');
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    dot.classList.add('active');
-                    track.style.transform = `translateX(-${i * 100}%)`;
-                });
-                container.appendChild(dot);
-            }
-        }
-
-        /* ===== LIGHTBOX LOGIC ===== */
-        const lightboxOverlay = document.getElementById('lightboxOverlay');
-        const lightboxContent = document.getElementById('lightboxContent');
-        const lightboxClose = document.getElementById('lightboxClose');
-        const lightboxPrev = document.getElementById('lightboxPrev');
-        const lightboxNext = document.getElementById('lightboxNext');
-
-        let currentLightboxFolder = '';
-        let currentLightboxCount = 0;
-        let currentLightboxIndex = 0;
-
-        function openLightbox(folder, count, index) {
-            currentLightboxFolder = folder;
-            currentLightboxCount = count;
-            currentLightboxIndex = index;
-            updateLightboxContent();
-            lightboxOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function updateLightboxContent() {
-            const i = currentLightboxIndex + 1;
-            const imgPath = `./${currentLightboxFolder}_img_${i}.jpg`;
-            const vidPath = `./${currentLightboxFolder}_vid_${i}.mp4`;
-
-            lightboxContent.innerHTML = '';
-            const img = document.createElement('img');
-            img.src = imgPath;
-            img.alt = `${currentLightboxFolder} Image ${i}`;
-            img.style.width = '100%';
-            img.style.height = 'auto';
-            img.style.maxHeight = '85vh';
-            img.style.objectFit = 'contain';
-            img.style.borderRadius = '12px';
-
-            img.onerror = function() {
-                const video = document.createElement('video');
-                video.controls = true;
-                video.autoplay = true;
-                video.style.width = '100%';
-                video.style.maxHeight = '85vh';
-                video.style.borderRadius = '12px';
-                video.style.background = 'black';
-                
-                const source = document.createElement('source');
-                source.src = vidPath;
-                source.type = 'video/mp4';
-                video.appendChild(source);
-
-                video.onerror = function() {
-                    img.src = `https://placehold.co/800x600/07111f/ffffff?text=${currentLightboxFolder.toUpperCase()}+${i}`;
-                    img.onerror = null;
-                    lightboxContent.appendChild(img);
-                };
-                lightboxContent.appendChild(video);
-            };
-
-            img.onload = function() {
-                lightboxContent.appendChild(img);
-            };
-        }
-
-        function closeLightbox() {
-            lightboxOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            const video = lightboxContent.querySelector('video');
-            if(video) { video.pause(); }
-        }
-
-        function changeLightbox(direction) {
-            if(direction === 'next') {
-                currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxCount;
-            } else if(direction === 'prev') {
-                currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxCount) % currentLightboxCount;
-            }
-            updateLightboxContent();
-        }
-
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightboxOverlay.addEventListener('click', (e) => {
-            if(e.target === lightboxOverlay) closeLightbox();
-        });
-        lightboxPrev.addEventListener('click', () => changeLightbox('prev'));
-        lightboxNext.addEventListener('click', () => changeLightbox('next'));
-
-        document.addEventListener('keydown', (e) => {
-            if(lightboxOverlay.classList.contains('active')) {
-                if(e.key === 'Escape') closeLightbox();
-                if(e.key === 'ArrowRight') changeLightbox('next');
-                if(e.key === 'ArrowLeft') changeLightbox('prev');
-            }
-        });
-    </script>
 </body>
 </html>
