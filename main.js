@@ -1,10 +1,33 @@
 /* =====================================================
-   CNE ZONE — Global Frontend Controller (Zain Style)
+   CNE ZONE — Global Frontend Controller (Fully Fixed)
    ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ===== 1. Header Scroll Effect ===== */
+    /* ===== 1. FIX: Font Awesome Icons Check ===== */
+    function checkFontAwesome() {
+        const testIcon = document.createElement('i');
+        testIcon.className = 'fas fa-check';
+        testIcon.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;';
+        document.body.appendChild(testIcon);
+        
+        const computedStyle = window.getComputedStyle(testIcon);
+        const fontFamily = computedStyle.getPropertyValue('font-family');
+        document.body.removeChild(testIcon);
+        
+        if (!fontFamily || !fontFamily.includes('Font Awesome')) {
+            console.warn('Font Awesome not loaded. Loading now...');
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            link.integrity = 'sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==';
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+        }
+    }
+    checkFontAwesome();
+
+    /* ===== 2. Header Scroll Effect ===== */
     const header = document.querySelector(".main-header");
     if (header) {
         window.addEventListener("scroll", () => {
@@ -12,46 +35,79 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: true });
     }
 
-    /* ===== 2. Mobile Navigation ===== */
+    /* ===== 3. Mobile Navigation (FIXED) ===== */
     const mobileToggle = document.getElementById("mobileToggle");
-    const navMenu      = document.getElementById("navMenu");
-    const navLinks     = document.querySelectorAll(".nav-link");
+    const navMenu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll(".nav-link");
 
     if (mobileToggle && navMenu) {
-        mobileToggle.addEventListener("click", () => {
+        // Toggle menu
+        mobileToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle("active");
             const icon = mobileToggle.querySelector("i");
-            icon.className = navMenu.classList.contains("active") ? "fas fa-times" : "fas fa-bars";
+            if (icon) {
+                icon.className = navMenu.classList.contains("active") ? "fas fa-times" : "fas fa-bars";
+            }
+            document.body.style.overflow = navMenu.classList.contains("active") ? "hidden" : "";
         });
 
+        // Close on link click
         navLinks.forEach(link => {
             link.addEventListener("click", () => {
-                setTimeout(() => {
-                    navMenu.classList.remove("active");
-                    mobileToggle.querySelector("i").className = "fas fa-bars";
-                }, 150);
+                navMenu.classList.remove("active");
+                const icon = mobileToggle.querySelector("i");
+                if (icon) icon.className = "fas fa-bars";
+                document.body.style.overflow = "";
             });
         });
 
         // Close on outside click
         document.addEventListener("click", (e) => {
-            if (!header.contains(e.target) && navMenu.classList.contains("active")) {
+            if (navMenu.classList.contains("active")) {
+                const isHeader = header && header.contains(e.target);
+                const isToggle = mobileToggle && mobileToggle.contains(e.target);
+                if (!isHeader && !isToggle) {
+                    navMenu.classList.remove("active");
+                    const icon = mobileToggle.querySelector("i");
+                    if (icon) icon.className = "fas fa-bars";
+                    document.body.style.overflow = "";
+                }
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && navMenu.classList.contains("active")) {
                 navMenu.classList.remove("active");
-                mobileToggle.querySelector("i").className = "fas fa-bars";
+                const icon = mobileToggle.querySelector("i");
+                if (icon) icon.className = "fas fa-bars";
+                document.body.style.overflow = "";
+            }
+        });
+
+        // Handle resize - close menu on desktop
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 767 && navMenu.classList.contains("active")) {
+                navMenu.classList.remove("active");
+                const icon = mobileToggle.querySelector("i");
+                if (icon) icon.className = "fas fa-bars";
+                document.body.style.overflow = "";
             }
         });
     }
 
-    /* ===== 3. Active nav link highlighting ===== */
+    /* ===== 4. Active nav link highlighting ===== */
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
     navLinks.forEach(link => {
         const linkPage = link.getAttribute("href");
-        if (linkPage === currentPage || (currentPage === "" && linkPage === "index.html")) {
+        if (linkPage === currentPage || (currentPage === "" && linkPage === "index.html") ||
+            (currentPage === "index.html" && linkPage === "index.html")) {
             link.classList.add("active");
         }
     });
 
-    /* ===== 4. Scroll Reveal (Animation on scroll) ===== */
+    /* ===== 5. Scroll Reveal ===== */
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -63,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll(".scroll-reveal").forEach(el => revealObserver.observe(el));
 
-    /* ===== 5. Tab Switcher (For Services/About pages) ===== */
-    const tabBtns  = document.querySelectorAll(".tab-btn");
+    /* ===== 6. Tab Switcher ===== */
+    const tabBtns = document.querySelectorAll(".tab-btn");
     const tabPanes = document.querySelectorAll(".tab-pane");
     if (tabBtns.length > 0) {
         tabBtns.forEach(btn => {
@@ -79,112 +135,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* ===== 6. Products/Solutions Slider ===== */
-    const elevTrack    = document.getElementById("elevTrack");
-    const elevPrev     = document.getElementById("elevPrev");
-    const elevNext     = document.getElementById("elevNext");
-    const elevDotsWrap = document.getElementById("elevDots");
-
-    if (elevTrack && elevPrev && elevNext) {
-        let currentIndex = 0;
-        let autoPlayTimer = null;
-        const AUTOPLAY_MS = 3500;
-
-        function getVisible() {
-            if (window.innerWidth <= 640) return 1;
-            if (window.innerWidth <= 1024) return 2;
-            return 3;
-        }
-        const slides = elevTrack.querySelectorAll(".elev-slide");
-        const totalSlides = slides.length;
-
-        function buildDots() {
-            if (!elevDotsWrap) return;
-            elevDotsWrap.innerHTML = "";
-            const visible = getVisible();
-            const totalPages = totalSlides - visible + 1;
-            for (let i = 0; i < totalPages; i++) {
-                const dot = document.createElement("button");
-                dot.className = "elev-dot" + (i === currentIndex ? " active" : "");
-                dot.addEventListener("click", () => goTo(i));
-                elevDotsWrap.appendChild(dot);
-            }
-        }
-
-        function updateDots() {
-            if (!elevDotsWrap) return;
-            elevDotsWrap.querySelectorAll(".elev-dot").forEach((d, i) => {
-                d.classList.toggle("active", i === currentIndex);
-            });
-        }
-
-        function goTo(index) {
-            const visible = getVisible();
-            const maxIndex = Math.max(0, totalSlides - visible);
-            currentIndex = Math.min(Math.max(index, 0), maxIndex);
-            const slideEl = slides[0];
-            const gap = window.innerWidth <= 640 ? 16 : 24;
-            const slideWidth = slideEl.getBoundingClientRect().width;
-            const offset = currentIndex * (slideWidth + gap);
-            elevTrack.style.transform = `translateX(-${offset}px)`;
-            elevPrev.disabled = currentIndex === 0;
-            elevNext.disabled = currentIndex >= maxIndex;
-            updateDots();
-        }
-
-        function next() {
-            const visible = getVisible();
-            const maxIndex = Math.max(0, totalSlides - visible);
-            goTo(currentIndex < maxIndex ? currentIndex + 1 : 0);
-        }
-
-        function prev() {
-            const visible = getVisible();
-            const maxIndex = Math.max(0, totalSlides - visible);
-            goTo(currentIndex > 0 ? currentIndex - 1 : maxIndex);
-        }
-
-        function startAutoPlay() { 
-            stopAutoPlay(); 
-            autoPlayTimer = setInterval(next, AUTOPLAY_MS); 
-        }
-
-        function stopAutoPlay() { 
-            if (autoPlayTimer) { 
-                clearInterval(autoPlayTimer); 
-                autoPlayTimer = null; 
-            } 
-        }
-        
-        elevNext.addEventListener("click", () => { next(); startAutoPlay(); });
-        elevPrev.addEventListener("click", () => { prev(); startAutoPlay(); });
-        
-        const sliderSection = document.getElementById("solutionSliderSection");
-        if (sliderSection) {
-            sliderSection.addEventListener("mouseenter", stopAutoPlay);
-            sliderSection.addEventListener("mouseleave", startAutoPlay);
-        }
-        
-        buildDots(); 
-        goTo(0); 
-        startAutoPlay();
-    }
-
-    /* ===== 7. Assistant Chatbot Widget Controller ===== */
+    /* ===== 7. Assistant Chatbot ===== */
     const assistantToggleBtn = document.getElementById("assistantToggleBtn");
-    const assistantCloseBtn  = document.getElementById("assistantCloseBtn");
+    const assistantCloseBtn = document.getElementById("assistantCloseBtn");
     const assistantChatWindow = document.getElementById("assistantChatWindow");
-    const acwMessages         = document.getElementById("acwMessages");
-    const questionButtons     = document.querySelectorAll(".acw-q-btn");
+    const acwMessages = document.getElementById("acwMessages");
+    const questionButtons = document.querySelectorAll(".acw-q-btn");
 
     if (assistantToggleBtn && assistantChatWindow && acwMessages) {
-        // Toggle Open
         assistantToggleBtn.addEventListener("click", () => {
             assistantChatWindow.classList.add("active");
             assistantToggleBtn.style.display = "none";
         });
 
-        // Toggle Close
         const closeChat = () => {
             assistantChatWindow.classList.remove("active");
             assistantToggleBtn.style.display = "flex";
@@ -193,50 +156,126 @@ document.addEventListener("DOMContentLoaded", () => {
             assistantCloseBtn.addEventListener("click", closeChat);
         }
 
-        // Handle Pre-fed Questions
+        // Close on outside click
+        document.addEventListener("click", (e) => {
+            if (assistantChatWindow.classList.contains("active")) {
+                const isChat = assistantChatWindow.contains(e.target);
+                const isToggle = assistantToggleBtn.contains(e.target);
+                if (!isChat && !isToggle) {
+                    closeChat();
+                }
+            }
+        });
+
         questionButtons.forEach(btn => {
             btn.addEventListener("click", () => {
                 const questionText = btn.textContent;
-                const answerText   = btn.getAttribute("data-answer");
+                const answerText = btn.getAttribute("data-answer");
 
-                // 1. Add User Message
                 const userMsg = document.createElement("div");
                 userMsg.className = "acw-msg user";
                 userMsg.textContent = questionText;
                 acwMessages.appendChild(userMsg);
 
-                // Disable button momentarily
                 btn.style.opacity = "0.5";
                 btn.style.pointerEvents = "none";
 
-                // Auto Scroll
                 acwMessages.scrollTop = acwMessages.scrollHeight;
 
-                // 2. Add Bot Answer with realistic delay
                 setTimeout(() => {
                     const botMsg = document.createElement("div");
                     botMsg.className = "acw-msg bot";
                     botMsg.textContent = answerText;
                     acwMessages.appendChild(botMsg);
 
-                    // Re-enable button
                     btn.style.opacity = "";
                     btn.style.pointerEvents = "";
 
-                    // Auto Scroll
                     acwMessages.scrollTop = acwMessages.scrollHeight;
                 }, 500);
             });
         });
     }
 
-    /* ===== 8. Smooth Back to Top / Year Update (Bonus) ===== */
-    // Update copyright year automatically
-    const yearSpan = document.querySelector('.footer-bottom p:first-child');
-    if (yearSpan) {
-        const currentYear = new Date().getFullYear();
-        yearSpan.innerHTML = `&copy; ${currentYear} CNE Zone. All Rights Reserved.`;
+    /* ===== 8. Copyright Year ===== */
+    const yearSpans = document.querySelectorAll('.footer-bottom p');
+    const currentYear = new Date().getFullYear();
+    yearSpans.forEach(span => {
+        if (span.textContent.includes('CNE Zone')) {
+            span.innerHTML = `&copy; ${currentYear} CNE Zone. All Rights Reserved.`;
+        }
+    });
+
+    /* ===== 9. Counter Animation for Stats ===== */
+    const statsSection = document.querySelector('.transparent-stats-section');
+    if (statsSection) {
+        const counters = statsSection.querySelectorAll('.stat-number-wrap[data-target]');
+        if (counters.length > 0) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        counters.forEach(counter => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            const duration = 1500;
+                            const startTime = performance.now();
+                            const unitSpan = counter.querySelector('.stat-unit-orange');
+                            const unitText = unitSpan ? unitSpan.outerHTML : '';
+
+                            function updateCounter(currentTime) {
+                                const elapsed = currentTime - startTime;
+                                const progress = Math.min(elapsed / duration, 1);
+                                const eased = 1 - Math.pow(1 - progress, 3);
+                                const currentVal = Math.round(target * eased);
+                                counter.innerHTML = currentVal + unitText;
+                                if (progress < 1) {
+                                    requestAnimationFrame(updateCounter);
+                                }
+                            }
+                            requestAnimationFrame(updateCounter);
+                        });
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            statsObserver.observe(statsSection);
+        }
     }
+
+    /* ===== 10. Services Step Cards Animation ===== */
+    const serviceCards = document.querySelectorAll('.service-step-card.fade-hidden');
+    if (serviceCards.length > 0) {
+        const serviceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('fade-hidden');
+                    entry.target.classList.add('visible');
+                    serviceObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        serviceCards.forEach(card => serviceObserver.observe(card));
+    }
+
+    /* ===== 11. Tab Card Animation ===== */
+    const tabCards = document.querySelectorAll('.tab-card-item');
+    if (tabCards.length > 0) {
+        const tabCardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    tabCardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        tabCards.forEach(card => tabCardObserver.observe(card));
+    }
+
+    /* ===== 12. Fix: Touch events for mobile ===== */
+    document.querySelectorAll('.qca-btn, .nav-link, .btn, .tab-btn, .acw-q-btn, .project-card, .feature-card, .product-card, .service-step-card, .sla-card').forEach(el => {
+        el.addEventListener('touchstart', function() {
+            // Passive touch to trigger hover states on mobile
+        }, { passive: true });
+    });
 
     console.log("🚀 CNE Zone - Website Loaded Successfully!");
 });
