@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://cnezone.github.io/sitemap.xml
