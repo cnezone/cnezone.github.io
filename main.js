@@ -314,5 +314,25 @@ document.addEventListener("DOMContentLoaded", function () {
         tabCards.forEach(function (card) { tabCardObserver.observe(card); });
     }
 
+    /* =====================================================
+       12. Footer / floating-widget collision fix
+       The fixed Call / WhatsApp / Chat button stack sits in the
+       bottom-right corner of the viewport. Once the user scrolls
+       all the way down, that same corner is exactly where the
+       footer's "Navigation" and "Get In Touch" links live — so the
+       floating buttons were sitting on top of them and eating taps.
+       Fix: watch the footer, and fade the floating stack out
+       (and make it non-interactive) whenever the footer is on screen.
+       ===================================================== */
+    const mainFooter = document.querySelector(".main-footer");
+    if (mainFooter) {
+        const footerObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                document.body.classList.toggle("footer-in-view", entry.isIntersecting);
+            });
+        }, { threshold: 0.08 });
+        footerObserver.observe(mainFooter);
+    }
+
     console.log("🚀 CNE Zone - Website Loaded Successfully!");
 });
