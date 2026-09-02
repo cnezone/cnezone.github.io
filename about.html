@@ -211,6 +211,7 @@
             gap: 4px;
             margin-bottom: 40px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            touch-action: pan-x;
         }
         .tab-btn {
             flex: 1;
@@ -228,6 +229,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            position: relative;
+            z-index: 1;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         .tab-btn i {
             font-size: 18px;
@@ -437,7 +442,7 @@
                     <i class="fab fa-whatsapp"></i>
                     <span class="btn-text">WhatsApp</span>
                 </a>
-                <button class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                <button type="button" class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -510,16 +515,16 @@
             </div>
             <div class="tabs-wrapper scroll-reveal">
                 <div class="tabs-nav">
-                    <button class="tab-btn active" data-tab="cctv-specs">
+                    <button type="button" class="tab-btn active" data-tab="cctv-specs">
                         <i class="fas fa-video"></i> CCTV Systems
                     </button>
-                    <button class="tab-btn" data-tab="access-models">
+                    <button type="button" class="tab-btn" data-tab="access-models">
                         <i class="fas fa-fingerprint"></i> Access Control
                     </button>
-                    <button class="tab-btn" data-tab="networking-safety">
+                    <button type="button" class="tab-btn" data-tab="networking-safety">
                         <i class="fas fa-network-wired"></i> Networking
                     </button>
-                    <button class="tab-btn" data-tab="fire-safety">
+                    <button type="button" class="tab-btn" data-tab="fire-safety">
                         <i class="fas fa-fire-extinguisher"></i> Fire Safety
                     </button>
                 </div>
@@ -659,7 +664,7 @@
             </a>
         </div>
         <div class="assistant-chat-widget">
-            <button class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
+            <button type="button" class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
                 <span class="pulse-indicator"></span>
                 <i class="fas fa-robot"></i>
                 <span class="qca-tooltip">Ask Assistant</span>
@@ -673,15 +678,15 @@
                             <span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span>
                         </div>
                     </div>
-                    <button class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+                    <button type="button" class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
                 </div>
                 <div class="acw-messages" id="acwMessages">
                     <div class="acw-msg bot">Hello! I'm your CNE Zone Assistant. Select a question below to get instant answers.</div>
                 </div>
                 <div class="acw-questions-grid">
-                    <button class="acw-q-btn" data-answer="CNE Zone provides professional CCTV, Access Control, Networking, and Fire Safety solutions.">What services do you offer?</button>
-                    <button class="acw-q-btn" data-answer="We install HD IP CCTV, biometric access, structured networking, and fire detection alarms.">What systems do you install?</button>
-                    <button class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
+                    <button type="button" class="acw-q-btn" data-answer="CNE Zone provides professional CCTV, Access Control, Networking, and Fire Safety solutions.">What services do you offer?</button>
+                    <button type="button" class="acw-q-btn" data-answer="We install HD IP CCTV, biometric access, structured networking, and fire detection alarms.">What systems do you install?</button>
+                    <button type="button" class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
                 </div>
                 <div class="acw-footer">
                     <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct">
@@ -692,45 +697,10 @@
         </div>
     </div>
 
+    <!-- Tab switching + card reveal animation are handled globally by main.js
+         (event delegation) — the page used to also bind its own separate
+         click handlers here, which double-bound every tab button and could
+         make taps behave inconsistently on mobile. Removed to avoid conflict. -->
     <script src="./main.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var tabBtns = document.querySelectorAll(".tab-btn");
-            var tabPanes = document.querySelectorAll(".tab-pane");
-            if (tabBtns.length > 0) {
-                tabBtns.forEach(function(btn) {
-                    btn.addEventListener("click", function() {
-                        var target = btn.getAttribute("data-tab");
-                        tabBtns.forEach(function(b) { b.classList.remove("active"); });
-                        tabPanes.forEach(function(p) { p.classList.remove("active"); });
-                        btn.classList.add("active");
-                        var pane = document.getElementById(target);
-                        if (pane) pane.classList.add("active");
-                        setTimeout(function() {
-                            var cards = pane.querySelectorAll('.tab-card-item');
-                            var observer = new IntersectionObserver(function(entries) {
-                                entries.forEach(function(entry) {
-                                    if (entry.isIntersecting) {
-                                        entry.target.classList.add('visible');
-                                    }
-                                });
-                            }, { threshold: 0.1 });
-                            cards.forEach(function(card) { observer.observe(card); });
-                        }, 100);
-                    });
-                });
-            }
-            var cards = document.querySelectorAll('.tab-card-item');
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
-            cards.forEach(function(card) { observer.observe(card); });
-        });
-    </script>
 </body>
 </html>

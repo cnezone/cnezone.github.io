@@ -605,7 +605,7 @@
                     <i class="fab fa-whatsapp"></i>
                     <span class="btn-text">WhatsApp</span>
                 </a>
-                <button class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                <button type="button" class="mobile-nav-toggle" id="mobileToggle" aria-label="Toggle Navigation">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -658,9 +658,9 @@
 
     <!-- ===== LIGHTBOX ===== -->
     <div class="lightbox-overlay" id="lightboxOverlay">
-        <button class="lightbox-close" id="lightboxClose">&times;</button>
-        <button class="lightbox-nav prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
-        <button class="lightbox-nav next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+        <button type="button" class="lightbox-close" id="lightboxClose">&times;</button>
+        <button type="button" class="lightbox-nav prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+        <button type="button" class="lightbox-nav next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
         <div class="lightbox-content" id="lightboxContent"></div>
     </div>
 
@@ -676,7 +676,7 @@
                         <span class="project-category-badge">CCTV & Network</span>
                         <div class="project-number">01</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="ptcl" data-count="8"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="ptcl" data-count="8"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> Islamabad</span>
@@ -692,7 +692,7 @@
                         <span class="project-category-badge">Access Control</span>
                         <div class="project-number">02</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="nust" data-count="6"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="nust" data-count="6"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> NUST, Islamabad</span>
@@ -708,7 +708,7 @@
                         <span class="project-category-badge">CCTV</span>
                         <div class="project-number">03</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="d12" data-count="4"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="d12" data-count="4"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> Sector D-12, Islamabad</span>
@@ -724,7 +724,7 @@
                         <span class="project-category-badge">Networking</span>
                         <div class="project-number">04</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="b17" data-count="4"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="b17" data-count="4"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> Sector B-17, Islamabad</span>
@@ -740,7 +740,7 @@
                         <span class="project-category-badge">Access Control</span>
                         <div class="project-number">05</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="e11" data-count="4"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="e11" data-count="4"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> Sector E-11, Islamabad</span>
@@ -756,7 +756,7 @@
                         <span class="project-category-badge">Fire Safety</span>
                         <div class="project-number">06</div>
                         <div class="media-thumbnails"></div>
-                        <button class="open-gallery-btn" data-folder="fire" data-count="4"><i class="fas fa-images"></i> Gallery</button>
+                        <button type="button" class="open-gallery-btn" data-folder="fire" data-count="4"><i class="fas fa-images"></i> Gallery</button>
                     </div>
                     <div class="project-info">
                         <span class="project-location"><i class="fas fa-map-marker-alt"></i> Various Locations</span>
@@ -821,7 +821,7 @@
             </a>
         </div>
         <div class="assistant-chat-widget">
-            <button class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
+            <button type="button" class="qca-btn qca-chat" id="assistantToggleBtn" aria-label="Toggle Assistant">
                 <span class="pulse-indicator"></span>
                 <i class="fas fa-robot"></i>
                 <span class="qca-tooltip">Ask Assistant</span>
@@ -835,15 +835,15 @@
                             <span style="color:rgba(255,255,255,0.8); font-size:12px;">Online • Instant Answers</span>
                         </div>
                     </div>
-                    <button class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+                    <button type="button" class="acw-close-btn" id="assistantCloseBtn" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
                 </div>
                 <div class="acw-messages" id="acwMessages">
                     <div class="acw-msg bot">Hello! I'm your CNE Zone Assistant. Select a question below to get instant answers.</div>
                 </div>
                 <div class="acw-questions-grid">
-                    <button class="acw-q-btn" data-answer="CNE Zone provides professional CCTV, Access Control, Networking, and Fire Safety solutions.">What services do you offer?</button>
-                    <button class="acw-q-btn" data-answer="We install HD IP CCTV, biometric access, structured networking, and fire detection alarms.">What systems do you install?</button>
-                    <button class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
+                    <button type="button" class="acw-q-btn" data-answer="CNE Zone provides professional CCTV, Access Control, Networking, and Fire Safety solutions.">What services do you offer?</button>
+                    <button type="button" class="acw-q-btn" data-answer="We install HD IP CCTV, biometric access, structured networking, and fire detection alarms.">What systems do you install?</button>
+                    <button type="button" class="acw-q-btn" data-answer="We offer comprehensive Annual Maintenance Contracts (AMC) and 24/7 emergency repair support.">Do you provide maintenance and 24/7 support?</button>
                 </div>
                 <div class="acw-footer">
                     <a href="https://wa.me/923008005682" target="_blank" class="acw-wa-direct">
