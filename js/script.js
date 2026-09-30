@@ -28,7 +28,9 @@ document.querySelectorAll('[data-year]').forEach(el => {
 document.querySelectorAll('img').forEach(img => {
   if (img.closest('.project-img')) return; // handled by initProjectSlideshows
   img.addEventListener('error', function () {
-    this.style.visibility = 'hidden';
+    this.style.display = 'none';
+    const photoBox = this.closest('.badge-photo');
+    if (photoBox) photoBox.classList.add('img-fallback');
   });
 });
 
@@ -203,7 +205,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
   document.addEventListener('mouseout', (e) => { if (e.target.closest(targets)) ring.classList.remove('hover'); });
 })();
 
-// ===== "ASK HNIS" ASSISTANT (client-side FAQ widget) =====
+// ===== "ASK CNE Zone" ASSISTANT (client-side FAQ widget) =====
 // Note: this runs entirely in the browser — it matches your question against
 // a fixed set of answers below. It is not a live/connected AI model.
 (function initAssistant() {
@@ -212,7 +214,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
   const qa = [
     {
-      q: 'What services does HNIS provide?',
+      q: 'What services does CNE Zone provide?',
       a: 'We handle six areas in-house: CCTV & surveillance, access control & biometrics, structured networking, cyber & IT security, fire & life safety, and systems integration.'
     },
     {
@@ -247,11 +249,11 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
   panel.innerHTML = `
     <div class="assistant-head">
       <i class="fa-solid fa-robot"></i>
-      <div><strong>Ask HNIS</strong><span class="status">● Quick answers, no waiting</span></div>
+      <div><strong>Ask CNE Zone</strong><span class="status">● Quick answers, no waiting</span></div>
       <button class="assistant-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="assistant-body" id="assistantBody">
-      <div class="assistant-msg bot">Hi — I'm the HNIS quick-answer desk. Tap a question below, or type your own.</div>
+      <div class="assistant-msg bot">Hi — I'm the CNE Zone quick-answer desk. Tap a question below, or type your own.</div>
       <div class="assistant-quick" id="assistantQuick"></div>
     </div>
     <div class="assistant-input-row">
@@ -291,7 +293,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
       words.forEach(w => { if (t.includes(w)) score++; });
       if (score > bestScore) { bestScore = score; best = item; }
     });
-    return bestScore > 0 ? best.a : "I don't have a canned answer for that yet — please reach the ops desk at 0300 800 5682 or getinfo.hnis@gmail.com and a technician will get back to you.";
+    return bestScore > 0 ? best.a : "I don't have a canned answer for that yet — please reach the ops desk at 0300 800 5682 or cne.zonee@gmail.com and a technician will get back to you.";
   }
 
   function ask(text) {
@@ -314,6 +316,38 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     panel.classList.toggle('open');
   });
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+})();
+
+// ===== FORM SUBMISSION CONFIRMATION (contact page) =====
+(function initFormSuccessToast() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('sent') !== '1') return;
+
+  const toast = document.createElement('div');
+  toast.className = 'success-toast';
+  toast.innerHTML = `
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Thank you! Your message has been sent — we'll get back to you soon.</span>
+    <button class="toast-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  `;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => toast.classList.add('show'));
+
+  function hide() {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }
+
+  const autoHide = setTimeout(hide, 6000);
+  toast.querySelector('.toast-close').addEventListener('click', () => {
+    clearTimeout(autoHide);
+    hide();
+  });
+
+  params.delete('sent');
+  const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+  window.history.replaceState({}, document.title, cleanUrl);
 })();
 
 // ===== MAGNETIC BUTTONS =====
