@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Layout &amp; Site Survey Tool | CNE Zone</title>
+    <meta name="description" content="Free CCTV layout and site survey tool by CNE Zone: mark cameras and access control devices on a PDF floor plan and export a map and BOQ.">
+    <link rel="icon" href="images/favicon.png?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6; }
+        #canvasContainer { position: relative; overflow: auto; background: #e5e7eb; border: 2px dashed #9ca3af; border-radius: 8px; max-height: 75vh; }
+        canvas { display: block; background: #ffffff; cursor: default; transform-origin: top left; }
+        .placement-active canvas { cursor: cell !important; }
+        .linking-active canvas { cursor: nodrop !important; }
+    </style>
+</head>
+<body class="h-screen flex flex-col">
+
+    <header class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" title="Back to CNE Zone website"><img src="images/logo-white.png" alt="CNE Zone" class="h-10 w-auto"></a>
+            <div class="border-l border-slate-700 pl-3">
+                <p class="text-sm font-semibold text-white leading-tight">CCTV Layout &amp; Access Control Design Engine</p>
+                <a href="tools.html" class="text-xs text-slate-400 hover:text-amber-400">&larr; Back to Tools</a>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+            <div class="bg-slate-800 rounded-lg p-1.5 flex items-center space-x-2 border border-slate-700">
+                <span class="text-xs font-bold text-amber-400 pl-1">⚙️ Layer:</span>
+                <select id="layerFilterSelect" class="bg-slate-900 text-white border border-slate-600 rounded px-2 py-0.5 text-xs font-medium focus:outline-none focus:border-blue-500">
+                    <option value="ALL">All Layers (CCTV + ACS)</option>
+                    <option value="CCTV">Only CCTV Layout</option>
+                    <option value="ACS">Only ACS & TA Layout</option>
+                </select>
+            </div>
+
+            <div class="bg-slate-800 rounded-lg p-1.5 flex items-center space-x-2 border border-slate-700">
+                <button id="saveProjectBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium py-1 px-3 rounded text-xs transition-colors shadow">
+                    💾 Save Master Project (.cne)
+                </button>
+                <input type="file" id="importProjectFile" accept=".cne" class="hidden" />
+                <label for="importProjectFile" class="bg-amber-600 hover:bg-amber-500 text-white font-medium py-1 px-3 rounded text-xs transition-colors shadow cursor-pointer">
+                    📂 Load Project File
+                </label>
+            </div>
+
+            <div class="bg-slate-800 rounded-lg p-1 flex items-center space-x-1 border border-slate-700">
+                <button id="zoomOutBtn" class="bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded text-xs font-bold font-mono transition-colors shadow">-</button>
+                <span id="zoomLabel" class="text-xs font-semibold px-2 text-slate-300 min-w-[50px] text-center">100%</span>
+                <button id="zoomInBtn" class="bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded text-xs font-bold font-mono transition-colors shadow">+</button>
+            </div>
+            
+            <input type="file" id="pdfUpload" accept="application/pdf" class="hidden" />
+            <label for="pdfUpload" class="bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-3 rounded shadow cursor-pointer text-sm transition-colors border border-slate-600">
+                🗺️ Upload PDF Map
+            </label>
+            <button id="exportPdfBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded shadow text-sm transition-colors">
+                📄 Export Map & BOQ
+            </button>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden" id="workspace">
+        
+        <aside class="w-85 bg-white border-r border-gray-200 p-4 flex flex-col space-y-4 overflow-y-auto shadow-inner">
+            
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm">
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Project / Floor Plan Name</label>
+                <input type="text" id="floorPlanNameInput" placeholder="e.g., Ground Floor" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:outline-blue-500 font-medium text-slate-800" />
+            </div>
+
+            <div>
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Add Security & Network Devices</h2>
+                <p class="text-[11px] text-amber-600 font-bold mb-2 hidden" id="placementHint">⚠️ CLICK ON THE MAP TO DROP/PLACE SELECTED ICON</p>
+                <p class="text-[11px] text-emerald-600 font-bold mb-2 hidden" id="cableHint">🔌 Click 1st device ➔ Click empty canvas spaces for turns ➔ Click 2nd device to Finish</p>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="addBulletBtn" class="flex flex-col items-center justify-center p-2 border border-gray-200 hover:border-blue-500 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-gray-700">📹 Bullet Cam</span>
+                    </button>
+                    <button id="addDomeBtn" class="flex flex-col items-center justify-center p-2 border border-gray-200 hover:border-blue-500 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-gray-700">🛑 Dome Cam</span>
+                    </button>
+                    <button id="addPtzBtn" class="flex flex-col items-center justify-center p-2 border border-gray-200 hover:border-blue-500 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-gray-700">🔄 PTZ Cam</span>
+                    </button>
+                    <button id="addPoleBtn" class="flex flex-col items-center justify-center p-2 border border-gray-200 hover:border-blue-500 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-gray-700">🗼 CCTV Pole</span>
+                    </button>
+                    <button id="addFaceBtn" class="flex flex-col items-center justify-center p-2 border border-purple-200 hover:border-purple-500 rounded-xl bg-purple-50 hover:bg-purple-100 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-purple-950">👤 Face Cam</span>
+                    </button>
+                    <button id="addLprBtn" class="flex flex-col items-center justify-center p-2 border border-amber-200 hover:border-amber-500 rounded-xl bg-amber-50 hover:bg-amber-100 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-amber-950">🚗 ANPR Cam</span>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <button id="addAcsBtn" class="flex flex-col items-center justify-center p-2 border border-slate-200 hover:border-slate-500 rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-slate-800">🚪 ACS Reader</span>
+                    </button>
+                    <button id="addTaBtn" class="flex flex-col items-center justify-center p-2 border border-slate-200 hover:border-slate-500 rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-slate-800">🕒 TA Terminal</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <button id="addNoteBtn" class="flex flex-col items-center justify-center p-2 border border-gray-200 hover:border-blue-500 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-gray-700">📝 Add Note</span>
+                    </button>
+                    <button id="addBlackDotBtn" class="flex flex-col items-center justify-center p-2 border border-stone-400 hover:border-stone-900 rounded-xl bg-stone-100 hover:bg-stone-200 cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-stone-900 flex items-center space-x-1"><span>⚫</span> <span>Round Dot</span></span>
+                    </button>
+                </div>
+                
+                <div class="mt-2 space-y-1.5">
+                    <button id="addSwitchBtn" class="w-full flex p-2 border border-gray-200 hover:border-indigo-500 rounded-xl bg-slate-50 hover:bg-indigo-50 justify-center cursor-pointer transition-all">
+                        <span class="text-xs font-bold text-indigo-700">🎛️ IT Rack / Network Switch</span>
+                    </button>
+                    <button id="startCableBtn" class="w-full flex p-2.5 border-2 border-emerald-500 hover:border-emerald-600 rounded-xl bg-emerald-50 hover:bg-emerald-100 justify-center cursor-pointer transition-all shadow-sm">
+                        <span class="text-xs font-bold text-emerald-800">🟢 Connect Devices (Multi-Bend Route)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="propertiesPanel" class="hidden border-t border-gray-100 pt-3">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2.5">Device Properties</h2>
+                <div class="space-y-3 text-xs">
+                    
+                    <div id="propNameWrapper">
+                        <label class="block text-gray-600 font-medium mb-1">Device Name / Number / Value</label>
+                        <input type="text" id="propName" class="w-full border border-gray-300 rounded px-2 py-1.5 focus:outline-blue-500 font-medium" />
+                    </div>
+
+                    <div id="labelTextManagementWrapper" class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 space-y-2">
+                        <span class="block font-bold text-gray-700 text-[11px] uppercase tracking-wide">Label Text Management</span>
+                        <div>
+                            <label class="block text-gray-600 mb-1 text-[11px]">Text Color</label>
+                            <select id="propTextColor" class="w-full border border-gray-300 bg-white rounded px-2 py-1">
+                                <option value="#334155">Slate (Default)</option>
+                                <option value="#ef4444">Red</option>
+                                <option value="#2563eb">Blue</option>
+                                <option value="#7e22ce">Purple</option>
+                                <option value="#e11d48">Rose</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[11px] text-gray-600">
+                                <label>Adjust Position X</label>
+                                <span id="offsetXVal">0px</span>
+                            </div>
+                            <input type="range" id="propOffsetX" min="-60" max="60" value="0" class="w-full accent-blue-600" />
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[11px] text-gray-600">
+                                <label>Adjust Position Y</label>
+                                <span id="offsetYVal">14px</span>
+                            </div>
+                            <input type="range" id="propOffsetY" min="-40" max="80" value="14" class="w-full accent-blue-600" />
+                        </div>
+                    </div>
+                    
+                    <div id="fovProjectionWrapper" class="flex items-center space-x-2 bg-gray-50 p-2 rounded border border-gray-200">
+                        <input type="checkbox" id="propShowFov" class="w-4 h-4 text-blue-600 border-gray-300 rounded" checked />
+                        <label for="propShowFov" class="font-medium text-gray-700 cursor-pointer">Enable FOV Shade Projection</label>
+                    </div>
+
+                    <div id="deviceSizeWrapper">
+                        <label class="block text-gray-600 mb-1">Device Icon Size</label>
+                        <div class="flex items-center space-x-1.5">
+                            <button id="sizeDecreaseBtn" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 font-bold px-2.5 py-1 rounded text-xs">-</button>
+                            <input type="range" id="propSize" min="10" max="80" class="w-full accent-blue-600" />
+                            <button id="sizeIncreaseBtn" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 font-bold px-2.5 py-1 rounded text-xs">+</button>
+                            <span id="sizeVal" class="text-gray-500 min-w-[30px] text-right">36px</span>
+                        </div>
+                    </div>
+                    
+                    <div id="flipControlsWrapper">
+                        <label class="block text-gray-600 mb-1">Flip Device Icon</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="flipHBtn" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 py-1 px-2 rounded text-center">↔ Flip Horiz</button>
+                            <button id="flipVBtn" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 py-1 px-2 rounded text-center">↕ Flip Vertic</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2" id="fovNumericParameters">
+                        <div>
+                            <label class="block text-gray-600 mb-1">FOV Angle (°)</label>
+                            <input type="number" id="propFov" min="10" max="360" class="w-full border border-gray-300 rounded px-2 py-1" />
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 mb-1">Range (px)</label>
+                            <input type="number" id="propRange" min="20" max="500" class="w-full border border-gray-300 rounded px-2 py-1" />
+                        </div>
+                    </div>
+                    
+                    <div id="rotationSliderWrapper">
+                        <label class="block text-gray-600 mb-1">Rotation / Direction (°)</label>
+                        <input type="range" id="propRotation" min="0" max="360" value="0" class="w-full accent-blue-600" />
+                        <div class="text-right text-gray-500 mt-0.5" id="rotationVal">0°</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-100">
+                        <button id="duplicateCamBtn" class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-medium py-2 rounded text-center cursor-pointer">📋 Duplicate</button>
+                        <button id="deleteCamBtn" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-medium py-2 rounded text-center cursor-pointer">🗑️ Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cablePropertiesPanel" class="hidden border-t border-gray-100 pt-3">
+                <h2 class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2.5">Cable Link Properties</h2>
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">Cable Type / Label Name</label>
+                        <input type="text" id="cablePropName" class="w-full border border-gray-300 rounded px-2 py-1.5 focus:outline-emerald-500" />
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">Cable Color Coding</label>
+                        <select id="cablePropColor" class="w-full border border-gray-300 bg-white rounded px-2 py-1.5 focus:outline-emerald-500">
+                            <option value="#10b981">Green (Standard Link)</option>
+                            <option value="#ef4444">Red (Power / Critical)</option>
+                            <option value="#2563eb">Blue (Network Lan)</option>
+                            <option value="#a855f7">Purple (AI Data Trunk)</option>
+                            <option value="#000000">Black (Outdoor Tough)</option>
+                        </select>
+                    </div>
+                    <div class="pt-2">
+                        <button id="deleteCableBtn" class="w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-medium py-2 rounded text-center cursor-pointer">🗑️ Delete Cable Link</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-col border-t border-gray-100 pt-3">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">BOQ Live Inventory Summary</h2>
+                <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 flex-1 overflow-y-auto text-xs space-y-2" id="boqContainer">
+                    <p class="text-gray-400 italic text-center py-4">No devices placed yet.</p>
+                </div>
+            </div>
+
+        </aside>
+
+        <main class="flex-1 p-5 flex justify-center items-center overflow-auto">
+            <div id="canvasContainer" class="shadow-lg">
+                <canvas id="layoutCanvas" width="1024" height="768"></canvas>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        const canvas = document.getElementById('layoutCanvas');
+        const ctx = canvas.getContext('2d');
+        const workspace = document.getElementById('workspace');
+        const placementHint = document.getElementById('placementHint');
+        const cableHint = document.getElementById('cableHint');
+        const layerFilterSelect = document.getElementById('layerFilterSelect');
+        
+        let cameras = [];
+        let cables = []; 
+        let selectedCamera = null;
+        let selectedCable = null; 
+        
+        let isDraggingDevice = false;
+        let draggingWaypointIndex = -1; 
+        let pdfPageBackground = null; 
+        let cachedPdfBytes = null; 
+
+        let pendingDeviceType = null; 
+        let cableLinkingMode = false;
+        let cableSourceDevice = null;
+        let temporaryWaypoints = []; 
+        let mouseCurrentX = 0;
+        let mouseCurrentY = 0;
+
+        let currentZoom = 1.0;
+        const minZoom = 0.5;
+        const maxZoom = 2.5;
+        const zoomStep = 0.1;
+
+        let deviceCounters = {
+            Bullet: 0, Dome: 0, PTZ: 0, Pole: 0, Switch: 0, Face: 0, ANPR: 0, ACS: 0, TA: 0, Note: 0, BlackDot: 0
+        };
+
+        // UI Connectors
+        const propPanel = document.getElementById('propertiesPanel');
+        const cablePanel = document.getElementById('cablePropertiesPanel');
+        const propName = document.getElementById('propName');
+        const propTextColor = document.getElementById('propTextColor');
+        const propOffsetX = document.getElementById('propOffsetX');
+        const propOffsetY = document.getElementById('propOffsetY');
+        const offsetXVal = document.getElementById('offsetXVal');
+        const offsetYVal = document.getElementById('offsetYVal');
+        const propShowFov = document.getElementById('propShowFov');
+        const propSize = document.getElementById('propSize');
+        const sizeVal = document.getElementById('sizeVal');
+        const propFov = document.getElementById('propFov');
+        const propRange = document.getElementById('propRange');
+        const propRotation = document.getElementById('propRotation');
+        const rotationVal = document.getElementById('rotationVal');
+
+        const cablePropName = document.getElementById('cablePropName');
+        const cablePropColor = document.getElementById('cablePropColor');
+
+        // --- SVGs Vector Paths ---
+        const bulletPath = new Path2D("m496,63.984h-19.78l3.218-11.797c1.313-4.797 0.305-9.953-2.719-13.922-3.031-3.953-7.734-6.281-12.719-6.281h-448c-8.836,0-16,7.156-16,16v176c0,8.844 7.164,16 16,16h120.008l43.195,57.594c3.016,4.031 7.758,6.406 12.797,6.406h16v32c0,26.484-21.547,48.031-48.031,48.031h-79.969v-16c0-5.344-2.672-10.344-7.125-13.313l-48-32c-4.922-3.281-11.25-3.594-16.422-0.797-5.203,2.783-8.453,8.204-8.453,14.111v128c0,5.906 3.25,11.328 8.453,14.109 2.359,1.266 4.961,1.891 7.547,1.891 3.102,0 6.195-0.906 8.875-2.688l48-32c4.453-2.969 7.125-7.969 7.125-13.313v-16h79.969c44.133,0 80.031-35.906 80.031-80.031v-32h16c5.039,0 9.781-2.375 12.797-6.406l43.195-57.594h104.008c7.219,0 13.539-4.828 15.438-11.797l9.874-36.203h54.688c8.836,0 16-7.156 16-16v-96c0-8.843-7.164-16-16-16zm-448,359.469l-16,10.672v-68.219l16,10.672v46.875zm200-151.469h-48l-24-32h96l-24,32zm155.781-64h-99.781-160-112v-144h411.055l-39.274,144zm76.219-48h-29.962l17.455-64h12.507v64z");
+        const ptzPathMain = new Path2D("M253.126,0v23.438H93.751c-12.923,0-23.438,10.514-23.438,23.438V75H23.439v37.5h-9.375c-7.754,0-14.063,6.309-14.063,14.063l0.014,33.173L5.035,225h6.595c8.672,38.241,42.548,65.625,82.12,65.625c39.572,0,73.448-27.384,82.12-65.625h6.595l5.034-65.625v-32.813c0-7.753-6.309-14.063-14.063-14.063h-9.375V84.375h68.119l20.944,25.134V187.5h37.5V0H253.126z M32.814,84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V84.375h9.375v14.063h9.375V112.5H32.814V84.375z M93.751,281.25c-34.463,0-64.13-23.339-72.563-56.25h145.125C157.881,257.911,128.213,281.25,93.751,281.25z M164.064,121.875h9.375c2.583,0,4.688,2.1,4.688,4.688l0.014,28.125h-14.077v9.375h13.687l-3.966,51.563H13.717l-3.98-51.563h144.952v-9.375H9.376v-28.125c0-2.588,2.105-4.688,4.688-4.688h9.375H164.064z M253.127,94.865L236.57,75h-72.506H79.689V46.875c0-7.753,6.309-14.063,14.063-14.063h159.375V94.865z M281.251,178.125h-18.75v-57.366V23.438V9.375h18.75V178.125z");
+        const ptzDot1 = new Path2D("M146.471,236.723l-8.109-4.697c-1.758,3.028-3.863,5.925-6.253,8.592l6.98,6.262C141.906,243.731,144.395,240.314,146.471,236.723z");
+        const ptzDot2 = new Path2D("M127.412,257.03l-5.184-7.809c-16.922,11.241-40.027,11.241-56.948,0l-5.184,7.809c9.998,6.647,21.638,10.158,33.656,10.158C105.77,267.188,117.409,263.677,127.412,257.03z");
+        const domeLayer6 = new Path2D("M485.083,54.98H26.917C12.075,54.98,0,67.055,0,81.897v102.369c0,7.19,2.801,13.95,7.884,19.033l28.769,28.768v5.606c0,120.948,98.399,219.347,219.347,219.347s219.347-98.399,219.347-219.347v-5.606l28.768-28.769c5.085-5.083,7.885-11.844,7.885-19.033V81.897C512,67.055,499.925,54.98,485.083,54.98z M256,439.839c-111.474,0-202.166-90.692-202.166-202.166v-0.573h28.067c4.744,0,8.591-3.846,8.591-8.591c0-4.744-3.846-8.591-8.591-8.591h-33.1l-28.635-28.635h336.631c4.744,0,8.591-3.846,8.591-8.591s-3.846-8.591-8.591-8.591H17.181V81.897c0-5.369,4.367-9.736,9.736-9.736h458.166c5.369,0,9.736,4.367,9.736,9.736v92.206h-46.388c-4.744,0-8.591,3.846-8.591,8.591s3.846,8.591,8.591,8.591h43.402l-28.635,28.635H118.55c-4.744,0-8.591,3.846-8.591,8.591c0,4.744,3.846,8.591,8.591,8.591h339.615v0.573C458.166,349.147,367.474,439.839,256,439.839z");
+
+        // --- Core Application Bindings ---
+        document.getElementById('addBulletBtn').addEventListener('click', () => setPlacementMode('Bullet'));
+        document.getElementById('addDomeBtn').addEventListener('click', () => setPlacementMode('Dome'));
+        document.getElementById('addPtzBtn').addEventListener('click', () => setPlacementMode('PTZ'));
+        document.getElementById('addPoleBtn').addEventListener('click', () => setPlacementMode('Pole'));
+        document.getElementById('addSwitchBtn').addEventListener('click', () => setPlacementMode('Switch'));
+        document.getElementById('addFaceBtn').addEventListener('click', () => setPlacementMode('Face'));
+        document.getElementById('addLprBtn').addEventListener('click', () => setPlacementMode('ANPR'));
+        document.getElementById('addAcsBtn').addEventListener('click', () => setPlacementMode('ACS'));
+        document.getElementById('addTaBtn').addEventListener('click', () => setPlacementMode('TA'));
+        document.getElementById('addNoteBtn').addEventListener('click', () => setPlacementMode('Note'));
+        document.getElementById('addBlackDotBtn').addEventListener('click', () => setPlacementMode('BlackDot'));
+        
+        document.getElementById('startCableBtn').addEventListener('click', activateCableMode);
+        document.getElementById('deleteCamBtn').addEventListener('click', deleteSelectedCamera);
+        document.getElementById('duplicateCamBtn').addEventListener('click', duplicateSelectedCamera);
+        document.getElementById('deleteCableBtn').addEventListener('click', deleteSelectedCable);
+
+        document.getElementById('flipHBtn').addEventListener('click', () => { if(selectedCamera) { selectedCamera.flipH = !selectedCamera.flipH; draw(); } });
+        document.getElementById('flipVBtn').addEventListener('click', () => { if(selectedCamera) { selectedCamera.flipV = !selectedCamera.flipV; draw(); } });
+
+        document.getElementById('zoomInBtn').addEventListener('click', () => adjustZoom(zoomStep));
+        document.getElementById('zoomOutBtn').addEventListener('click', () => adjustZoom(-zoomStep));
+        document.getElementById('sizeDecreaseBtn').addEventListener('click', () => changeSelectedSize(-4));
+        document.getElementById('sizeIncreaseBtn').addEventListener('click', () => changeSelectedSize(4));
+
+        layerFilterSelect.addEventListener('change', () => { deselectAll(); updateUI(); draw(); });
+
+        document.getElementById('saveProjectBtn').addEventListener('click', exportCneProjectFile);
+        document.getElementById('importProjectFile').addEventListener('change', importCneProjectFile);
+
+        function adjustZoom(amount) {
+            currentZoom = Math.min(maxZoom, Math.max(minZoom, currentZoom + amount));
+            document.getElementById('zoomLabel').innerText = `${Math.round(currentZoom * 100)}%`;
+            canvas.style.transform = `scale(${currentZoom})`;
+        }
+
+        function setPlacementMode(type) {
+            pendingDeviceType = type;
+            cableLinkingMode = false;
+            workspace.className = "flex-1 flex overflow-hidden placement-active";
+            placementHint.classList.remove('hidden');
+            cableHint.classList.add('hidden');
+            deselectAll();
+            draw();
+        }
+
+        function activateCableMode() {
+            cableLinkingMode = true;
+            pendingDeviceType = null;
+            cableSourceDevice = null;
+            temporaryWaypoints = [];
+            workspace.className = "flex-1 flex overflow-hidden linking-active";
+            cableHint.classList.remove('hidden');
+            placementHint.classList.add('hidden');
+            deselectAll();
+            draw();
+        }
+
+        function isDeviceInActiveLayer(deviceType) {
+            const currentFilter = layerFilterSelect.value;
+            if (currentFilter === 'ALL') return true;
+            
+            const isAcsItem = (deviceType === 'ACS' || deviceType === 'TA');
+            if (currentFilter === 'CCTV') {
+                return !isAcsItem; 
+            } else if (currentFilter === 'ACS') {
+                return isAcsItem || deviceType === 'Switch'; 
+            }
+            return true;
+        }
+
+        function createCameraAtCoordinates(type, targetX, targetY) {
+            deviceCounters[type]++;
+            const idNum = deviceCounters[type].toString().padStart(3, '0');
+            
+            const isSw = (type === 'Switch');
+            const isAcs = (type === 'ACS');
+            const isTa = (type === 'TA');
+            const isNote = (type === 'Note');
+            const isBlackDot = (type === 'BlackDot');
+            
+            let prefix = 'CAM-';
+            if(isSw) prefix = 'SW-';
+            if(isAcs) prefix = 'ACS-';
+            if(isTa) prefix = 'TA-';
+            if(type === 'Face') prefix = 'FRC-';
+            if(type === 'ANPR') prefix = 'ANPR-';
+            if(isNote) prefix = 'NOTE-';
+            if(isBlackDot) prefix = 'DOT-';
+
+            let defaultName = `${type}-${idNum}`;
+            if(isSw) defaultName = `Switch-${idNum}`;
+            if(isAcs) defaultName = `ACS-${idNum}`;
+            if(isTa) defaultName = `TA-${idNum}`;
+            if(type === 'Face') defaultName = `Face Cam-${idNum}`;
+            if(type === 'ANPR') defaultName = `ANPR Cam-${idNum}`;
+            if(isNote) defaultName = `Note Entry ${idNum}`;
+            if(isBlackDot) defaultName = ``; // Black dot label empty rkhein gey taake layout clean rhey
+
+            const newDevice = {
+                id: prefix + idNum + '-' + Date.now().toString().slice(-3),
+                name: defaultName,
+                type: type,
+                x: targetX,
+                y: targetY,
+                fov: (type === 'PTZ' || type === 'ANPR') ? 60 : 90,
+                range: type === 'ANPR' ? 160 : (type === 'Pole' ? 150 : (isAcs || isTa ? 40 : 130)),
+                angle: 0,
+                showFov: (!isSw && !isAcs && !isTa && type !== 'Pole' && !isNote && !isBlackDot), 
+                flipH: false,
+                flipV: false,
+                size: isBlackDot ? 12 : ((isAcs || isTa) ? 38 : (isSw ? 42 : (isNote ? 25 : 36))),
+                textColor: type === 'Face' ? '#7e22ce' : (type === 'ANPR' ? '#b45309' : '#334155'),
+                offsetX: 0,
+                offsetY: isNote ? 0 : 14
+            };
+            cameras.push(newDevice);
+            selectCamera(newDevice);
+            updateUI();
+            draw();
+        }
+
+        function duplicateSelectedCamera() {
+            if (!selectedCamera) return;
+            
+            const type = selectedCamera.type;
+            deviceCounters[type]++;
+            const idNum = deviceCounters[type].toString().padStart(3, '0');
+            
+            let prefix = 'CAM-';
+            if(type === 'Switch') prefix = 'SW-';
+            if(type === 'ACS') prefix = 'ACS-';
+            if(type === 'TA') prefix = 'TA-';
+            if(type === 'Face') prefix = 'FRC-';
+            if(type === 'ANPR') prefix = 'ANPR-';
+            if(type === 'Note') prefix = 'NOTE-';
+            if(type === 'BlackDot') prefix = 'DOT-';
+
+            let defaultName = `${type}-${idNum}`;
+            if(type === 'Switch') defaultName = `Switch-${idNum}`;
+            if(type === 'ACS') defaultName = `ACS-${idNum}`;
+            if(type === 'TA') defaultName = `TA-${idNum}`;
+            if(type === 'Face') defaultName = `Face Cam-${idNum}`;
+            if(type === 'ANPR') defaultName = `ANPR Cam-${idNum}`;
+            if(type === 'Note') defaultName = `Note Entry ${idNum}`;
+            if(type === 'BlackDot') defaultName = ``;
+
+            const duplicatedCam = {
+                ...selectedCamera,
+                id: prefix + idNum + '-' + Date.now().toString().slice(-3),
+                name: defaultName,
+                x: selectedCamera.x + 25,
+                y: selectedCamera.y + 25
+            };
+            cameras.push(duplicatedCam);
+            selectCamera(duplicatedCam);
+            updateUI();
+            draw();
+        }
+
+        function changeSelectedSize(delta) {
+            if (!selectedCamera) return;
+            let currentSize = parseInt(propSize.value) || 36;
+            let targetSize = Math.min(80, Math.max(10, currentSize + delta));
+            propSize.value = targetSize;
+            sizeVal.innerText = `${targetSize}px`;
+            selectedCamera.size = targetSize;
+            draw();
+        }
+
+        // --- Core Draw Engine Render Loop ---
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (pdfPageBackground) {
+                ctx.drawImage(pdfPageBackground, 0, 0, canvas.width, canvas.height);
+            } else {
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < canvas.width; i += 40) {
+                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                }
+                for (let j = 0; j < canvas.height; j += 40) {
+                    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
+                }
+            }
+
+            cameras.forEach(cam => {
+                if (cam.showFov && isDeviceInActiveLayer(cam.type)) drawFOV(ctx, cam);
+            });
+
+            cables.forEach(wire => {
+                const devA = cameras.find(c => c.id === wire.from);
+                const devB = cameras.find(c => c.id === wire.to);
+                if (devA && devB && isDeviceInActiveLayer(devA.type) && isDeviceInActiveLayer(devB.type)) {
+                    drawMultiBendCable(ctx, wire);
+                }
+            });
+
+            if (cableLinkingMode && cableSourceDevice) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(cableSourceDevice.x, cableSourceDevice.y);
+                temporaryWaypoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
+                ctx.lineTo(mouseCurrentX, mouseCurrentY);
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([6, 4]);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            cameras.forEach(cam => {
+                if (isDeviceInActiveLayer(cam.type)) {
+                    drawDeviceVector(ctx, cam);
+                    if(cam.type !== 'BlackDot' && cam.name) {
+                        drawCameraLabel(ctx, cam);
+                    }
+                }
+            });
+
+            if (selectedCable) {
+                const dA = cameras.find(c => c.id === selectedCable.from);
+                const dB = cameras.find(c => c.id === selectedCable.to);
+                if(dA && dB && isDeviceInActiveLayer(dA.type) && isDeviceInActiveLayer(dB.type)) {
+                    drawCableEditHandles(ctx, selectedCable);
+                }
+            }
+
+            if (selectedCamera && isDeviceInActiveLayer(selectedCamera.type)) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(selectedCamera.x, selectedCamera.y, (selectedCamera.size / 2) + 8, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#2563eb';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([4, 4]);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function drawFOV(ctx, camera) {
+            ctx.save();
+            ctx.translate(camera.x, camera.y);
+            ctx.rotate(camera.angle * Math.PI / 180); 
+
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            const halfFov = camera.fov / 2;
+            const radStart = (-halfFov) * Math.PI / 180;
+            const radEnd = (halfFov) * Math.PI / 180;
+
+            ctx.arc(0, 0, camera.range, radStart, radEnd);
+            ctx.lineTo(0, 0);
+            ctx.closePath();
+
+            if(camera.type === 'Face') {
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.22)'; 
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.45)';
+            } else if(camera.type === 'ANPR') {
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.22)'; 
+                ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
+            } else {
+                ctx.fillStyle = camera.type === 'Pole' ? 'rgba(234, 179, 8, 0.18)' : 'rgba(14, 165, 233, 0.2)'; 
+                ctx.strokeStyle = camera.type === 'Pole' ? 'rgba(234, 179, 8, 0.4)' : 'rgba(14, 165, 233, 0.4)';
+            }
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawDeviceVector(ctx, camera) {
+            ctx.save();
+            ctx.translate(camera.x, camera.y);
+            ctx.rotate(camera.angle * Math.PI / 180);
+
+            let fx = camera.flipH ? -1 : 1;
+            let fy = camera.flipV ? -1 : 1;
+            ctx.scale(fx, fy);
+
+            let iconSize = camera.size || 36;
+
+            if (camera.type === 'BlackDot') {
+                // Sleek engineering black dot renderer
+                ctx.fillStyle = "#000000";
+                ctx.beginPath();
+                ctx.arc(0, 0, iconSize / 2, 0, 2 * Math.PI);
+                ctx.fill();
+
+            } else if (camera.type === 'Bullet' || camera.type === 'Face' || camera.type === 'ANPR') {
+                let s = iconSize / 512;
+                ctx.scale(s, s); 
+                ctx.translate(-256, -256); 
+                
+                if(camera.type === 'Face') {
+                    ctx.fillStyle = "#581c87"; 
+                } else if(camera.type === 'ANPR') {
+                    ctx.fillStyle = "#0f172a"; 
+                } else {
+                    ctx.fillStyle = "#1e293b"; 
+                }
+                ctx.fill(bulletPath);
+
+                if (camera.type === 'Face') {
+                    ctx.restore(); ctx.save(); 
+                    ctx.translate(camera.x, camera.y);
+                    ctx.rotate(camera.angle * Math.PI / 180);
+                    ctx.scale(fx, fy);
+                    
+                    ctx.fillStyle = "#a855f7"; ctx.font = "bold 9px sans-serif";
+                    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                    ctx.fillText("FRC", 0, -iconSize/2);
+                }
+                else if (camera.type === 'ANPR') {
+                    ctx.restore(); ctx.save();
+                    ctx.translate(camera.x, camera.y);
+                    ctx.rotate(camera.angle * Math.PI / 180);
+                    ctx.scale(fx, fy);
+
+                    ctx.fillStyle = "#f59e0b"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.rect(-15, -7, 30, 14); ctx.fill(); ctx.stroke();
+                    
+                    ctx.fillStyle = "#000000"; ctx.font = "black 8px sans-serif";
+                    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                    ctx.fillText("ANPR", 0, 0.5);
+                } else {
+                    ctx.fillStyle = "#ef4444"; 
+                    ctx.beginPath(); ctx.arc(80, 111.984, 16, 0, 2 * Math.PI); ctx.fill();
+                    ctx.beginPath(); ctx.arc(144, 111.984, 16, 0, 2 * Math.PI); ctx.fill();
+                }
+
+            } else if (camera.type === 'PTZ') {
+                ctx.rotate(90 * Math.PI / 180); 
+                let s = iconSize / 290.625;
+                ctx.scale(s, s); ctx.translate(-145.31, -145.31); 
+                ctx.fillStyle = "#0f172a"; ctx.fill(ptzPathMain);
+                ctx.fill(ptzDot1); ctx.fill(ptzDot2);
+
+            } else if (camera.type === 'Dome') {
+                ctx.rotate(90 * Math.PI / 180);
+                let s = (iconSize + 2) / 512;
+                ctx.scale(s, s); ctx.translate(-256, -256); 
+                ctx.fillStyle = "#1e293b"; ctx.fill(domeLayer6);
+                ctx.fillStyle = "#FFFFFF";
+                ctx.beginPath(); ctx.arc(276.617, 317.852, 16.036, 0, 2 * Math.PI); ctx.fill();
+
+            } else if (camera.type === 'Pole') {
+                ctx.lineWidth = 3; ctx.strokeStyle = "#475569"; ctx.fillStyle = "#cbd5e1";
+                ctx.beginPath(); ctx.arc(0, 0, iconSize / 2, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
+                ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 4;
+                ctx.beginPath(); ctx.moveTo(-iconSize/2, 0); ctx.lineTo(iconSize/2, 0); ctx.stroke();
+                ctx.fillStyle = "#ef4444"; ctx.beginPath(); ctx.arc(0, 0, 4, 0, 2 * Math.PI); ctx.fill();
+
+            } else if (camera.type === 'Switch') {
+                ctx.fillStyle = "#1e1b4b"; ctx.strokeStyle = "#4338ca"; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.rect(-iconSize, -iconSize / 2.5, iconSize * 2, iconSize * 0.8);
+                ctx.fill(); ctx.stroke();
+                ctx.fillStyle = "#34d399"; 
+                for (let p = -iconSize + 6; p < iconSize - 4; p += 10) { ctx.fillRect(p, -2, 5, 5); }
+            
+            } else if (camera.type === 'ACS') {
+                let w = iconSize * 0.75;
+                let h = iconSize * 1.1;
+                ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.roundRect(-w/2, -h/2, w, h, 3); ctx.fill(); ctx.stroke();
+                
+                ctx.strokeStyle = "#475569"; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.arc(0, -h/6, w/4, Math.PI, 0); ctx.stroke();
+                ctx.beginPath(); ctx.arc(0, 0, w/4, 0, Math.PI); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(-w/4, h/4); ctx.lineTo(w/4, h/4); ctx.stroke();
+
+            } else if (camera.type === 'TA') {
+                let w = iconSize * 1.1;
+                let h = iconSize * 0.9;
+                ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 2.5;
+                ctx.beginPath(); ctx.roundRect(-w/2, -h/2, w, h, 4); ctx.fill(); ctx.stroke();
+                
+                ctx.strokeStyle = "#334155"; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.rect(-w/2 + 6, -h/2 + 6, w * 0.45, h - 12); ctx.stroke();
+                
+                ctx.fillStyle = "#475569";
+                for(let row = -h/3; row <= h/4; row += 6) {
+                    ctx.fillRect(w/6, row, 4, 3);
+                    ctx.fillRect(w/6 + 7, row, 4, 3);
+                }
+            } else if (camera.type === 'Note') {
+                ctx.strokeStyle = "#475569"; ctx.fillStyle = "#fef08a"; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.rect(-10, -10, 20, 20); ctx.fill(); ctx.stroke();
+                ctx.fillStyle = "#475569"; ctx.font = "bold 10px monospace";
+                ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                ctx.fillText("N", 0, 0);
+            }
+            ctx.restore();
+        }
+
+        function drawCameraLabel(ctx, camera) {
+            ctx.save();
+            ctx.font = "bold 11px 'Segoe UI', sans-serif";
+            ctx.textAlign = "center";
+            const calcX = camera.x + (camera.offsetX || 0);
+            const calcY = camera.y + (camera.size / 2) + (camera.offsetY !== undefined ? camera.offsetY : 14);
+            ctx.strokeStyle = "white"; ctx.lineWidth = 3;
+            ctx.strokeText(camera.name, calcX, calcY);
+            ctx.fillStyle = (camera === selectedCamera) ? "#2563eb" : (camera.textColor || "#334155");
+            ctx.fillText(camera.name, calcX, calcY);
+            ctx.restore();
+        }
+
+        function drawMultiBendCable(ctx, cable) {
+            const devA = cameras.find(c => c.id === cable.from);
+            const devB = cameras.find(c => c.id === cable.to);
+            if (!devA || !devB) return;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(devA.x, devA.y);
+            cable.waypoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ctx.lineTo(devB.x, devB.y);
+
+            if (cable === selectedCable) {
+                ctx.strokeStyle = "#ec4899"; 
+                ctx.lineWidth = 5;
+            } else {
+                ctx.strokeStyle = cable.color || "#10b981";
+                ctx.lineWidth = 3;
+            }
+            ctx.stroke();
+
+            let totalPoints = [devA, ...cable.waypoints, devB];
+            let midIndex = Math.floor(totalPoints.length / 2);
+            let txtX = totalPoints[midIndex].x;
+            let txtY = totalPoints[midIndex].y;
+            if(cable.waypoints.length === 0) {
+                txtX = (devA.x + devB.x) / 2;
+                txtY = (devA.y + devB.y) / 2;
+            }
+
+            ctx.font = "italic bold 10px sans-serif";
+            ctx.textAlign = "center";
+            ctx.strokeStyle = "white"; ctx.lineWidth = 3;
+            ctx.strokeText(cable.name, txtX, txtY - 6);
+            ctx.fillStyle = "#0f172a"; ctx.fillText(cable.name, txtX, txtY - 6);
+            ctx.restore();
+        }
+
+        function drawCableEditHandles(ctx, cable) {
+            ctx.save();
+            cable.waypoints.forEach((pt, index) => {
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = "#ec4899"; ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2;
+                ctx.fill(); ctx.stroke();
+            });
+            ctx.restore();
+        }
+
+        function getDistanceToSegment(p, a, b) {
+            let l2 = Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
+            if (l2 === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+            let t = ((p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y)) / l2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.hypot(p.x - (a.x + t * (b.x - a.x)), p.y - (a.y + t * (b.y - a.y)));
+        }
+
+        // --- Mouse Action Pipeline ---
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (e.clientX - rect.left) / currentZoom;
+            const mouseY = (e.clientY - rect.top) / currentZoom;
+            const currentClickPoint = { x: mouseX, y: mouseY };
+
+            if (pendingDeviceType) {
+                if(!isDeviceInActiveLayer(pendingDeviceType)) {
+                    alert("Selected layer filter active. Switch to All Layers view first.");
+                    pendingDeviceType = null;
+                    workspace.className = "flex-1 flex overflow-hidden";
+                    placementHint.classList.add('hidden');
+                    return;
+                }
+                createCameraAtCoordinates(pendingDeviceType, mouseX, mouseY);
+                pendingDeviceType = null;
+                workspace.className = "flex-1 flex overflow-hidden";
+                placementHint.classList.add('hidden');
+                return;
+            }
+
+            let clickedDevice = null;
+            for (let i = cameras.length - 1; i >= 0; i--) {
+                if(!isDeviceInActiveLayer(cameras[i].type)) continue;
+                const boundaryRadius = Math.max(12, cameras[i].size / 1.1);
+                const dist = Math.hypot(cameras[i].x - mouseX, cameras[i].y - mouseY);
+                if (dist <= boundaryRadius) { 
+                    clickedDevice = cameras[i];
+                    break;
+                }
+            }
+
+            if (cableLinkingMode) {
+                if (clickedDevice) {
+                    if (!cableSourceDevice) {
+                        cableSourceDevice = clickedDevice;
+                    } else {
+                        if (cableSourceDevice.id !== clickedDevice.id) {
+                            const wireId = 'LINK-' + Date.now().toString().slice(-4);
+                            cables.push({
+                                id: wireId,
+                                from: cableSourceDevice.id,
+                                to: clickedDevice.id,
+                                name: "Cat6 Link",
+                                color: (cableSourceDevice.type === 'ACS' || clickedDevice.type === 'ACS' || cableSourceDevice.type === 'TA' || clickedDevice.type === 'TA') ? '#ef4444' : '#10b981',
+                                waypoints: [...temporaryWaypoints]
+                            });
+                            cableLinkingMode = false;
+                            workspace.className = "flex-1 flex overflow-hidden";
+                            cableHint.classList.add('hidden');
+                            updateUI();
+                        }
+                        cableSourceDevice = null;
+                        temporaryWaypoints = [];
+                    }
+                } else {
+                    if (cableSourceDevice) {
+                        temporaryWaypoints.push({ x: mouseX, y: mouseY });
+                    } else {
+                        cableLinkingMode = false;
+                        workspace.className = "flex-1 flex overflow-hidden";
+                        cableHint.classList.add('hidden');
+                    }
+                }
+                draw();
+                return;
+            }
+
+            if (selectedCable) {
+                const dA = cameras.find(c => c.id === selectedCable.from);
+                const dB = cameras.find(c => c.id === selectedCable.to);
+                if(dA && dB && isDeviceInActiveLayer(dA.type) && isDeviceInActiveLayer(dB.type)) {
+                    for (let i = 0; i < selectedCable.waypoints.length; i++) {
+                        let pt = selectedCable.waypoints[i];
+                        if (Math.hypot(pt.x - mouseX, pt.y - mouseY) <= 10) {
+                            draggingWaypointIndex = i;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (clickedDevice) {
+                deselectAll();
+                selectCamera(clickedDevice);
+                isDraggingDevice = true;
+                draw();
+                return;
+            }
+
+            let matchedCable = null;
+            for (let wire of cables) {
+                const devA = cameras.find(c => c.id === wire.from);
+                const devB = cameras.find(c => c.id === wire.to);
+                if (!devA || !devB || !isDeviceInActiveLayer(devA.type) || !isDeviceInActiveLayer(devB.type)) continue;
+
+                let pointsList = [devA, ...wire.waypoints, devB];
+                for (let s = 0; s < pointsList.length - 1; s++) {
+                    let distance = getDistanceToSegment(currentClickPoint, pointsList[s], pointsList[s+1]);
+                    if (distance < 8) { 
+                        matchedCable = wire;
+                        break;
+                    }
+                }
+                if (matchedCable) break;
+            }
+
+            if (matchedCable) {
+                deselectAll();
+                selectCable(matchedCable);
+            } else {
+                deselectAll();
+            }
+            draw();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseCurrentX = (e.clientX - rect.left) / currentZoom;
+            mouseCurrentY = (e.clientY - rect.top) / currentZoom;
+
+            if (cableLinkingMode && cableSourceDevice) {
+                draw(); 
+            } else if (draggingWaypointIndex !== -1 && selectedCable) {
+                selectedCable.waypoints[draggingWaypointIndex].x = mouseCurrentX;
+                selectedCable.waypoints[draggingWaypointIndex].y = mouseCurrentY;
+                draw();
+            } else if (isDraggingDevice && selectedCamera) {
+                selectedCamera.x = mouseCurrentX;
+                selectedCamera.y = mouseCurrentY;
+                draw();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => { 
+            isDraggingDevice = false; 
+            draggingWaypointIndex = -1; 
+        });
+
+        function selectCamera(cam) {
+            selectedCamera = cam;
+            propPanel.classList.remove('hidden');
+            propName.value = cam.name;
+            propSize.value = cam.size || 36;
+            sizeVal.innerText = `${cam.size || 36}px`;
+            propTextColor.value = cam.textColor || "#334155";
+            propOffsetX.value = cam.offsetX || 0;
+            propOffsetY.value = cam.offsetY !== undefined ? cam.offsetY : 14;
+            offsetXVal.innerText = `${cam.offsetX || 0}px`;
+            offsetYVal.innerText = `${cam.offsetY !== undefined ? cam.offsetY : 14}px`;
+
+            if(cam.type === 'BlackDot') {
+                document.getElementById('propNameWrapper').classList.add('hidden');
+                document.getElementById('labelTextManagementWrapper').classList.add('hidden');
+                document.getElementById('fovProjectionWrapper').classList.add('hidden');
+                document.getElementById('fovNumericParameters').classList.add('hidden');
+                document.getElementById('flipControlsWrapper').classList.add('hidden');
+                document.getElementById('rotationSliderWrapper').classList.add('hidden');
+                document.getElementById('deviceSizeWrapper').classList.remove('hidden');
+            } else if (cam.type === 'Switch' || cam.type === 'Pole' || cam.type === 'Note') {
+                document.getElementById('propNameWrapper').classList.remove('hidden');
+                document.getElementById('labelTextManagementWrapper').classList.remove('hidden');
+                document.getElementById('fovProjectionWrapper').classList.add('hidden');
+                document.getElementById('fovNumericParameters').classList.add('hidden');
+                document.getElementById('flipControlsWrapper').classList.add('hidden');
+                document.getElementById('rotationSliderWrapper').classList.add('hidden');
+                if(cam.type === 'Note') {
+                    document.getElementById('deviceSizeWrapper').classList.add('hidden');
+                } else {
+                    document.getElementById('deviceSizeWrapper').classList.remove('hidden');
+                }
+            } else if (cam.type === 'ACS' || cam.type === 'TA') {
+                document.getElementById('propNameWrapper').classList.remove('hidden');
+                document.getElementById('labelTextManagementWrapper').classList.remove('hidden');
+                document.getElementById('fovProjectionWrapper').classList.add('hidden');
+                document.getElementById('fovNumericParameters').classList.add('hidden');
+                document.getElementById('flipControlsWrapper').classList.add('hidden');
+                document.getElementById('rotationSliderWrapper').classList.remove('hidden');
+                document.getElementById('deviceSizeWrapper').classList.remove('hidden');
+                propRotation.value = cam.angle || 0;
+                rotationVal.innerText = `${cam.angle || 0}°`;
+            } else {
+                document.getElementById('propNameWrapper').classList.remove('hidden');
+                document.getElementById('labelTextManagementWrapper').classList.remove('hidden');
+                document.getElementById('fovProjectionWrapper').classList.remove('hidden');
+                document.getElementById('fovNumericParameters').classList.remove('hidden');
+                document.getElementById('flipControlsWrapper').classList.remove('hidden');
+                document.getElementById('rotationSliderWrapper').classList.remove('hidden');
+                document.getElementById('deviceSizeWrapper').classList.remove('hidden');
+                propShowFov.checked = cam.showFov;
+                propFov.value = cam.fov;
+                propRange.value = cam.range;
+                propRotation.value = cam.angle || 0;
+                rotationVal.innerText = `${cam.angle || 0}°`;
+            }
+        }
+
+        function selectCable(wire) {
+            selectedCable = wire;
+            cablePanel.classList.remove('hidden');
+            cablePropName.value = wire.name;
+            cablePropColor.value = wire.color || "#10b981";
+        }
+
+        function deselectAll() {
+            selectedCamera = null;
+            selectedCable = null;
+            propPanel.classList.add('hidden');
+            cablePanel.classList.add('hidden');
+        }
+
+        function deleteSelectedCamera() {
+            if (!selectedCamera) return;
+            cables = cables.filter(w => w.from !== selectedCamera.id && w.to !== selectedCamera.id);
+            cameras = cameras.filter(c => c.id !== selectedCamera.id);
+            deselectAll();
+            updateUI();
+            draw();
+        }
+
+        function deleteSelectedCable() {
+            if (!selectedCable) return;
+            cables = cables.filter(w => w.id !== selectedCable.id);
+            deselectAll();
+            updateUI();
+            draw();
+        }
+
+        // --- Event Listeners Matrix ---
+        propName.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.name = e.target.value; draw(); updateUI(); } });
+        propTextColor.addEventListener('change', (e) => { if(selectedCamera) { selectedCamera.textColor = e.target.value; draw(); } });
+        propOffsetX.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.offsetX = parseInt(e.target.value) || 0; offsetXVal.innerText = `${selectedCamera.offsetX}px`; draw(); } });
+        propOffsetY.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.offsetY = parseInt(e.target.value) || 0; offsetYVal.innerText = `${selectedCamera.offsetY}px`; draw(); } });
+        propShowFov.addEventListener('change', (e) => { if(selectedCamera) { selectedCamera.showFov = e.target.checked; draw(); } });
+        propSize.addEventListener('input', (e) => { if(selectedCamera) { let sv = parseInt(e.target.value) || 36; selectedCamera.size = sv; sizeVal.innerText = `${sv}px`; draw(); } });
+        propFov.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.fov = parseInt(e.target.value) || 90; draw(); } });
+        propRange.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.range = parseInt(e.target.value) || 100; draw(); } });
+        propRotation.addEventListener('input', (e) => { if(selectedCamera) { selectedCamera.angle = parseInt(e.target.value) || 0; rotationVal.innerText = `${selectedCamera.angle}°`; draw(); } });
+
+        cablePropName.addEventListener('input', (e) => { if(selectedCable) { selectedCable.name = e.target.value; draw(); updateUI(); } });
+        cablePropColor.addEventListener('change', (e) => { if(selectedCable) { selectedCable.color = e.target.value; draw(); } });
+
+        function updateUI() {
+            const container = document.getElementById('boqContainer');
+            
+            // Exclude BlackDot from BOQ Live inventory list completely
+            let activeDevices = cameras.filter(c => isDeviceInActiveLayer(c.type) && c.type !== 'BlackDot');
+            let activeCables = cables.filter(w => {
+                const dA = cameras.find(c => c.id === w.from);
+                const dB = cameras.find(c => c.id === w.to);
+                return dA && dB && isDeviceInActiveLayer(dA.type) && isDeviceInActiveLayer(dB.type);
+            });
+
+            if (activeDevices.length === 0 && activeCables.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 italic text-center py-4">No hardware in current layer view.</p>';
+                return;
+            }
+
+            let liveCounts = { Bullet: 0, Dome: 0, PTZ: 0, Pole: 0, Switch: 0, Face: 0, ANPR: 0, ACS: 0, TA: 0, Note: 0 };
+            activeDevices.forEach(c => { if(liveCounts[c.type] !== undefined) liveCounts[c.type]++; });
+
+            let summaryHtml = `
+                <div class="grid grid-cols-3 gap-1.5 mb-2 border-b border-gray-200 pb-2 font-bold text-center text-[10px] text-gray-700">
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Bullet===0?'opacity-40':''}">Bullet: ${liveCounts.Bullet}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Dome===0?'opacity-40':''}">Dome: ${liveCounts.Dome}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.PTZ===0?'opacity-40':''}">PTZ: ${liveCounts.PTZ}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Face===0?'opacity-40':''}">Face: ${liveCounts.Face}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.ANPR===0?'opacity-40':''}">ANPR: ${liveCounts.ANPR}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Switch===0?'opacity-40':''}">Switch: ${liveCounts.Switch}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.ACS===0?'opacity-40':''}">ACS: ${liveCounts.ACS}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.TA===0?'opacity-40':''}">TA: ${liveCounts.TA}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Pole===0?'opacity-40':''}">Poles: ${liveCounts.Pole}</div>
+                    <div class="bg-slate-100 p-1 rounded text-slate-900 ${liveCounts.Note===0?'opacity-40':''}">Notes: ${liveCounts.Note}</div>
+                </div>
+                <div class="text-[11px] text-gray-600 font-medium">Layer Wire Links: <b>${activeCables.length}</b> runs</div>
+            `;
+            container.innerHTML = summaryHtml;
+        }
+
+        // --- PDF Processing Engine ---
+        function loadPdfFromBytesArray(bytes) {
+            pdfjsLib.getDocument({data: bytes}).promise.then(pdf => {
+                pdf.getPage(1).then(page => {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const actualCanvas = document.createElement('canvas');
+                    actualCanvas.width = viewport.width;
+                    actualCanvas.height = viewport.height;
+                    const actualCtx = actualCanvas.getContext('2d');
+
+                    const renderContext = { canvasContext: actualCtx, viewport: viewport };
+                    page.render(renderContext).promise.then(() => {
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        pdfPageBackground = actualCanvas; 
+                        draw();
+                    });
+                });
+            }).catch(err => { alert("Error reading map layout: " + err.message); });
+        }
+
+        document.getElementById('pdfUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file || file.type !== "application/pdf") return;
+
+            const cleanFileName = file.name.replace(/\.[^/.]+$/, "");
+            document.getElementById('floorPlanNameInput').value = cleanFileName;
+
+            const fileReader = new FileReader();
+            fileReader.onload = function() {
+                cachedPdfBytes = Array.from(new Uint8Array(this.result)); 
+                loadPdfFromBytesArray(new Uint8Array(cachedPdfBytes));
+            };
+            fileReader.readAsArrayBuffer(file);
+        });
+
+        // --- Custom Storage System File Save/Load ---
+        function exportCneProjectFile() {
+            const projectName = document.getElementById('floorPlanNameInput').value.trim() || "Untitled-Project";
+            const formattedFilename = projectName.replace(/\s+/g, '-').toLowerCase();
+
+            const backupPackage = {
+                version: "3.0-CNE-BLACK-DOT",
+                projectName: projectName,
+                deviceCounters: deviceCounters,
+                cameras: cameras,
+                cables: cables,
+                canvasWidth: canvas.width,
+                canvasHeight: canvas.height,
+                mapBackgroundBytes: cachedPdfBytes 
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPackage));
+            const dummyAnchor = document.createElement('a');
+            dummyAnchor.setAttribute("href", dataStr);
+            dummyAnchor.setAttribute("download", formattedFilename + "-master-project.cne");
+            document.body.appendChild(dummyAnchor);
+            dummyAnchor.click();
+            dummyAnchor.remove();
+        }
+
+        function importCneProjectFile(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    if (!importedData.cameras) throw new Error("Invalid structure.");
+
+                    deselectAll();
+                    document.getElementById('floorPlanNameInput').value = importedData.projectName || "";
+                    deviceCounters = importedData.deviceCounters || { Bullet: 0, Dome: 0, PTZ: 0, Pole: 0, Switch: 0, Face: 0, ANPR: 0, ACS: 0, TA: 0, Note: 0, BlackDot: 0 };
+                    cameras = importedData.cameras || [];
+                    cables = importedData.cables || [];
+                    canvas.width = importedData.canvasWidth || 1024;
+                    canvas.height = importedData.canvasHeight || 768;
+                    cachedPdfBytes = importedData.mapBackgroundBytes || null;
+
+                    if (cachedPdfBytes) {
+                        loadPdfFromBytesArray(new Uint8Array(cachedPdfBytes));
+                    } else {
+                        pdfPageBackground = null;
+                        draw();
+                    }
+                    updateUI();
+                } catch (err) {
+                    alert("Error loading backup project file: " + err.message);
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        // --- Clean & Simple PDF & BOQ Export Engine ---
+        document.getElementById('exportPdfBtn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const floorPlanTitleText = document.getElementById('floorPlanNameInput').value.trim() || "Ground Floor";
+            const currentFilterMode = layerFilterSelect.value;
+            
+            let filterLabel = "CCTV & ACS";
+            if(currentFilterMode === "CCTV") filterLabel = "CCTV";
+            if(currentFilterMode === "ACS") filterLabel = "ACS";
+
+            // FILE 1: Graphical Layout Map (Draws Black Dots normally on layout map image)
+            const mapOrientation = canvas.width > canvas.height ? 'l' : 'p';
+            const pdfMapOnly = new jsPDF(mapOrientation, 'px', [canvas.width, canvas.height]);
+            deselectAll(); 
+            draw(); 
+
+            const canvasImgData = canvas.toDataURL('image/jpeg', 1.0);
+            pdfMapOnly.addImage(canvasImgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+            pdfMapOnly.save(`${floorPlanTitleText} - ${filterLabel} Map.pdf`);
+
+            // FILE 2: Clean Textual Inventory BOQ Document (Zero footprint of Black Dots)
+            const pdfBoqOnly = new jsPDF('p', 'pt', 'a4'); 
+            const marginX = 40;
+            const colSlNoX = 45;
+            const colSpecX = 90;
+            const colQtyX = 480;
+            const tableWidth = 515;
+
+            let currentLineY = 50;
+            pdfBoqOnly.setTextColor(15, 23, 42);
+            pdfBoqOnly.setFont("Helvetica", "bold");
+            pdfBoqOnly.setFontSize(16);
+            
+            pdfBoqOnly.text(`${floorPlanTitleText} - ${filterLabel} BOQ`, marginX, currentLineY);
+
+            currentLineY += 12;
+            pdfBoqOnly.setDrawColor(203, 213, 225);
+            pdfBoqOnly.setLineWidth(1.5);
+            pdfBoqOnly.line(marginX, currentLineY, marginX + tableWidth, currentLineY);
+
+            currentLineY += 25;
+            pdfBoqOnly.setFillColor(241, 245, 249);
+            pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'F');
+            pdfBoqOnly.setDrawColor(148, 163, 184);
+            pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'S');
+
+            pdfBoqOnly.setTextColor(15, 23, 42);
+            pdfBoqOnly.setFont("Helvetica", "bold");
+            pdfBoqOnly.setFontSize(10);
+            pdfBoqOnly.text("S.No", colSlNoX, currentLineY + 15);
+            pdfBoqOnly.text("Device / Security Item Specifications", colSpecX, currentLineY + 15);
+            pdfBoqOnly.text("Qty Placed", colQtyX, currentLineY + 15);
+
+            let itemIndex = 1;
+            let exportCounts = { Bullet: 0, Dome: 0, PTZ: 0, Face: 0, ANPR: 0, Switch: 0, ACS: 0, TA: 0, Pole: 0 };
+            let activeNotesList = [];
+            
+            // Loops through items, explicitly bypassing BlackDot types so they aren't logged
+            cameras.forEach(c => { 
+                if(isDeviceInActiveLayer(c.type) && c.type !== 'BlackDot') {
+                    if (c.type === 'Note') {
+                        activeNotesList.push(c.name);
+                    } else if (exportCounts[c.type] !== undefined) {
+                        exportCounts[c.type]++; 
+                    }
+                }
+            });
+
+            const deviceLabelsMapping = {
+                Bullet: "CCTV Bullet Camera",
+                Dome: "CCTV Dome Indoor Camera",
+                PTZ: "CCTV PTZ 360-Degree Speed Dome",
+                Face: "Smart AI Face Recognition Camera (FRC)",
+                ANPR: "Automated Number Plate Recognition Camera (ANPR)",
+                Switch: "Network LAN Managed POE Switch / IT Rack Hub",
+                ACS: "Access Control Secure Biometric Door Terminal",
+                TA: "Time Attendance Clock Log Device",
+                Pole: "CCTV Outdoor Mounting Structure Mast Pole"
+            };
+
+            pdfBoqOnly.setFont("Helvetica", "normal");
+            Object.keys(exportCounts).forEach(key => {
+                let count = exportCounts[key];
+                if(count > 0) {
+                    currentLineY += 24;
+                    if(itemIndex % 2 === 0) {
+                        pdfBoqOnly.setFillColor(248, 250, 252);
+                        pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'F');
+                    }
+                    pdfBoqOnly.setDrawColor(226, 232, 240);
+                    pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'S');
+
+                    pdfBoqOnly.setTextColor(51, 65, 85);
+                    pdfBoqOnly.text(itemIndex.toString(), colSlNoX, currentLineY + 15);
+                    pdfBoqOnly.text(deviceLabelsMapping[key], colSpecX, currentLineY + 15);
+                    pdfBoqOnly.text(`${count} Nos`, colQtyX, currentLineY + 15);
+                    itemIndex++;
+                }
+            });
+
+            let activeCablesCount = cables.filter(w => {
+                const dA = cameras.find(c => c.id === w.from);
+                const dB = cameras.find(c => c.id === w.to);
+                return dA && dB && isDeviceInActiveLayer(dA.type) && isDeviceInActiveLayer(dB.type);
+            }).length;
+
+            if(activeCablesCount > 0) {
+                currentLineY += 24;
+                if(itemIndex % 2 === 0) {
+                    pdfBoqOnly.setFillColor(248, 250, 252);
+                    pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'F');
+                }
+                pdfBoqOnly.setDrawColor(226, 232, 240);
+                pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'S');
+
+                pdfBoqOnly.setTextColor(51, 65, 85);
+                pdfBoqOnly.text(itemIndex.toString(), colSlNoX, currentLineY + 15);
+                pdfBoqOnly.text("Cat6 / Connectivity Inter-Device Cable Run", colSpecX, currentLineY + 15);
+                pdfBoqOnly.text(`${activeCablesCount} Runs`, colQtyX, currentLineY + 15);
+                itemIndex++;
+            }
+
+            activeNotesList.forEach(noteText => {
+                currentLineY += 24;
+                if(itemIndex % 2 === 0) {
+                    pdfBoqOnly.setFillColor(248, 250, 252);
+                    pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'F');
+                }
+                pdfBoqOnly.setDrawColor(226, 232, 240);
+                pdfBoqOnly.rect(marginX, currentLineY, tableWidth, 24, 'S');
+
+                pdfBoqOnly.setTextColor(51, 65, 85);
+                pdfBoqOnly.text(itemIndex.toString(), colSlNoX, currentLineY + 15);
+                pdfBoqOnly.text(`Site Engineering Note: ${noteText}`, colSpecX, currentLineY + 15);
+                pdfBoqOnly.text("1 Item", colQtyX, currentLineY + 15);
+                itemIndex++;
+            });
+
+            pdfBoqOnly.save(`${floorPlanTitleText} - ${filterLabel} BOQ.pdf`);
+        });
+
+        // Initialize App Canvas First Render
+        updateUI();
+        draw();
+    </script>
+</body>
+</html>
