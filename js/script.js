@@ -363,3 +363,54 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 })();
+
+// ===== NAV DROPDOWNS =====
+(function initNavDropdowns() {
+  const MENUS = {"index.html": [{"t": "Overview", "h": "index.html#home-hero", "i": "fa-house"}, {"t": "Core Services", "h": "index.html#services-overview", "i": "fa-cogs"}, {"t": "Track Record", "h": "index.html#track-record", "i": "fa-chart-line"}, {"t": "Why Choose Us", "h": "index.html#why-us", "i": "fa-circle-check"}, {"t": "Get Started", "h": "index.html#get-started", "i": "fa-paper-plane"}], "about.html": [{"t": "Who We Are", "h": "about.html#who-we-are", "i": "fa-id-badge"}, {"t": "Operating Principles", "h": "about.html#principles", "i": "fa-bullseye"}, {"t": "How A Project Runs", "h": "about.html#project-process", "i": "fa-diagram-project"}, {"t": "Meet The Team", "h": "about.html#meet-team", "i": "fa-handshake"}], "services.html": [{"t": "CCTV & Surveillance", "h": "services.html#cctv", "i": "fa-video"}, {"t": "Access Control", "h": "services.html#access-control", "i": "fa-fingerprint"}, {"t": "Networking", "h": "services.html#networking", "i": "fa-network-wired"}, {"t": "Cyber Security", "h": "services.html#cyber-security", "i": "fa-shield-halved"}, {"t": "Fire & Life Safety", "h": "services.html#fire-safety", "i": "fa-fire-extinguisher"}, {"t": "Engineering", "h": "services.html#engineering", "i": "fa-diagram-project"}], "solutions.html": [{"t": "Enterprise Security", "h": "solutions.html#enterprise-suite", "i": "fa-building-shield"}, {"t": "Smart Facility", "h": "solutions.html#smart-facility", "i": "fa-city"}, {"t": "Surveillance-as-a-Service", "h": "solutions.html#surveillance-service", "i": "fa-video"}, {"t": "Access & Attendance", "h": "solutions.html#access-attendance", "i": "fa-fingerprint"}, {"t": "Network Backbone", "h": "solutions.html#network-backbone", "i": "fa-network-wired"}, {"t": "Fire Compliance", "h": "solutions.html#fire-compliance", "i": "fa-fire"}, {"t": "System Integration", "h": "solutions.html#system-integration", "i": "fa-link"}], "projects.html": [{"t": "Video Surveillance", "h": "projects.html#project-cctv", "i": "fa-video"}, {"t": "Access Systems", "h": "projects.html#project-access", "i": "fa-fingerprint"}, {"t": "Network Backbone", "h": "projects.html#project-network", "i": "fa-network-wired"}, {"t": "Fire Alarm", "h": "projects.html#project-fire", "i": "fa-fire-extinguisher"}, {"t": "Integrated Security", "h": "projects.html#project-integration", "i": "fa-diagram-project"}, {"t": "Tech Infrastructure", "h": "projects.html#project-infrastructure", "i": "fa-server"}, {"t": "How We Scope Work", "h": "projects.html#scope-work", "i": "fa-clipboard-list"}], "industries.html": [{"t": "Corporate Offices", "h": "industries.html#corporate", "i": "fa-building"}, {"t": "Industrial", "h": "industries.html#industrial", "i": "fa-industry"}, {"t": "Retail & Commercial", "h": "industries.html#retail", "i": "fa-store"}, {"t": "Education", "h": "industries.html#education", "i": "fa-school"}, {"t": "Healthcare", "h": "industries.html#healthcare", "i": "fa-hospital"}, {"t": "Government", "h": "industries.html#government", "i": "fa-landmark"}, {"t": "Why Industry Matters", "h": "industries.html#why-industry", "i": "fa-lightbulb"}], "contact.html": [{"t": "Reach Us Directly", "h": "contact.html#contact-info", "i": "fa-location-dot"}, {"t": "Send An Inquiry", "h": "contact.html#inquiry-form", "i": "fa-paper-plane"}, {"t": "After You Submit", "h": "contact.html#after-submit", "i": "fa-list-check"}, {"t": "Get A Faster Quote", "h": "contact.html#faster-quote", "i": "fa-clipboard-check"}], "blog.html": [{"t": "CCTV System Guide", "h": "how-to-choose-cctv-system.html", "i": "fa-video"}, {"t": "Access Control Explained", "h": "access-control-explained.html", "i": "fa-fingerprint"}, {"t": "Structured Cabling", "h": "structured-cabling-basics.html", "i": "fa-network-wired"}, {"t": "Fire Alarm Guide", "h": "fire-alarm-systems-guide.html", "i": "fa-fire-extinguisher"}, {"t": "Secure Your CCTV Network", "h": "secure-your-cctv-network.html", "i": "fa-shield-halved"}, {"t": "Site Survey Checklist", "h": "site-survey-checklist.html", "i": "fa-clipboard-check"}]};
+  const links = document.querySelectorAll('.nav-links > li');
+  const navList = document.getElementById('navLinks');
+  function closeAll(except) {
+    document.querySelectorAll('.nav-links li.has-menu.open').forEach(li => {
+      if (li !== except) {
+        li.classList.remove('open');
+        const b = li.querySelector('.nav-caret'); if (b) b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  links.forEach(li => {
+    const a = li.querySelector(':scope > a');
+    if (!a) return;
+    const page = (a.getAttribute('href') || '').split('#')[0];
+    const items = MENUS[page];
+    if (!items) return;
+    li.classList.add('has-menu');
+    const name = a.textContent.trim();
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'nav-caret';
+    btn.setAttribute('aria-label', 'Show ' + name + ' sections');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+    const drop = document.createElement('div');
+    drop.className = 'nav-drop';
+    drop.innerHTML = '<div class="nav-drop-inner"><div class="nav-drop-head"><span>' + name + '</span> / On this page</div>' +
+      items.map(it => '<a href="' + it.h + '"><i class="fa-solid ' + it.i + '"></i><span>' + it.t.replace(/&/g, '&amp;') + '</span></a>').join('') +
+      '</div>';
+    a.after(btn);
+    li.appendChild(drop);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = !li.classList.contains('open');
+      closeAll(li);
+      li.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    drop.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      closeAll();
+      if (navList) navList.classList.remove('show');
+    }));
+  });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.nav-links')) closeAll(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+})();
+// ===== /NAV DROPDOWNS =====
