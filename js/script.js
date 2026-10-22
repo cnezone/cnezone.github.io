@@ -366,6 +366,71 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 // ===== NAV DROPDOWNS =====
 (function initNavDropdowns() {
+  // NAV_CSS_START
+  if (!document.getElementById('nav-dropdown-css')) {
+    const st = document.createElement('style');
+    st.id = 'nav-dropdown-css';
+    st.textContent = `/* ===== NAV DROPDOWNS ===== */
+[id] { scroll-margin-top: 92px; }
+.nav-links li.has-menu { display: flex; align-items: center; }
+.nav-caret {
+  background: none; border: 0; cursor: pointer; color: var(--steel-2);
+  font-size: 9px; padding: 10px 8px 10px 0; margin-left: -10px; position: relative; z-index: 3;
+  transition: color .25s ease, transform .25s ease; line-height: 1;
+}
+.nav-caret:hover, .nav-links li.has-menu.open .nav-caret { color: var(--signal); }
+.nav-links li.has-menu.open .nav-caret i { transform: rotate(180deg); }
+.nav-caret i { display: block; transition: transform .25s ease; }
+
+.nav-drop {
+  position: absolute; top: 100%; left: 0; padding-top: 14px; min-width: 290px; z-index: 50;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity .22s ease, transform .22s ease, visibility .22s;
+}
+.nav-links li.has-menu:nth-last-child(-n+3) .nav-drop { left: auto; right: 0; }
+.nav-drop-inner {
+  background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--signal);
+  box-shadow: var(--shadow); padding: 8px; display: flex; flex-direction: column; gap: 2px;
+}
+.nav-drop-head {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--steel-2); padding: 10px 12px 8px; border-bottom: 1px solid var(--line); margin-bottom: 6px;
+}
+.nav-drop-head span { color: var(--signal); font-weight: 600; }
+.nav-links .nav-drop a {
+  display: flex; align-items: center; gap: 12px; padding: 8px 10px; text-align: left;
+  font-family: 'Inter', Arial, sans-serif; font-size: 13.5px; font-weight: 600; letter-spacing: 0;
+  color: var(--ink); transition: background .2s ease, color .2s ease;
+}
+.nav-links .nav-drop a:before { display: none; }
+.nav-links .nav-drop a i {
+  width: 34px; height: 34px; flex: 0 0 34px; display: flex; align-items: center; justify-content: center;
+  background: var(--signal-dim); color: var(--signal); font-size: 14px; transition: background .2s ease, color .2s ease;
+}
+.nav-links .nav-drop a:hover { background: var(--paper); color: var(--ink); }
+.nav-links .nav-drop a:hover i { background: var(--signal); color: #fff; }
+
+@media (hover: hover) and (min-width: 1025px) {
+  .nav-links li.has-menu:hover > .nav-drop { opacity: 1; visibility: visible; transform: none; }
+  .nav-links li.has-menu:hover .nav-caret { color: var(--signal); }
+  .nav-links li.has-menu:hover .nav-caret i { transform: rotate(180deg); }
+}
+.nav-links li.has-menu:focus-within > .nav-drop,
+.nav-links li.has-menu.open > .nav-drop { opacity: 1; visibility: visible; transform: none; }
+
+@media (max-width: 1024px) {
+  .nav-links { max-height: calc(100vh - 72px); overflow-y: auto; }
+  .nav-links li.has-menu { flex-wrap: wrap; justify-content: center; }
+  .nav-drop { position: static; display: none; width: 100%; padding-top: 6px; opacity: 1; visibility: visible; transform: none; }
+  .nav-links li.has-menu.open > .nav-drop { display: block; }
+  .nav-links li.has-menu:nth-last-child(-n+3) .nav-drop { right: auto; }
+  .nav-caret { font-size: 11px; padding: 12px 10px; margin-left: 0; }
+  .nav-drop-inner { box-shadow: none; text-align: left; }
+}
+/* ===== /NAV DROPDOWNS ===== */`;
+    document.head.appendChild(st);
+  }
+  // NAV_CSS_END
   const MENUS = {"index.html": [{"t": "Overview", "h": "index.html#home-hero", "i": "fa-house"}, {"t": "Core Services", "h": "index.html#services-overview", "i": "fa-cogs"}, {"t": "Track Record", "h": "index.html#track-record", "i": "fa-chart-line"}, {"t": "Why Choose Us", "h": "index.html#why-us", "i": "fa-circle-check"}, {"t": "Get Started", "h": "index.html#get-started", "i": "fa-paper-plane"}], "about.html": [{"t": "Who We Are", "h": "about.html#who-we-are", "i": "fa-id-badge"}, {"t": "Operating Principles", "h": "about.html#principles", "i": "fa-bullseye"}, {"t": "How A Project Runs", "h": "about.html#project-process", "i": "fa-diagram-project"}, {"t": "Meet The Team", "h": "about.html#meet-team", "i": "fa-handshake"}, {"t": "Company Profile (PDF)", "h": "company-profile.pdf", "i": "fa-file-pdf", "x": 1}], "services.html": [{"t": "CCTV & Surveillance", "h": "services.html#cctv", "i": "fa-video"}, {"t": "Access Control", "h": "services.html#access-control", "i": "fa-fingerprint"}, {"t": "Networking", "h": "services.html#networking", "i": "fa-network-wired"}, {"t": "Cyber Security", "h": "services.html#cyber-security", "i": "fa-shield-halved"}, {"t": "Fire & Life Safety", "h": "services.html#fire-safety", "i": "fa-fire-extinguisher"}, {"t": "Engineering", "h": "services.html#engineering", "i": "fa-diagram-project"}, {"t": "Integrated Solutions", "h": "services.html#solutions", "i": "fa-boxes-stacked"}, {"t": "System Integration", "h": "services.html#system-integration", "i": "fa-link"}], "projects.html": [{"t": "Video Surveillance", "h": "projects.html#project-cctv", "i": "fa-video"}, {"t": "Access Systems", "h": "projects.html#project-access", "i": "fa-fingerprint"}, {"t": "Network Backbone", "h": "projects.html#project-network", "i": "fa-network-wired"}, {"t": "Fire Alarm", "h": "projects.html#project-fire", "i": "fa-fire-extinguisher"}, {"t": "Integrated Security", "h": "projects.html#project-integration", "i": "fa-diagram-project"}, {"t": "Tech Infrastructure", "h": "projects.html#project-infrastructure", "i": "fa-server"}, {"t": "How We Scope Work", "h": "projects.html#scope-work", "i": "fa-clipboard-list"}], "industries.html": [{"t": "Corporate Offices", "h": "industries.html#corporate", "i": "fa-building"}, {"t": "Industrial", "h": "industries.html#industrial", "i": "fa-industry"}, {"t": "Retail & Commercial", "h": "industries.html#retail", "i": "fa-store"}, {"t": "Education", "h": "industries.html#education", "i": "fa-school"}, {"t": "Healthcare", "h": "industries.html#healthcare", "i": "fa-hospital"}, {"t": "Government", "h": "industries.html#government", "i": "fa-landmark"}, {"t": "Why Industry Matters", "h": "industries.html#why-industry", "i": "fa-lightbulb"}], "contact.html": [{"t": "Get Quote", "h": "contact.html#inquiry-form", "i": "fa-file-invoice-dollar"}, {"t": "Reach Us Directly", "h": "contact.html#contact-info", "i": "fa-location-dot"}, {"t": "After You Submit", "h": "contact.html#after-submit", "i": "fa-list-check"}, {"t": "Quote Checklist", "h": "contact.html#faster-quote", "i": "fa-clipboard-check"}], "tools.html": [{"t": "CCTV Layout Planner", "h": "cctv-planner.html", "i": "fa-video"}, {"t": "Featured Tool", "h": "tools.html#launch-tool", "i": "fa-screwdriver-wrench"}, {"t": "Bandwidth Calculators", "h": "tools.html#manufacturer-calculators", "i": "fa-calculator"}, {"t": "How It Works", "h": "tools.html#how-it-works", "i": "fa-list-check"}, {"t": "Who It Is For", "h": "tools.html#who-for", "i": "fa-users"}], "blog.html": [{"t": "CCTV System Guide", "h": "how-to-choose-cctv-system.html", "i": "fa-video"}, {"t": "Access Control Explained", "h": "access-control-explained.html", "i": "fa-fingerprint"}, {"t": "Structured Cabling", "h": "structured-cabling-basics.html", "i": "fa-network-wired"}, {"t": "Fire Alarm Guide", "h": "fire-alarm-systems-guide.html", "i": "fa-fire-extinguisher"}, {"t": "Secure Your CCTV Network", "h": "secure-your-cctv-network.html", "i": "fa-shield-halved"}, {"t": "Site Survey Checklist", "h": "site-survey-checklist.html", "i": "fa-clipboard-check"}]};
   const links = document.querySelectorAll('.nav-links > li');
   const navList = document.getElementById('navLinks');
